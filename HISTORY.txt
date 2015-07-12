@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.1 (unreleased)
+0.1 (2015-07-12)
 ----------------
 
 - Initial release.
