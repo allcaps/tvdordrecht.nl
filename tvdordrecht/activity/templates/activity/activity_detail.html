@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
+
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        {{ object.title }}<br/>
+        <small>
+            {{ object.start_date|date:'l j F Y' }} {{ object.start_time }}
+        </small>
+    </h1>
+</div>
+
+<h2>Deelnemers:</h2>
+<ul>
+{% for p in object.participants.all %}
+    <li>{{ p.username }}</li>
+    {% empty %}
+    <li>Nog geen deelnemers</li>
+{% endfor %}
+</ul>
+
+{% endblock content %}
+
+{% block extra_js %}
+{% endblock extra_js %}

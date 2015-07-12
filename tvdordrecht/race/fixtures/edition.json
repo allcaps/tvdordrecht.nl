@@ -1,0 +1,74 @@
+[
+{
+    "fields": {
+        "date": "2017-08-29",
+        "event": 1
+    },
+    "model": "race.edition",
+    "pk": 9
+},
+{
+    "fields": {
+        "date": "2016-07-09",
+        "event": 1
+    },
+    "model": "race.edition",
+    "pk": 10
+},
+{
+    "fields": {
+        "date": "2015-07-09",
+        "event": 2
+    },
+    "model": "race.edition",
+    "pk": 11
+},
+{
+    "fields": {
+        "date": "2018-11-23",
+        "event": 3
+    },
+    "model": "race.edition",
+    "pk": 12
+},
+{
+    "fields": {
+        "date": "2018-05-30",
+        "event": 3
+    },
+    "model": "race.edition",
+    "pk": 13
+},
+{
+    "fields": {
+        "date": "2016-07-09",
+        "event": 2
+    },
+    "model": "race.edition",
+    "pk": 14
+},
+{
+    "fields": {
+        "date": "2013-06-27",
+        "event": 3
+    },
+    "model": "race.edition",
+    "pk": 15
+},
+{
+    "fields": {
+        "date": "2015-07-10",
+        "event": 5
+    },
+    "model": "race.edition",
+    "pk": 16
+},
+{
+    "fields": {
+        "date": "2016-07-10",
+        "event": 5
+    },
+    "model": "race.edition",
+    "pk": 17
+}
+]

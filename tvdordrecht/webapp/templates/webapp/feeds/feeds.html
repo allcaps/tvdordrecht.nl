@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block title %}RSS-Feeds « {% endblock %}
+
+{% block content %}
+<div class="column span-10 prepend-7" id="feeds">
+
+    <h1>RSS-Feeds</h1>
+    <p class="intro">Ontvang updates van {{ site.name }} via uw favoriete RSS-lezer.</p>
+    <p>{{ site.name }} publiceert artikelen ook via RSS-feed's. Een abonnement op onze feeds geeft je toegang tot de laatste artikelen via uw favoriete RSS-lezer.</p>
+    <ul>
+        <li><a href="http://{{ site.domain }}/feeds/news/">http://{{ site.domain }}/feeds/news/</a></li>
+        <li><a href="http://{{ site.domain }}/feeds/menu/">http://{{ site.domain }}/feeds/menu/</a></li>
+        <li><a href="http://{{ site.domain }}/feeds/page/">http://{{ site.domain }}/feeds/page/</a></li>        
+    </ul>		
+
+</div>
+{% endblock %}
+
+{% block breadcrumb %}
+<p><a href="/" title="Home">Home</a> » <span>RSS-Feeds</span></p>
+{% endblock %} 

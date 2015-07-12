@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}{{ current_menu.title }} « {{ block.super }}{% endblock title %}
+{% block keywords %}{{ current_menu.keywords }}{% endblock keywords %}
+{% block description %}Nieuwsberichten {{ year }}{% endblock description %}
+
+{% block admin_menu %}
+    {{ block.super }}
+{% endblock admin_menu %}
+
+{% block user_menu %}
+  <a class="btn btn-success" href="{% url 'webapp:news_create' %}">
+    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;&nbsp;Nieuwsbericht toevoegen
+  </a>
+{% endblock user_menu %}
+
+{% block content %}
+{% endblock content %}

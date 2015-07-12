@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% load crop %}
+{% load thumb %}
+
+{% block title %}{{ current_menu.title }} « {% endblock %}
+{% block keywords %}{{ current_menu.keywords }}{% endblock %}
+{% block description %}{{ current_menu.description }}{% endblock %}
+
+{% block ogtitle %}{{ current_menu.title }} « {% endblock %}
+{% block ogimage %}http://{{ site.domain }}{{MEDIA_URL}}{{ current_menu.image }}{% endblock %}
+{% block ogdescription %}{{ current_menu.description }}{% endblock %}
+
+{% block head %}
+<link rel="image_src" href="http://{{ site.domain }}{{MEDIA_URL}}{{ current_menu.image }}" />
+{#<meta property="og:image" content="http://{{ site.domain }}{{MEDIA_URL}}{{ current_menu.image }}" />#}
+{% endblock head %}
+
+{% block admin_menu %}
+    {{ block.super }}
+    <a href="{{ current_menu.get_admin_url }}" class="btn btn-default">
+      Menu-item bewerken
+    </a>
+    <a href="{% url 'admin:webapp_page_add' %}" class="btn btn-default">
+      Pagina toevoegen
+    </a>
+{% endblock admin_menu %}
+
+
+{% block content %}
+<div class="container">
+<div class="row">
+
+    <div class="col-sm-3 hidden-xs">
+      <div id="sidebar" data-spy="affix" role="complementary">
+          {% if current_menu.table_of_contents %}
+            <ul class="nav bs-sidenav">
+            {{ current_menu.table_of_contents|safe }}
+            </ul>
+          {% endif %}
+      </div>
+    </div>
+        
+    <div class="col-sm-9 col-md-7" role="main">
+
+        <div class="page-header">
+            <h1>{{ current_menu.title }}</h1>
+        </div>
+
+        {{ current_menu.html|safe }}
+
+    </div>    
+
+</div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div id="big-photo" style="background-image: url('{{MEDIA_URL}}{{ current_menu.image }}');">
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $('#sidebar').affix({
+        offset: { bottom: function () {
+            return (this.bottom = $('#footer').outerHeight(true))
+          }
+        }
+      })
+</script>
+{% endblock %}

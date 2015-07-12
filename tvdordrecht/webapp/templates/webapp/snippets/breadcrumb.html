@@ -1,0 +1,8 @@
+<p id="breadcrumb" class="small">
+    <a href="/" title="{{ site.title }}">Home</a> »
+    {% if not article %}
+        {{ current_menu.title }}
+    {% else %}
+        <a href="{{ current_menu.get_absolute_url }}{{ query_string }}">{{ current_menu.title }}</a> » {{ article.title }}
+    {% endif %}
+</p>

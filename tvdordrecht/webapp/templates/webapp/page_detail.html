@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% load crop %}
+{% load thumb %}
+
+{% block title %}{{ article.title }} « {% endblock %}
+{% block keywords %}{% if article.keywords %}, {{ article.keywords }}{% endif %}{% endblock %}	
+
+{% block ogtitle %}{{ article.title }} « {% endblock %}
+{% block ogimage %}http://{{ site.domain }}{{ MEDIA_URL }}{{ article.image }}{% endblock %}
+{% block ogdescription %}{{ article.description }}{% endblock %}
+
+{% block admin_menu %}
+    {{ block.super }}
+    <a href="{{ article.get_admin_url }}" class="btn btn-default">
+      Wijzig pagina
+    </a>
+{% endblock admin_menu %}
+
+{% block content %}
+<div class="container" id="{{ article.slug }}">
+<div class="row">
+
+    <div class="col-md-3">
+    <div id="sidebar" data-spy="affix" role="complementary">
+    
+        {% if current_menu.table_of_contents %}
+        <ul class="nav bs-sidenav">
+        {{ article.table_of_contents|safe }}
+        </ul>
+        {% endif %}
+
+    </div>
+    </div>
+    
+    <div class="col-md-7" role="main">
+
+        <div class="page-header">
+            <h1>{{ article.title|safe }}</h1>
+        </div>
+        
+        {{ article.html|safe }}
+        
+    </div>
+
+</div>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+<div id="big-photo" style="background-image: url('{{MEDIA_URL}}{{ article.image }}');">
+</div>
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+    $('#sidebar').affix({
+        offset: { bottom: function () {
+            return (this.bottom = $('#footer').outerHeight(true))
+          }
+        }
+      })
+</script>
+{% endblock %}

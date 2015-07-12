@@ -1,0 +1,478 @@
+[
+{
+    "fields": {
+        "website": "http://www.tveerke.nl/",
+        "city": "Dordrecht",
+        "name": "Run Bike Run Bike Run",
+        "text": "Blah",
+        "image": null,
+        "last_modified_by": 1,
+        "last_modified": "2015-07-11T23:01:13.397Z",
+        "owner": 1,
+        "pub_date": "2015-07-08T22:52:23Z",
+        "slug": "run-bike-run-bike-run-dordrecht"
+    },
+    "model": "race.event",
+    "pk": 1
+},
+{
+    "fields": {
+        "website": "",
+        "city": "Dordrecht",
+        "name": "Smulbosloop",
+        "text": "Smulbosloop",
+        "image": null,
+        "last_modified_by": 1,
+        "last_modified": "2015-07-09T19:39:42.127Z",
+        "owner": 1,
+        "pub_date": "2015-07-09T19:39:04Z",
+        "slug": "smulbosloop-dordrecht"
+    },
+    "model": "race.event",
+    "pk": 2
+},
+{
+    "fields": {
+        "website": "",
+        "city": "Warmond",
+        "name": "Poldercross",
+        "text": "Blaat",
+        "image": 327,
+        "last_modified_by": 1,
+        "last_modified": "2015-07-11T23:44:49.605Z",
+        "owner": 1,
+        "pub_date": "2015-07-10T21:14:48Z",
+        "slug": "poldercross-warmond"
+    },
+    "model": "race.event",
+    "pk": 3
+},
+{
+    "fields": {
+        "website": "",
+        "city": "bar",
+        "name": "Foo",
+        "text": "Blaat",
+        "image": null,
+        "last_modified_by": 1,
+        "last_modified": "2015-07-11T22:50:59.362Z",
+        "owner": 1,
+        "pub_date": "2015-07-11T22:45:32.577Z",
+        "slug": "foo-bar"
+    },
+    "model": "race.event",
+    "pk": 4
+},
+{
+    "fields": {
+        "website": "",
+        "city": "Dordrecht",
+        "name": "Big Rivers",
+        "text": "",
+        "image": null,
+        "last_modified_by": 31,
+        "last_modified": "2015-07-12T18:32:24.783Z",
+        "owner": 31,
+        "pub_date": "2015-07-12T18:32:24.782Z",
+        "slug": "big-rivers-dordrecht"
+    },
+    "model": "race.event",
+    "pk": 5
+},
+{
+    "fields": {
+        "date": "2017-08-29",
+        "event": 1
+    },
+    "model": "race.edition",
+    "pk": 9
+},
+{
+    "fields": {
+        "date": "2016-07-09",
+        "event": 1
+    },
+    "model": "race.edition",
+    "pk": 10
+},
+{
+    "fields": {
+        "date": "2015-07-09",
+        "event": 2
+    },
+    "model": "race.edition",
+    "pk": 11
+},
+{
+    "fields": {
+        "date": "2018-11-23",
+        "event": 3
+    },
+    "model": "race.edition",
+    "pk": 12
+},
+{
+    "fields": {
+        "date": "2018-05-30",
+        "event": 3
+    },
+    "model": "race.edition",
+    "pk": 13
+},
+{
+    "fields": {
+        "date": "2016-07-09",
+        "event": 2
+    },
+    "model": "race.edition",
+    "pk": 14
+},
+{
+    "fields": {
+        "date": "2013-06-27",
+        "event": 3
+    },
+    "model": "race.edition",
+    "pk": 15
+},
+{
+    "fields": {
+        "date": "2015-07-10",
+        "event": 5
+    },
+    "model": "race.edition",
+    "pk": 16
+},
+{
+    "fields": {
+        "date": "2016-07-10",
+        "event": 5
+    },
+    "model": "race.edition",
+    "pk": 17
+},
+{
+    "fields": {
+        "default": true,
+        "name": "10 km",
+        "order": "km 10"
+    },
+    "model": "race.distance",
+    "pk": 1
+},
+{
+    "fields": {
+        "default": true,
+        "name": "5 km",
+        "order": "km 05"
+    },
+    "model": "race.distance",
+    "pk": 2
+},
+{
+    "fields": {
+        "default": true,
+        "name": "15 km",
+        "order": "km 15"
+    },
+    "model": "race.distance",
+    "pk": 3
+},
+{
+    "fields": {
+        "default": false,
+        "name": "3000 m",
+        "order": "km 003"
+    },
+    "model": "race.distance",
+    "pk": 4
+},
+{
+    "fields": {
+        "edition": 9,
+        "distance": 1
+    },
+    "model": "race.race",
+    "pk": 7
+},
+{
+    "fields": {
+        "edition": 9,
+        "distance": 2
+    },
+    "model": "race.race",
+    "pk": 8
+},
+{
+    "fields": {
+        "edition": 9,
+        "distance": 3
+    },
+    "model": "race.race",
+    "pk": 9
+},
+{
+    "fields": {
+        "edition": 9,
+        "distance": 4
+    },
+    "model": "race.race",
+    "pk": 10
+},
+{
+    "fields": {
+        "edition": 10,
+        "distance": 2
+    },
+    "model": "race.race",
+    "pk": 12
+},
+{
+    "fields": {
+        "edition": 10,
+        "distance": 1
+    },
+    "model": "race.race",
+    "pk": 13
+},
+{
+    "fields": {
+        "edition": 10,
+        "distance": 3
+    },
+    "model": "race.race",
+    "pk": 14
+},
+{
+    "fields": {
+        "edition": 11,
+        "distance": 2
+    },
+    "model": "race.race",
+    "pk": 15
+},
+{
+    "fields": {
+        "edition": 11,
+        "distance": 1
+    },
+    "model": "race.race",
+    "pk": 16
+},
+{
+    "fields": {
+        "edition": 11,
+        "distance": 3
+    },
+    "model": "race.race",
+    "pk": 17
+},
+{
+    "fields": {
+        "edition": 11,
+        "distance": 4
+    },
+    "model": "race.race",
+    "pk": 18
+},
+{
+    "fields": {
+        "edition": 12,
+        "distance": 2
+    },
+    "model": "race.race",
+    "pk": 19
+},
+{
+    "fields": {
+        "edition": 13,
+        "distance": 2
+    },
+    "model": "race.race",
+    "pk": 20
+},
+{
+    "fields": {
+        "edition": 13,
+        "distance": 1
+    },
+    "model": "race.race",
+    "pk": 21
+},
+{
+    "fields": {
+        "edition": 14,
+        "distance": 2
+    },
+    "model": "race.race",
+    "pk": 22
+},
+{
+    "fields": {
+        "edition": 14,
+        "distance": 1
+    },
+    "model": "race.race",
+    "pk": 23
+},
+{
+    "fields": {
+        "edition": 14,
+        "distance": 3
+    },
+    "model": "race.race",
+    "pk": 24
+},
+{
+    "fields": {
+        "edition": 15,
+        "distance": 2
+    },
+    "model": "race.race",
+    "pk": 25
+},
+{
+    "fields": {
+        "edition": 16,
+        "distance": 3
+    },
+    "model": "race.race",
+    "pk": 26
+},
+{
+    "fields": {
+        "edition": 17,
+        "distance": 2
+    },
+    "model": "race.race",
+    "pk": 27
+},
+{
+    "fields": {
+        "edition": 17,
+        "distance": 1
+    },
+    "model": "race.race",
+    "pk": 28
+},
+{
+    "fields": {
+        "remarks": "",
+        "race": 7,
+        "user": 1,
+        "time": null
+    },
+    "model": "race.result",
+    "pk": 3
+},
+{
+    "fields": {
+        "remarks": "",
+        "race": 7,
+        "user": 2,
+        "time": null
+    },
+    "model": "race.result",
+    "pk": 4
+},
+{
+    "fields": {
+        "remarks": "",
+        "race": 14,
+        "user": 1,
+        "time": null
+    },
+    "model": "race.result",
+    "pk": 5
+},
+{
+    "fields": {
+        "remarks": "",
+        "race": 12,
+        "user": 1,
+        "time": null
+    },
+    "model": "race.result",
+    "pk": 6
+},
+{
+    "fields": {
+        "remarks": "",
+        "race": 8,
+        "user": 1,
+        "time": null
+    },
+    "model": "race.result",
+    "pk": 7
+},
+{
+    "fields": {
+        "remarks": "2e H30",
+        "race": 9,
+        "user": 1,
+        "time": "00:00:15"
+    },
+    "model": "race.result",
+    "pk": 8
+},
+{
+    "fields": {
+        "remarks": "aie",
+        "race": 15,
+        "user": 1,
+        "time": "10:10:10"
+    },
+    "model": "race.result",
+    "pk": 9
+},
+{
+    "fields": {
+        "remarks": "Foobar",
+        "race": 17,
+        "user": 1,
+        "time": "10:10:10"
+    },
+    "model": "race.result",
+    "pk": 10
+},
+{
+    "fields": {
+        "remarks": "",
+        "race": 19,
+        "user": 1,
+        "time": null
+    },
+    "model": "race.result",
+    "pk": 11
+},
+{
+    "fields": {
+        "remarks": "",
+        "race": 10,
+        "user": 1,
+        "time": null
+    },
+    "model": "race.result",
+    "pk": 12
+},
+{
+    "fields": {
+        "remarks": "3e H30",
+        "race": 25,
+        "user": 1,
+        "time": "00:00:20"
+    },
+    "model": "race.result",
+    "pk": 13
+},
+{
+    "fields": {
+        "remarks": "",
+        "race": 26,
+        "user": 31,
+        "time": null
+    },
+    "model": "race.result",
+    "pk": 14
+}
+]

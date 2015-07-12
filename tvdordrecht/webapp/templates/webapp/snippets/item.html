@@ -1,0 +1,13 @@
+{% load crop %}
+<div class="col-md-4 col-sm-6 news-item">
+    <a href="{{ obj.get_absolute_url }}" title="{{ obj.title }}">
+      <p>
+        <img src="{{ obj.image.image|crop:"280x157" }}"
+             alt="{{ obj.image.caption }}"
+             title="{{ obj.image.caption }}"
+            />
+      </p>
+      <h3>{{ obj.title }}</h3>
+      <p>{{ obj.text|safe|striptags|truncatewords_html:"18" }}</p>
+    </a>
+</div>

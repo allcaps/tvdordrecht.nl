@@ -1,0 +1,128 @@
+[
+{
+    "fields": {
+        "last_modified_by": null,
+        "table_of_contents": "",
+        "description": "",
+        "title": "Besttijden",
+        "menu": 4,
+        "image": null,
+        "publish": true,
+        "keywords": "",
+        "html": "",
+        "sortorder": null,
+        "last_modified": "2015-06-23T22:07:54.979Z",
+        "text": "",
+        "owner": 1,
+        "pub_date": "2015-06-18T21:18:14.543Z",
+        "slug": "besttijden"
+    },
+    "model": "webapp.page",
+    "pk": 1
+},
+{
+    "fields": {
+        "last_modified_by": null,
+        "table_of_contents": "",
+        "description": "",
+        "title": "Deelnemers",
+        "menu": 4,
+        "image": null,
+        "publish": true,
+        "keywords": "",
+        "html": "",
+        "sortorder": null,
+        "last_modified": "2015-06-18T21:19:21.920Z",
+        "text": "",
+        "owner": null,
+        "pub_date": "2015-06-18T21:19:21.920Z",
+        "slug": "deelnemers"
+    },
+    "model": "webapp.page",
+    "pk": 2
+},
+{
+    "fields": {
+        "last_modified_by": null,
+        "table_of_contents": "",
+        "description": "",
+        "title": "Zwemtesten",
+        "menu": 4,
+        "image": null,
+        "publish": true,
+        "keywords": "",
+        "html": "",
+        "sortorder": null,
+        "last_modified": "2015-06-18T21:21:36.884Z",
+        "text": "",
+        "owner": null,
+        "pub_date": "2015-06-18T21:21:36.884Z",
+        "slug": "zwemtesten"
+    },
+    "model": "webapp.page",
+    "pk": 3
+},
+{
+    "fields": {
+        "last_modified_by": 1,
+        "table_of_contents": "",
+        "description": "",
+        "title": "Wie wat waar",
+        "menu": 5,
+        "image": null,
+        "publish": true,
+        "keywords": "",
+        "html": "<p class=\"lead\">Een overzicht van evenementen waaraan leden van onze vereniging deelnemen.</p>\n",
+        "sortorder": 10,
+        "last_modified": "2015-07-12T18:45:10.222Z",
+        "text": "<p class=\"lead\">Een overzicht van evenementen waaraan leden van onze vereniging deelnemen.</p>\r\n",
+        "owner": 1,
+        "pub_date": "2015-06-29T07:42:57.391Z",
+        "slug": "wie-wat-waar"
+    },
+    "model": "webapp.page",
+    "pk": 5
+},
+{
+    "fields": {
+        "last_modified_by": null,
+        "table_of_contents": "",
+        "description": "",
+        "title": "Uitslagen",
+        "menu": 5,
+        "image": null,
+        "publish": true,
+        "keywords": "",
+        "html": "<p class=\"lead\">Alle prestaties op een rij.</p>\n",
+        "sortorder": 20,
+        "last_modified": "2015-07-04T22:54:28.002Z",
+        "text": "<p class=\"lead\">Alle prestaties op een rij.</p>\r\n",
+        "owner": 1,
+        "pub_date": "2015-06-29T07:43:59.306Z",
+        "slug": "uitslagen"
+    },
+    "model": "webapp.page",
+    "pk": 6
+},
+{
+    "fields": {
+        "last_modified_by": 1,
+        "table_of_contents": "",
+        "description": "",
+        "title": "Evenementen",
+        "menu": 5,
+        "image": null,
+        "publish": true,
+        "keywords": "",
+        "html": "<p class=\"lead\">Een overzicht van evenementen.</p>\n",
+        "sortorder": 30,
+        "last_modified": "2015-07-12T19:07:05.831Z",
+        "text": "<p class=\"lead\">Een overzicht van evenementen.</p>\r\n",
+        "owner": 1,
+        "pub_date": "2015-07-01T19:49:37.498Z",
+        "slug": "evenementen"
+    },
+    "model": "webapp.page",
+    "pk": 7
+}
+]

@@ -1,0 +1,264 @@
+[
+  {
+    "fields": {
+      "width": 5120,
+      "image": "images/2014/12/08/Sky.jpg",
+      "last_modified_by": null,
+      "height": 2880,
+      "caption": "",
+      "last_modified": "2014-12-08T20:32:07.457Z",
+      "sortorder": null,
+      "owner": null,
+      "pub_date": "2014-12-08T20:32:07.448Z",
+      "image_editing": ""
+    },
+    "model": "webapp.image",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "width": 5120,
+      "image": "images/2015/06/18/Shapes.jpg",
+      "last_modified_by": null,
+      "height": 2880,
+      "caption": "",
+      "last_modified": "2015-06-18T21:14:35.131Z",
+      "sortorder": null,
+      "owner": null,
+      "pub_date": "2015-06-18T21:14:35.120Z",
+      "image_editing": ""
+    },
+    "model": "webapp.image",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "table_of_contents": "",
+      "description": "",
+      "title": "Home",
+      "text": "",
+      "image": null,
+      "last_modified_by": null,
+      "keywords": "",
+      "html": "",
+      "sortorder": 10,
+      "last_modified": "2014-12-08T17:02:47.140Z",
+      "owner": null,
+      "pub_date": "2014-12-08T16:57:51.128Z",
+      "slug": "home"
+    },
+    "model": "webapp.menu",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "table_of_contents": "",
+      "description": "",
+      "title": "Nieuws",
+      "text": "",
+      "image": null,
+      "last_modified_by": null,
+      "keywords": "",
+      "html": "",
+      "sortorder": 20,
+      "last_modified": "2014-12-08T17:02:47.109Z",
+      "owner": null,
+      "pub_date": "2014-12-08T16:57:58.237Z",
+      "slug": "nieuws"
+    },
+    "model": "webapp.menu",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "table_of_contents": "",
+      "description": "",
+      "title": "Trainingen",
+      "text": "",
+      "image": null,
+      "last_modified_by": null,
+      "keywords": "",
+      "html": "",
+      "sortorder": 30,
+      "last_modified": "2014-12-08T17:02:47.080Z",
+      "owner": null,
+      "pub_date": "2014-12-08T16:58:07.179Z",
+      "slug": "trainingen"
+    },
+    "model": "webapp.menu",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "table_of_contents": "",
+      "description": "",
+      "title": "Zwemtest",
+      "text": "",
+      "image": null,
+      "last_modified_by": null,
+      "keywords": "",
+      "html": "",
+      "sortorder": 40,
+      "last_modified": "2014-12-08T17:02:47.050Z",
+      "owner": null,
+      "pub_date": "2014-12-08T16:58:14.614Z",
+      "slug": "zwemtest"
+    },
+    "model": "webapp.menu",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "table_of_contents": "",
+      "description": "",
+      "title": "Wedstrijden",
+      "text": "",
+      "image": null,
+      "last_modified_by": null,
+      "keywords": "",
+      "html": "",
+      "sortorder": 60,
+      "last_modified": "2014-12-08T17:03:11.771Z",
+      "owner": null,
+      "pub_date": "2014-12-08T16:58:20.771Z",
+      "slug": "wedstrijden"
+    },
+    "model": "webapp.menu",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "table_of_contents": "",
+      "description": "",
+      "title": "Activiteiten",
+      "text": "",
+      "image": null,
+      "last_modified_by": null,
+      "keywords": "",
+      "html": "",
+      "sortorder": 50,
+      "last_modified": "2014-12-08T17:03:11.800Z",
+      "owner": null,
+      "pub_date": "2014-12-08T16:58:29.954Z",
+      "slug": "activiteiten"
+    },
+    "model": "webapp.menu",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "table_of_contents": "",
+      "description": "",
+      "title": "Leden",
+      "text": "",
+      "image": null,
+      "last_modified_by": null,
+      "keywords": "",
+      "html": "",
+      "sortorder": 70,
+      "last_modified": "2014-12-08T17:02:46.952Z",
+      "owner": null,
+      "pub_date": "2014-12-08T16:58:39.201Z",
+      "slug": "leden"
+    },
+    "model": "webapp.menu",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "last_modified_by": null,
+      "table_of_contents": "",
+      "description": "",
+      "title": "Besttijden",
+      "menu": 4,
+      "image": null,
+      "publish": true,
+      "keywords": "",
+      "html": "",
+      "sortorder": null,
+      "last_modified": "2015-06-18T21:18:14.543Z",
+      "text": "",
+      "owner": null,
+      "pub_date": "2015-06-18T21:18:14.543Z",
+      "slug": "besttijden"
+    },
+    "model": "webapp.page",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "last_modified_by": null,
+      "table_of_contents": "",
+      "description": "",
+      "title": "Deelnemers",
+      "menu": 4,
+      "image": null,
+      "publish": true,
+      "keywords": "",
+      "html": "",
+      "sortorder": null,
+      "last_modified": "2015-06-18T21:19:21.920Z",
+      "text": "",
+      "owner": null,
+      "pub_date": "2015-06-18T21:19:21.920Z",
+      "slug": "deelnemers"
+    },
+    "model": "webapp.page",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "last_modified_by": null,
+      "table_of_contents": "",
+      "description": "",
+      "title": "Zwemtesten",
+      "menu": 4,
+      "image": null,
+      "publish": true,
+      "keywords": "",
+      "html": "",
+      "sortorder": null,
+      "last_modified": "2015-06-18T21:21:36.884Z",
+      "text": "",
+      "owner": null,
+      "pub_date": "2015-06-18T21:21:36.884Z",
+      "slug": "zwemtesten"
+    },
+    "model": "webapp.page",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "description": "",
+      "title": "Nieuwe website",
+      "text": "<p>Joeppie!</p>\r\n",
+      "image": 1,
+      "publish": true,
+      "keywords": "",
+      "last_modified": "2014-12-08T20:32:16.061Z",
+      "last_modified_by": null,
+      "owner": null,
+      "pub_date": "2014-12-08T20:29:23.358Z",
+      "slug": "nieuwe-website"
+    },
+    "model": "webapp.news",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "description": "",
+      "title": "KNSB verplicht bescherming marathonrijders",
+      "text": "<p>De KNSB heeft tijdens de ledenraadsvergadering\u00a0besloten dat marathonschaatsers\u00a0het komende seizoen tijdens de landelijke- en internationale wedstrijden op kunst- en natuurijs verplicht met een helm moeten rijden. Daarnaast is het dragen van snijvaste hand-, scheen-, enkel- en nekbescherming voortaan verplicht. De maatregel zal per 1 september van kracht zijn.</p>\r\n\r\n<h2>Bevorderen</h2>\r\n\r\n<p>De KNSB zal verder kijken hoe de veiligheid kan worden bevorderd in de schaatssport.\u00a0De bond neemt ook diverse extra veiligheidsmaatregelen op en rond de ijsbaan tijdens deze wedstrijden. Dit gaat om vereisten voor boarding, ijsverzorging en medische zorg. Ook\u00a0het protocol voor scheidsrechters op het onderdeel veiligheid is uitgebreid.</p>\r\n\r\n<h2>Ongevallen</h2>\r\n\r\n<p>De invoering van de extra veiligheidsmaatregelen boven de reeds bestaande veiligheidsvoorschriften is het directe gevolg van een aantal ernstige ongevallen in 2014. Naar aanleiding daarvan hebben onder andere sporters en experts in een speciaal ingestelde werkgroep gesproken over veiligheid.</p>\r\n\r\n<h2>Vernieuwing</h2>\r\n\r\n<p>De ledenraad ging ook akkoord met de vervolgstappen van de bestuurlijke vernieuwing binnen de KNSB. Daarin zou volgens planning in april jongstleden al een Raad van Toezicht-plus zijn benoemd. Maar omdat de beoogde voorzitter zich op het laatste moment wegens gebrek aan voldoende steun terugtrok, werd dit proces opgeschort. Er is inmiddels een nieuwe selectiecommissie benoemd, inclusief een afgevaardigde van de atletenvereniging.</p>\r\n",
+      "image": 2,
+      "publish": true,
+      "keywords": "",
+      "last_modified": "2015-06-18T21:14:59.935Z",
+      "last_modified_by": null,
+      "owner": null,
+      "pub_date": "2015-06-18T21:13:23.015Z",
+      "slug": "knsb-verplicht-bescherming-marathonrijders"
+    },
+    "model": "webapp.news",
+    "pk": 2
+  }
+]

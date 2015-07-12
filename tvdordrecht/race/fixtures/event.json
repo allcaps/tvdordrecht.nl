@@ -1,0 +1,82 @@
+[
+{
+    "fields": {
+        "website": "http://www.tveerke.nl/",
+        "city": "Dordrecht",
+        "name": "Run Bike Run Bike Run",
+        "text": "Blah",
+        "image": null,
+        "last_modified_by": 1,
+        "last_modified": "2015-07-11T23:01:13.397Z",
+        "owner": 1,
+        "pub_date": "2015-07-08T22:52:23Z",
+        "slug": "run-bike-run-bike-run-dordrecht"
+    },
+    "model": "race.event",
+    "pk": 1
+},
+{
+    "fields": {
+        "website": "",
+        "city": "Dordrecht",
+        "name": "Smulbosloop",
+        "text": "Smulbosloop",
+        "image": null,
+        "last_modified_by": 1,
+        "last_modified": "2015-07-09T19:39:42.127Z",
+        "owner": 1,
+        "pub_date": "2015-07-09T19:39:04Z",
+        "slug": "smulbosloop-dordrecht"
+    },
+    "model": "race.event",
+    "pk": 2
+},
+{
+    "fields": {
+        "website": "",
+        "city": "Warmond",
+        "name": "Poldercross",
+        "text": "Blaat",
+        "image": 327,
+        "last_modified_by": 1,
+        "last_modified": "2015-07-11T23:44:49.605Z",
+        "owner": 1,
+        "pub_date": "2015-07-10T21:14:48Z",
+        "slug": "poldercross-warmond"
+    },
+    "model": "race.event",
+    "pk": 3
+},
+{
+    "fields": {
+        "website": "",
+        "city": "bar",
+        "name": "Foo",
+        "text": "Blaat",
+        "image": null,
+        "last_modified_by": 1,
+        "last_modified": "2015-07-11T22:50:59.362Z",
+        "owner": 1,
+        "pub_date": "2015-07-11T22:45:32.577Z",
+        "slug": "foo-bar"
+    },
+    "model": "race.event",
+    "pk": 4
+},
+{
+    "fields": {
+        "website": "",
+        "city": "Dordrecht",
+        "name": "Big Rivers",
+        "text": "",
+        "image": null,
+        "last_modified_by": 31,
+        "last_modified": "2015-07-12T18:32:24.783Z",
+        "owner": 31,
+        "pub_date": "2015-07-12T18:32:24.782Z",
+        "slug": "big-rivers-dordrecht"
+    },
+    "model": "race.event",
+    "pk": 5
+}
+]

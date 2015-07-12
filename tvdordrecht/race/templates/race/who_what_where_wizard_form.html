@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block content %}
+  <h1>Wie wat waar toevoegen</h1>
+
+  {% if wizard.steps.step1 == 1 %}
+    <p class="lead">Kijk eerst in het
+      <a href="{% url 'race:event_list' %}">evenementen overzicht</a> of het
+      evenement én de editie (datum) waaraan je deelneemt voorkomen. Zo niet,
+      maak dan eerst het evenement en de editie aan!</p>
+  {% endif %}
+
+  <p class="lead">Stap {{ wizard.steps.step1 }} van {{ wizard.steps.count }}</p>
+
+  <form action="" method="post" class="well">{% csrf_token %}
+    {{ wizard.management_form }}
+    {% if wizard.form.forms %}
+        {{ wizard.form.management_form }}
+        {% for form in wizard.form.forms %}
+            {{ form|crispy }}
+        {% endfor %}
+    {% else %}
+        {{ wizard.form|crispy }}
+    {% endif %}
+
+    <p>
+      {% if wizard.steps.prev %}
+      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}"  class="btn btn-default btn-xs">{% trans "first step" %}</button>
+      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}"  class="btn btn-default btn-xs">{% trans "prev step" %}</button>
+      {% endif %}
+      <button type="submit" value="Volgende" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Volgende</button>
+    </p>
+  </form>
+
+{% endblock %}

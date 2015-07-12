@@ -1,0 +1,31 @@
+<div class="column span-6 nav">
+    <ul>
+
+        {% if article %}
+        <li><a href="{{ current_menu.get_absolute_url }}" title="{{ current_menu.title }}">{{ current_menu.title }}</a></li>
+        {% else %}
+        <li><a href="{{ current_menu.get_absolute_url }}" title="{{ current_menu.title }}" class="current">{{ current_menu.title }}</a></li>
+            {% if current_menu.table_of_contents %}
+                <li>
+                    <ul id="table_of_contents">
+                    {{ current_menu.table_of_contents|safe }}
+                    </ul>
+                </li>
+            {% endif %}
+        {% endif %}
+
+        {% for i in articles %}
+        <li><a href="{{ i.get_absolute_url }}"{% ifequal article.id i.id %} class="current"{% endifequal %} title="{{ i.title }}">{{ i.title }}</a></li>
+            {% ifequal article.id i.id %}
+            {% if article.table_of_contents %}
+                <li>
+                    <ul id="table_of_contents">
+                    {{ article.table_of_contents|safe }}
+                    </ul>
+                </li>
+            {% endif %}
+            {% endifequal %}
+        {% endfor %}
+
+    </ul>
+</div>

@@ -1,0 +1,6 @@
+{% load thumb %}
+{% if obj.image %}
+    <img src="http://{{ site.domain }}{{ obj.image.image|thumb:"310x551" }}" alt="{{ obj.image.caption|striptags|truncatewords:"10" }}" title="{{ article.image.caption|striptags|truncatewords:"10" }}" />
+    {% if obj.image.caption %}<p>{{ obj.image.caption|safe }}</p>{% endif %}
+{% endif %}
+{{ obj.text|striptags|safe }}

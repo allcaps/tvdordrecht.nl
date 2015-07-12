@@ -1,0 +1,16 @@
+[
+{
+    "fields": {
+        "date": "2014-12-13"
+    },
+    "model": "swimtest.swimtest",
+    "pk": 1
+},
+{
+    "fields": {
+        "date": "2014-12-18"
+    },
+    "model": "swimtest.swimtest",
+    "pk": 2
+}
+]

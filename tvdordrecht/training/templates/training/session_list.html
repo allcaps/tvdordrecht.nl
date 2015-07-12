@@ -1,0 +1,72 @@
+{% extends 'training/base.html' %}
+
+{% load staticfiles %}
+
+{% block admin_menu %}
+<a href="{{ current_menu.get_admin_url }}" class="btn btn-default">
+  Menu-item bewerken
+</a>
+{% endblock admin_menu %}
+
+{% block content %}
+<div class="container">
+<div class="row">
+
+  <div class="page-header">
+    <h1>{{ current_menu.title }}</h1>
+    {{ current_menu.html|safe }}
+  </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+              <th>Dag / Datum / Tijd</th>
+              <th>Discipline</th>
+              <th>Locatie</th>
+              <th>Trainer</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for obj in object_list %}
+
+          <tr{% if obj.cancel %} class="cancel-item"{% endif %}
+             {% if obj.message and not obj.cancel %} class="message-item"{% endif %}>
+            <td>
+              <a href="{{ obj.get_absolute_url }}" title="{{ obj }}">
+                {{ obj.start|date:'l j F H:i' }}
+              </a>
+            </td>
+            <td>{{ obj.discipline }}</td>
+            <td>{{ obj.location }}</td>
+            <td>{{ obj.trainer }}</td>
+          </tr>
+          
+          {% if obj.cancel %}
+          <tr class="cancel-header">
+            <td colspan="4">
+                {{ obj.message }}
+            </td>
+          </tr>
+          {% endif %}
+
+          {% if obj.message and not obj.cancel %}
+          <tr class="message-header">
+            <td colspan="4">
+                {{ obj.message }}
+            </td>
+          </tr>
+          {% endif %}
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+  </div>
+  </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+{% endblock extra_js %}

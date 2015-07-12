@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% load crop %}
+{% load thumb %}
+
+{% block title %}{{ current_menu.title }} « {% endblock %}
+{% block keywords %}{{ current_menu.keywords }}{% endblock %}
+{% block description %}{{ current_menu.description }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row" role="main">
+
+          <div class="page-header">
+            <h1>{{ user.username|capfirst }}</h1>
+          </div>
+
+
+        <div class="col-md-4">
+          <div class="page-header">
+            <h2>Account</h2>
+          </div>
+            <p>{{ user.username|capfirst }}</p>
+            <p>{{ user.first_name }} {{ user.last_name }}</p>
+            <p>{{ user.email }}</p>
+            <p><a href="{% url 'password_change' %}">Wachtwoord wijzigen</a></p>
+        </div>
+
+        <div class="col-md-8">
+            <div class="page-header">
+                <h2 class="section_title">
+                  <a href="{% url 'race:who_what_where_list' %}">Wie wat waar</a> /
+                  <a href="{% url 'race:result_list' %}">Uitslagen</a>
+                  <a href="{% url 'race:who_what_where_add' %}" class="btn btn-success btn-sm">
+                    Wie wat waar toevoegen
+                  </a>
+                  <a href="{% url 'race:result_add' %}" class="btn btn-success btn-sm">
+                    Uitslag toevoegen
+                  </a>
+                </h2>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th>Datum</th>
+                      <th>Evemenement</th>
+                      <th>Wedstrijd</th>
+                      <th>Uitslag</th>
+                      <th>Opmerkingen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for obj in user.result_set.all %}
+                    <tr>
+                        <td>
+                          {{ obj.edition.date }}
+                        </td>
+                        <td>
+                          <a href="{{ obj.edition.event.get_absolute_url }}" title="{{ obj.edition.event.name }}">{{ obj.edition.event }}</a>
+                        </td>
+                        <td>
+                          {{ obj.race }}
+                        </td>
+                        <td>
+                          {% if obj.time %}{{ obj.time }}{% endif %}
+                        </td>
+                    <td>
+                      {{ obj.remarks }}
+                    </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+
+
+        </div>
+
+    </div>
+
+        <div class="page-header">
+          <h1><a href="{% url 'webapp:news_list' %}">Nieuws <a href="{% url 'webapp:news_create' %}" class="btn btn-success btn-sm">Nieuwsbericht toevoegen</a></a></h1>
+        </div>
+
+        {% for obj in user.news_owner.all %}
+
+            {% include 'webapp/snippets/item.html' %}
+
+            {% if forloop.counter|divisibleby:2 %}
+              <div class="col-sm-12 hidden-xs hidden-md hidden-lg"></div>
+            {% endif %}
+            {% if forloop.counter|divisibleby:3 %}
+              <div class="col-md-12 hidden-xs hidden-sm"></div>
+            {% endif %}
+
+    {% empty %}
+
+        <h2>Geen nieuwsberichten</h2>
+
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

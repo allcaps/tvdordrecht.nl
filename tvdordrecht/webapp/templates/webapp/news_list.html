@@ -1,0 +1,56 @@
+{% extends "webapp/news_base.html" %}
+
+{% load crop %}
+{% load thumb %}
+{% load truncate_char %}
+
+
+{% block title %}{{ current_menu.title }} « {% endblock %}
+{% block keywords %}{{ current_menu.keywords }}{% endblock %}	
+{% block description %}Nieuwsberichten {{ year }}{% endblock %}
+
+{% block admin_menu %}
+  {{ block.super }}
+  <a href="{{ current_menu.get_admin_url }}" class="btn btn-default">
+    <span>Wijzig menu-item</span>
+  </a>
+{% endblock admin_menu %}
+
+{% block content %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>{{ current_menu.title }} {{ year.year }}</h1>
+        {% if current_menu.text %}
+            {{ current_menu.text|safe }}
+        {% endif %}
+    </div>
+
+
+    <div class="row">
+        {% for obj in object_list %}
+
+            {% include 'webapp/snippets/item.html' %}
+
+    {% if forloop.counter|divisibleby:2 %}
+      <div class="col-sm-12 hidden-xs hidden-md hidden-lg"></div>
+    {% endif %}
+    {% if forloop.counter|divisibleby:3 %}
+      <div class="col-md-12 hidden-xs hidden-sm"></div>
+    {% endif %}
+
+            {% if forloop.last %}
+              <div class="col-md-4">
+                  {% include 'webapp/snippets/year_list.html' %}
+              </div>
+            {% endif %}
+
+    {% empty %}
+
+        <h2>Geen nieuwsberichten</h2>
+
+    {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends 'swimtest/swimtest_base.html' %}
+
+{% load staticfiles %}
+{% load to_seconds %}
+{% load to_milliseconds %}
+
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
+
+
+{% block content %}
+<div class="page-header">
+  <h1>Zwemtest {{ object }}</h1>
+  <h2>Resultaten</h2>
+  <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>#</th>
+              <th>Deelnemer</th>
+              <th>100 m</th>
+              <th>200 m</th>
+              <th>300 m</th>
+              <th>400 m</th>
+              <th>500 m</th>
+              <th>Pacetime</th>
+          </tr>
+      </thead>
+      <tbody>
+
+        {% for record in object.record_set.all %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{{ record.user.get_swimtest_url }}">{{ record.user }}</a></td>
+            <td>{{ record.time_100|time:"i:s" }}</td>
+            <td>{{ record.time_200|time:"i:s" }}</td>
+            <td>{{ record.time_300|time:"i:s" }}</td>
+            <td>{{ record.time_400|time:"i:s" }}</td>
+            <td>{{ record.time_500|time:"i:s" }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{ record.split_100|time:"i:s" }}</td>
+            <td>{{ record.split_200|time:"i:s" }}</td>
+            <td>{{ record.split_300|time:"i:s" }}</td>
+            <td>{{ record.split_400|time:"i:s" }}</td>
+            <td>{{ record.split_500|time:"i:s" }}</td>
+            <td>{{ record.pace_time|time:"i:s" }}</td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+  </table>
+  <div id="net_chart" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+  <div id="split_chart" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script src="/static/swimtest/highcharts-4.0.4/js/highcharts.js"></script>
+<script src="/static/swimtest/highcharts-4.0.4/js/modules/exporting.js"></script>
+
+<script>
+$(function () {
+  $('#split_chart').highcharts({
+      title: {
+          text: 'Splittijden',
+          x: -20 //center
+      },
+      subtitle: {
+          text: 'Zwemtest {{ object }}',
+          x: -20
+      },
+      xAxis: {
+        title: {
+          text: 'Afstand (meters)'
+        },
+          categories: ['100', '200', '300', '400', '500']
+      },
+      yAxis: {
+          title: {
+              text: 'Splittijd (seconden)'
+          },
+          plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'
+          }]
+      },
+      tooltip: {
+          valueSuffix: 'sec.'
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle',
+          borderWidth: 0
+      },
+      series: [
+
+      {% for record in object.record_set.all %}
+      {
+          name: '{{ record.user }}',
+          data: [
+            {{ record.split_100|to_seconds }},
+            {{ record.split_200|to_seconds }},
+            {{ record.split_300|to_seconds }},
+            {{ record.split_400|to_seconds }},
+            {{ record.split_500|to_seconds }}
+           ]
+      }{% if not for.loop.last %}, {% endif %}
+      {% endfor %}
+    
+    ]
+  });
+  
+  
+  $('#net_chart').highcharts({
+      dateFormat: '%H:%S',
+      title: {
+          text: 'Netto tijden',
+          x: -20 //center
+      },
+      subtitle: {
+          text: 'Zwemtest {{ object }}',
+          x: -20
+      },
+      xAxis: {
+        title: {
+          text: 'Afstand (meters)'
+        },
+          categories: ['0', '100', '200', '300', '400', '500']
+      },
+      yAxis: {
+        type: 'datetime',
+        dateTimeLabelFormats: {
+            minute: '%M:%S',
+            day: '%M:%S'
+          },
+        title: {
+            text: 'Netto tijd (mm:ss)'
+        },
+        plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+        }]
+      },
+      tooltip: {
+          valueSuffix: ' sec.',
+          formatter: function() {
+              return  '<b>' + this.series.name +'</b><br/>' +
+            Highcharts.dateFormat('%M:%S', new Date(this.y)) + ' @ ' +this.x + ' m.';
+          }
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle',
+          borderWidth: 0
+      },
+      series: [
+
+      {% for record in object.record_set.all %}
+      {
+          name: '{{ record.user }}',
+          data: [
+            0,
+            {{ record.time_100|to_milliseconds }},
+            {{ record.time_200|to_milliseconds }},
+            {{ record.time_300|to_milliseconds }},
+            {{ record.time_400|to_milliseconds }},
+            {{ record.time_500|to_milliseconds }}
+           ]
+      }{% if not for.loop.last %}, {% endif %}
+      {% endfor %}
+    
+    ]
+  });
+});
+</script>
+
+{% endblock extra_js %}

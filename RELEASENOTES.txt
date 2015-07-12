@@ -1,0 +1,25 @@
+# Create a PostgreSQL-db:
+createdb tvdordrecht
+
+# Copy the secrets file and set the database credentials and secret key.
+cp secrets.json.sample secrets.json
+chmod 0600 secrets.json
+
+# Create a virtual environment:
+virtualenv env
+
+# Install requirements into the environment:
+env/bin/pip2.7 install -r requirements.txt
+
+# Start the environment
+source env/bin/activate
+
+# If you start developing and need some initial data, load it:
+cd tvdordrecht
+sh load_data.sh
+
+# Create an admin user:
+python manage.py createsuperuser
+
+# Run the development server
+python manage.py runserver

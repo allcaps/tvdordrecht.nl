@@ -1,0 +1,89 @@
+{% extends 'race/base.html' %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
+
+{% block title %}
+  {{ object.name }} {{ object.city }}
+{% endblock title %}
+
+{% block admin_menu %}
+    {{ block.super }}
+    <a class="btn btn-default" href="{{ object.get_admin_url }}">
+      Evenement bewerken
+    </a>
+{% endblock admin_menu %}
+
+{% block user_menu %}
+    <a class="btn btn-success" href="{{ object.get_absolute_url }}editie/toevoegen/">
+      Editie toevoegen
+    </a>
+    <a class="btn btn-primary" href="{{ object.get_absolute_url }}bewerken/">
+      Evenement bewerken
+    </a>
+{% endblock user_menu %}
+
+{% block content %}
+<div class="page-header">
+  <h1>{{ object.name }}</h1>
+  <p class="lead">{{ object.city }}</p>
+  <p><a href="{{ object.website }}">{{ object.website }}</a></p>
+  {{ object.text|safe }}
+
+  {% for edition in object.edition_set.all %}
+    <h3>{{ edition.date }}</h3>
+    {% if user.is_authenticated %}
+    <p><a href="{{ edition.get_edit_url }}">Editie bewerken</a></p>
+    {% endif %}
+      <table class="table">
+          <thead>
+              <tr>
+                  <th>Wedstrijd</th>
+                  <th>Deelnemer</th>
+                  <th>Uitslag</th>
+                  <th>Opmerkingen</th>
+              </tr>
+          </thead>
+          <tbody>
+          {% for race in edition.race_set.all %}
+            {% for result in race.result_set.all %}
+              <tr>
+                  <td>
+                    {% if forloop.first %}
+                      {{ race.distance }}
+                    {% endif %}
+                  </td>
+                  <td>
+                    {{ result.user }}
+                  </td>
+                  <td>{% if result.time %}{{ result.time }}{% endif %}</td>
+                  <td>{{ result.remarks }}</td>
+              </tr>
+            {% empty %}
+                <tr>
+                  <td>
+                    {{ race.distance }}
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+              </tr>
+            {% endfor %}
+          {% endfor %}
+          </tbody>
+      <tfoot>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+      </tfoot>
+      </table>
+  {% endfor %}
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+{% endblock extra_js %}

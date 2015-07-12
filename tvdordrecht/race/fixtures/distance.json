@@ -1,0 +1,38 @@
+[
+{
+    "fields": {
+        "default": true,
+        "name": "10 km",
+        "order": "km 10"
+    },
+    "model": "race.distance",
+    "pk": 1
+},
+{
+    "fields": {
+        "default": true,
+        "name": "5 km",
+        "order": "km 05"
+    },
+    "model": "race.distance",
+    "pk": 2
+},
+{
+    "fields": {
+        "default": true,
+        "name": "15 km",
+        "order": "km 15"
+    },
+    "model": "race.distance",
+    "pk": 3
+},
+{
+    "fields": {
+        "default": false,
+        "name": "3000 m",
+        "order": "km 003"
+    },
+    "model": "race.distance",
+    "pk": 4
+}
+]

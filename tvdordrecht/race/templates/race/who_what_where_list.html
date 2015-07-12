@@ -1,0 +1,86 @@
+{% extends 'race/base.html' %}
+
+{% load staticfiles %}
+
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
+
+{% block user_menu %}
+  {{ super.block }}
+  <a href="{%  url 'race:who_what_where_add' %}" class="btn btn-success">
+    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+    Wie wat waar toevoegen
+  </a>
+{% endblock user_menu %}
+
+{% block content %}
+
+  <div class="page-header">
+      <h1>{{ object.title }}</h1>
+      {{ object.text|safe }}
+  </div>
+
+  <div class="container well hidden-print">
+      {% crispy form %}
+  </div>
+
+  <div class="container">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Evenement</th>
+                <th>Plaats</th>
+                <th>Wedstrijd</th>
+                <th>Deelnemers</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% regroup object_list by race.edition as edition_list %}
+          {% for edition in edition_list %}
+            {% for result in edition.list %}
+              <tr>
+                  {% if forloop.first %}
+                    <td>
+                      {{ edition.grouper }}
+                    </td>
+                    <td>
+                      <a href="{{ edition.grouper.event.get_absolute_url }}">
+                        {{ edition.grouper.event.name }}
+                      </a>
+                    </td>
+                    <td>
+                      {{ edition.grouper.event.city }}
+                    </td>
+                  {% else %}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  {% endif %}
+                  <td>
+                    {{ result.race }}
+                  </td>
+                  <td>
+                    {{ result.user }}
+                  </td>
+              </tr>
+          {% endfor %}
+          {% endfor %}
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+        </tbody>
+    </table>
+
+  </div>
+{% endblock content %}
+
+{% block extra_js %}
+{% endblock extra_js %}

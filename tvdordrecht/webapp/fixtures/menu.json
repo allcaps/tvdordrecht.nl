@@ -1,0 +1,116 @@
+[
+{
+    "fields": {
+        "table_of_contents": "",
+        "description": "Introductietekst op de homepage.",
+        "title": "Home",
+        "text": "<p class=\"lead\">Triathlonvereninging Dordrecht biedt je de mogelijkheid om onder deskundige leiding te sporten. We bieden wekelijks zwem-, fiets- en looptrainingen aan. <a href=\"/over-triathlonvereniging-dordrecht/\">Meer over ons</a></p>\r\n",
+        "image": null,
+        "last_modified_by": 1,
+        "keywords": "",
+        "html": "<p class=\"lead\">Triathlonvereninging Dordrecht biedt je de mogelijkheid om onder deskundige leiding te sporten. We bieden wekelijks zwem-, fiets- en looptrainingen aan. <a href=\"/over-triathlonvereniging-dordrecht/\">Meer over ons</a></p>\n",
+        "sortorder": 10,
+        "last_modified": "2015-07-12T18:44:31.519Z",
+        "owner": 1,
+        "pub_date": "2014-12-08T16:57:51.128Z",
+        "slug": "home"
+    },
+    "model": "webapp.menu",
+    "pk": 1
+},
+{
+    "fields": {
+        "table_of_contents": "",
+        "description": "",
+        "title": "Nieuws",
+        "text": "",
+        "image": null,
+        "last_modified_by": null,
+        "keywords": "",
+        "html": "",
+        "sortorder": 20,
+        "last_modified": "2015-06-21T22:17:37.951Z",
+        "owner": 1,
+        "pub_date": "2014-12-08T16:57:58.237Z",
+        "slug": "nieuws"
+    },
+    "model": "webapp.menu",
+    "pk": 2
+},
+{
+    "fields": {
+        "table_of_contents": "",
+        "description": "Je kunt deelnemen aan de volgende trainingsessies.",
+        "title": "Training",
+        "text": "<p class=\"lead\">Je kunt deelnemen aan de onderstaande trainingen. Zie ook onze\u00a0<a href=\"/training/locaties/\">trainingslocaties</a>\u00a0en\u00a0<a href=\"/training/disciplines/\">trainingsdisciplines</a>.</p>\r\n",
+        "image": null,
+        "last_modified_by": 1,
+        "keywords": "",
+        "html": "<p class=\"lead\">Je kunt deelnemen aan de onderstaande trainingen. Zie ook onze\u00a0<a href=\"/training/locaties/\">trainingslocaties</a>\u00a0en\u00a0<a href=\"/training/disciplines/\">trainingsdisciplines</a>.</p>\n",
+        "sortorder": 30,
+        "last_modified": "2015-07-12T18:46:03.133Z",
+        "owner": 1,
+        "pub_date": "2014-12-08T16:58:07.179Z",
+        "slug": "training"
+    },
+    "model": "webapp.menu",
+    "pk": 3
+},
+{
+    "fields": {
+        "table_of_contents": "",
+        "description": "",
+        "title": "Zwemtest",
+        "text": "",
+        "image": null,
+        "last_modified_by": null,
+        "keywords": "",
+        "html": "",
+        "sortorder": 40,
+        "last_modified": "2014-12-08T17:02:47.050Z",
+        "owner": 1,
+        "pub_date": "2014-12-08T16:58:14.614Z",
+        "slug": "zwemtest"
+    },
+    "model": "webapp.menu",
+    "pk": 4
+},
+{
+    "fields": {
+        "table_of_contents": "",
+        "description": "",
+        "title": "Wedstrijd",
+        "text": "",
+        "image": null,
+        "last_modified_by": null,
+        "keywords": "",
+        "html": "",
+        "sortorder": 60,
+        "last_modified": "2015-07-04T21:50:19.800Z",
+        "owner": 1,
+        "pub_date": "2014-12-08T16:58:20.771Z",
+        "slug": "wedstrijd"
+    },
+    "model": "webapp.menu",
+    "pk": 5
+},
+{
+    "fields": {
+        "table_of_contents": "<li class=\"toc_h2\"><a href=\"#doe-mee\">Doe mee!</a></li><li class=\"toc_h2\"><a href=\"#contributie\">Contributie</a></li><li class=\"toc_h2\"><a href=\"#kleding\">Kleding</a></li><li class=\"toc_h2\"><a href=\"#contact\">Contact</a></li>",
+        "description": "Over TVD bla bla",
+        "title": "Over ons",
+        "text": "<p class=\"lead\">Triathlonvereninging Dordrecht biedt je de mogelijkheid om onder deskundige begeleiding te sporten. We bieden wekelijks zwem-, fiets- en looptrainingen aan. Bij iedere trainingen wordt rekening gehouden met jouw niveau.</p>\r\n\r\n<p>Ieder voorjaar organiseren we een trainingsweekend in Limburg. Met Hemelvaart organiseren we de Run Bike Run Bike Run en Smulbosloop. De zomer wordt afgesloten met een clubkampienschap en een gezellige barbecue.\u00a0Daarnaast worden diverse andere activiteiten georganiseerd en enkele ranglijsten bijgehouden.</p>\r\n\r\n<h2>Doe mee!</h2>\r\n\r\n<p class=\"lead\">Is triathlon iets voor jou? Voel jij je thuis bij onze vereniging? Kom gerust eens kennis maken en sport de eerste maand vrijblijvend mee. Ja, gratis!</p>\r\n\r\n<p>Na een maand beslis je of je definitief lid wil worden.</p>\r\n\r\n<p>[Wat te doen als je een keer wil komen trainen? ...]</p>\r\n\r\n<h2>Contributie</h2>\r\n\r\n<p>De\u00a0contributie\u00a0bedraagt per maand:</p>\r\n\r\n<p>Jeugd \u00a0 \u00a0 \u00a0\u00a0 (t/m 17 jaar)\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \u20ac 10,50</p>\r\n\r\n<p>Junioren \u00a0 \u00a0 (18 t/m 23 jaar) \u00a0\u00a0 \u20ac 14,50</p>\r\n\r\n<p>Senioren\u00a0\u00a0\u00a0\u00a0 (24 jaar en ouder) \u20ac 18,50</p>\r\n\r\n<p>De contributie dient bij vooruitbetaling te worden voldoen. Ter keuze in maandelijkse, driemaandelijkse, halfjaarlijkse of jaarlijkse termijnen.\u00a0</p>\r\n\r\n<p>De contributie is inclusief een basislicentie van de NTB. Hiermee krijg je ook het bondsblad. Met een basislicentie zul je bij deelname aan een wedstrijd een additionele daglicentie moeten aanschaffen.</p>\r\n\r\n<p>Een atletenlicentie (2015) kost \u20ac 24,00. Met deze licentie ben je verzekerd voor ongevallen tijdens wedstrijden.</p>\r\n\r\n<p>Bij opzegging geldt een opzegtermijn van 1 maand, gerekend vanaf de 1e van de volgende maand.</p>\r\n\r\n<p>De genoemde bedragen dienen te worden overgemaakt op:</p>\r\n\r\n<p>Rekeningnr: NL84 RABO 0127169423<br />\r\nt.n.v. Triathlonvereniging Dordrecht<br />\r\nonder vermelding van \"Contributie\" en maand/periode.</p>\r\n\r\n<p>Het is ook mogelijk om een machtiging af te geven. Het bedrag wordt dan automatisch elk\u00a0kwartaal van je rekening afgeschreven.</p>\r\n\r\n<p>Kijk voor meer informatie over de licenties op de website van de triathlonbond\u00a0<a href=\"http://www.triathlonbond.nl/\">www.triathlonbond.nl</a>.</p>\r\n\r\n<h2>Kleding</h2>\r\n\r\n<p>We zijn trots op onze clubkleding en zien graag dat onze atleten erin sporten. Daarom bieden we clubkleding aan tegen een aantrekkelijke prijs. Clubkleding is het gehele jaar door te bestellen via onze eigen\u00a0<a href=\"http://tvdordrecht.biedmeer.nl/\">webwinkel</a>. Je vindt hier een ruim assortiment.</p>\r\n\r\n<h2>Contact</h2>\r\n\r\n<p class=\"lead\">Remi Boon 06-123456789</p>\r\n\r\n<h3>Bestuur</h3>\r\n\r\n<p>bestuur@tvdordrecht.nl</p>\r\n\r\n<ul>\r\n\t<li>Remi Boon voorzitter@tvdordrecht.nl</li>\r\n</ul>\r\n\r\n<h3>Trainers</h3>\r\n\r\n<p>trainers@tvdordrecht.nl</p>\r\n\r\n<ul>\r\n\t<li>Marcel Bezemer</li>\r\n\t<li>Selmar Brand</li>\r\n\t<li>Albert de Vries</li>\r\n</ul>\r\n\r\n<h3>Activiteiten</h3>\r\n\r\n<p>activiteiten@tvdordrecht.nl</p>\r\n\r\n<ul>\r\n\t<li>Fenna de Boer</li>\r\n\t<li>Andr\u00e9 Stappers</li>\r\n</ul>\r\n\r\n<h3>Wedstrijd</h3>\r\n\r\n<p>wedstrijd@tvdordrecht.nl</p>\r\n\r\n<ul>\r\n\t<li>Albert de Vries</li>\r\n</ul>\r\n",
+        "image": null,
+        "last_modified_by": 1,
+        "keywords": "",
+        "html": "<p class=\"lead\">Triathlonvereninging Dordrecht biedt je de mogelijkheid om onder deskundige begeleiding te sporten. We bieden wekelijks zwem-, fiets- en looptrainingen aan. Bij iedere trainingen wordt rekening gehouden met jouw niveau.</p>\n<p>Ieder voorjaar organiseren we een trainingsweekend in Limburg. Met Hemelvaart organiseren we de Run Bike Run Bike Run en Smulbosloop. De zomer wordt afgesloten met een clubkampienschap en een gezellige barbecue.\u00a0Daarnaast worden diverse andere activiteiten georganiseerd en enkele ranglijsten bijgehouden.</p>\n<h2 id=\"doe-mee\"><a href=\"#doe-mee\" title=\"Permanente link naar Doe mee!\">Doe mee!</a></h2>\n<p class=\"lead\">Is triathlon iets voor jou? Voel jij je thuis bij onze vereniging? Kom gerust eens kennis maken en sport de eerste maand vrijblijvend mee. Ja, gratis!</p>\n<p>Na een maand beslis je of je definitief lid wil worden.</p>\n<p>[Wat te doen als je een keer wil komen trainen? ...]</p>\n<h2 id=\"contributie\"><a href=\"#contributie\" title=\"Permanente link naar Contributie\">Contributie</a></h2>\n<p>De\u00a0contributie\u00a0bedraagt per maand:</p>\n<p>Jeugd \u00a0 \u00a0 \u00a0\u00a0 (t/m 17 jaar)\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 \u20ac 10,50</p>\n<p>Junioren \u00a0 \u00a0 (18 t/m 23 jaar) \u00a0\u00a0 \u20ac 14,50</p>\n<p>Senioren\u00a0\u00a0\u00a0\u00a0 (24 jaar en ouder) \u20ac 18,50</p>\n<p>De contributie dient bij vooruitbetaling te worden voldoen. Ter keuze in maandelijkse, driemaandelijkse, halfjaarlijkse of jaarlijkse termijnen.\u00a0</p>\n<p>De contributie is inclusief een basislicentie van de NTB. Hiermee krijg je ook het bondsblad. Met een basislicentie zul je bij deelname aan een wedstrijd een additionele daglicentie moeten aanschaffen.</p>\n<p>Een atletenlicentie (2015) kost \u20ac 24,00. Met deze licentie ben je verzekerd voor ongevallen tijdens wedstrijden.</p>\n<p>Bij opzegging geldt een opzegtermijn van 1 maand, gerekend vanaf de 1e van de volgende maand.</p>\n<p>De genoemde bedragen dienen te worden overgemaakt op:</p>\n<p>Rekeningnr: NL84 RABO 0127169423<br/>\r\nt.n.v. Triathlonvereniging Dordrecht<br/>\r\nonder vermelding van \"Contributie\" en maand/periode.</p>\n<p>Het is ook mogelijk om een machtiging af te geven. Het bedrag wordt dan automatisch elk\u00a0kwartaal van je rekening afgeschreven.</p>\n<p>Kijk voor meer informatie over de licenties op de website van de triathlonbond\u00a0<a href=\"http://www.triathlonbond.nl/\">www.triathlonbond.nl</a>.</p>\n<h2 id=\"kleding\"><a href=\"#kleding\" title=\"Permanente link naar Kleding\">Kleding</a></h2>\n<p>We zijn trots op onze clubkleding en zien graag dat onze atleten erin sporten. Daarom bieden we clubkleding aan tegen een aantrekkelijke prijs. Clubkleding is het gehele jaar door te bestellen via onze eigen\u00a0<a href=\"http://tvdordrecht.biedmeer.nl/\">webwinkel</a>. Je vindt hier een ruim assortiment.</p>\n<h2 id=\"contact\"><a href=\"#contact\" title=\"Permanente link naar Contact\">Contact</a></h2>\n<p class=\"lead\">Remi Boon 06-123456789</p>\n<h3>Bestuur</h3>\n<p>\n        <script id=\"script-0\">\n            $(function() {\n                function rot(s, i) {\n                    return s.replace(/[a-zA-Z]/g, function (c) {\n                        return String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + i) ? c : c - 26);\n                    });\n                }\n                $('#script-0').after(rot('<n uers=\"znvygb:orfghhe@giqbeqerpug.ay\">orfghhe@giqbeqerpug.ay</n>', 13));\n            });\n        </script>\n        </p>\n<ul>\n<li>Remi Boon \n        <script id=\"script-1\">\n            $(function() {\n                function rot(s, i) {\n                    return s.replace(/[a-zA-Z]/g, function (c) {\n                        return String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + i) ? c : c - 26);\n                    });\n                }\n                $('#script-1').after(rot('<v cmza=\"hvdgoj:qjjmudoozm@oqyjmymzxco.ig\">qjjmudoozm@oqyjmymzxco.ig</v>', 5));\n            });\n        </script>\n        </li>\n</ul>\n<h3>Trainers</h3>\n<p>\n        <script id=\"script-2\">\n            $(function() {\n                function rot(s, i) {\n                    return s.replace(/[a-zA-Z]/g, function (c) {\n                        return String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + i) ? c : c - 26);\n                    });\n                }\n                $('#script-2').after(rot('<h oylm=\"thpsav:ayhpulyz@ackvykyljoa.us\">ayhpulyz@ackvykyljoa.us</h>', 19));\n            });\n        </script>\n        </p>\n<ul>\n<li>Marcel Bezemer</li>\n<li>Selmar Brand</li>\n<li>Albert de Vries</li>\n</ul>\n<h3>Activiteiten</h3>\n<p>\n        <script id=\"script-3\">\n            $(function() {\n                function rot(s, i) {\n                    return s.replace(/[a-zA-Z]/g, function (c) {\n                        return String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + i) ? c : c - 26);\n                    });\n                }\n                $('#script-3').after(rot('<u blyz=\"gucfni:uwncpcnycnyh@npxilxlywbn.hf\">uwncpcnycnyh@npxilxlywbn.hf</u>', 6));\n            });\n        </script>\n        </p>\n<ul>\n<li>Fenna de Boer</li>\n<li>Andr\u00e9 Stappers</li>\n</ul>\n<h3>Wedstrijd</h3>\n<p>\n        <script id=\"script-4\">\n            $(function() {\n                function rot(s, i) {\n                    return s.replace(/[a-zA-Z]/g, function (c) {\n                        return String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + i) ? c : c - 26);\n                    });\n                }\n                $('#script-4').after(rot('<g nxkl=\"sgorzu:ckjyzxopj@zbjuxjxkinz.tr\">ckjyzxopj@zbjuxjxkinz.tr</g>', 20));\n            });\n        </script>\n        </p>\n<ul>\n<li>Albert de Vries</li>\n</ul>\n",
+        "sortorder": 70,
+        "last_modified": "2015-07-12T18:44:18.082Z",
+        "owner": 1,
+        "pub_date": "2015-06-23T22:28:09.067Z",
+        "slug": "over-triathlonvereniging-dordrecht"
+    },
+    "model": "webapp.menu",
+    "pk": 9
+}
+]

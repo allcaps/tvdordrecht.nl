@@ -1,0 +1,11 @@
+<nav>
+  <h3><a href="{% url 'webapp:news_list' %}" title="Nieuws archief">Nieuws archief</a></h3>
+  <ul class="pager">
+    <li class="previous{% if not prev %} disabled{% endif %}">
+      <a href="{{ prev.get_absolute_url }}"><span class="glyphicon glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Vorige</a>
+    </li>
+    <li class="next{% if not next %} disabled{% endif %}">
+      <a href="{{ next.get_absolute_url }}">Volgende <span class="glyphicon glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
+
+
+{% block content %}
+
+    <div class="container well hidden-print">
+        {% crispy form %}
+    </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+{% endblock extra_js %}

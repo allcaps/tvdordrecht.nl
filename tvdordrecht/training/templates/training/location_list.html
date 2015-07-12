@@ -1,0 +1,44 @@
+{% extends "training/base.html" %}
+
+{% load crop %}
+{% load thumb %}
+{% load truncate_char %}
+
+
+{% block title %}Locaties « {% endblock %}
+{% block keywords %}{{ current_menu.keywords }}{% endblock %}	
+{% block description %}Locaties{% endblock %}
+
+{% block admin_menu %}
+  {{ block.super }}
+{% endblock admin_menu %}
+
+{% block content %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>Locaties</h1>
+    </div>
+
+    {% for obj in object_list %}
+      <div class="col-md-4 col-sm-6 news-item">
+        <h2>{{ obj.title }}</h2>
+        <p class="lead">
+          {{ obj.address }}<br>
+          {{ obj.city }}<br>
+        </p>
+        {{ obj.text|safe }}
+      </div>
+
+      {% if forloop.counter|divisibleby:2 %}
+        <div class="col-sm-12 hidden-xs hidden-md hidden-lg"></div>
+      {% endif %}
+      {% if forloop.counter|divisibleby:3 %}
+        <div class="col-md-12 hidden-xs hidden-sm"></div>
+      {% endif %}
+
+    {% endfor %}
+
+
+</div>
+{% endblock %}

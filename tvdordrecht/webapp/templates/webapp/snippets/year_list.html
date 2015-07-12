@@ -1,0 +1,12 @@
+{% if year_list %}
+<h3>Archief</h3>
+<ul>
+  {% for i in year_list %}
+    <li>
+      <a href="{{ current_menu.get_absolute_url }}{{ i.slug }}/"{% ifequal i.slug current_year %} class="current"{% endifequal %}>
+        {{ i.title }} ({{ i.count }})
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+{% endif %}
