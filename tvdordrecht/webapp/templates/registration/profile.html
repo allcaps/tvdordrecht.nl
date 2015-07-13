@@ -46,6 +46,7 @@
                 </h2>
             </div>
 
+            {% if user.result_set.all %}
             <table class="table">
                 <thead>
                     <tr>
@@ -87,8 +88,9 @@
                     </tr>
                 </tfoot>
             </table>
-
-
+            {% else %}
+                    <h2>Geen Wie wat waar / Uitslagen</h2>
+            {% endif %}
         </div>
 
     </div>
