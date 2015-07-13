@@ -20,10 +20,16 @@
           <div class="page-header">
             <h2>Account</h2>
           </div>
-            <p>{{ user.username|capfirst }}</p>
-            <p>{{ user.first_name }} {{ user.last_name }}</p>
-            <p>{{ user.email }}</p>
-            <p><a href="{% url 'password_change' %}">Wachtwoord wijzigen</a></p>
+            <dl>
+              <dt>Gebruikersnaam</dt><dd>{{ user.username|capfirst }}</dd>
+            </dl>
+            <dl>
+              <dt>Voor- en achternaam</dt><dd>{{ user.first_name }} {{ user.last_name }}</dd>
+            </dl>
+            <dl>
+              <dt>E-mailadres</dt><dd>{{ user.email }}</dd>
+            </dl>
+            <p><a href="{% url 'password_change' %}" class="btn btn-default">Wachtwoord wijzigen</a></p>
         </div>
 
         <div class="col-md-8">
