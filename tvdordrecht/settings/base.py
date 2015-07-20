@@ -10,10 +10,10 @@ import json
 # into your settings, but ImproperlyConfigured is an exception. :P
 from django.core.exceptions import ImproperlyConfigured
 
-BASE_DIR = dirname(dirname(dirname(__file__)))
-PROJECT_DIR = dirname(dirname(__file__))
+BASE_DIR = "/home/coen/tvdordrecht.nl"
+PROJECT_DIR = "/home/coen/tvdordrecht.nl/tvdordrecht"
 SECRETS_FILE = normpath(join(BASE_DIR, 'secrets.json'))
-
+print "SECRETS", SECRETS_FILE
 DEBUG = False
 
 with open(SECRETS_FILE) as f:
@@ -41,7 +41,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['www.tvdordrecht.nl', '127.0.0.1']
+ALLOWED_HOSTS = ['www.tvdordrecht.nl', '127.0.0.1', '149.210.227.54']
 
 SITE_ID = 1
 
