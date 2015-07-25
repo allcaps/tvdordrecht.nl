@@ -10,8 +10,8 @@ import json
 # into your settings, but ImproperlyConfigured is an exception. :P
 from django.core.exceptions import ImproperlyConfigured
 
-BASE_DIR = "/home/coen/tvdordrecht.nl"
-PROJECT_DIR = "/home/coen/tvdordrecht.nl/tvdordrecht"
+BASE_DIR = "/home/coen/tvdordrecht"
+PROJECT_DIR = "/home/coen/tvdordrecht/tvdordrecht"
 SECRETS_FILE = normpath(join(BASE_DIR, 'secrets.json'))
 print "SECRETS", SECRETS_FILE
 DEBUG = False
@@ -128,3 +128,22 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '/home/coen/tvdordrecht.log',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
