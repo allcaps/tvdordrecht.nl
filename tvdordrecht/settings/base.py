@@ -3,17 +3,16 @@ Django settings for tvdordrecht project.
 
 """
 
-from os.path import normpath, join, dirname
+from os import path
 import json
 
 # Normally you should not import ANYTHING from Django directly
 # into your settings, but ImproperlyConfigured is an exception. :P
 from django.core.exceptions import ImproperlyConfigured
 
-BASE_DIR = "/home/coen/tvdordrecht"
-PROJECT_DIR = "/home/coen/tvdordrecht/tvdordrecht"
-SECRETS_FILE = normpath(join(BASE_DIR, 'secrets.json'))
-print "SECRETS", SECRETS_FILE
+BASE_DIR = path.abspath(path.join(path.dirname(__file__), "..", ".."))
+PROJECT_DIR = path.abspath(path.join(path.dirname(__file__), ".."))
+SECRETS_FILE = path.normpath(path.join(BASE_DIR, 'secrets.json'))
 DEBUG = False
 
 with open(SECRETS_FILE) as f:
@@ -118,10 +117,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-MEDIA_ROOT = normpath(join(PROJECT_DIR, 'media'))
+MEDIA_ROOT = path.normpath(path.join(PROJECT_DIR, 'media'))
+print "MEDIA_ROOT", MEDIA_ROOT
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = normpath(join(PROJECT_DIR, 'static'))
+STATIC_ROOT = path.normpath(path.join(PROJECT_DIR, 'static'))
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/login/'
@@ -136,7 +136,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/home/coen/tvdordrecht.log',
+            'filename': path.normpath(path.join(BASE_DIR, 'tvdordrecht.log')),
         },
     },
     'loggers': {
