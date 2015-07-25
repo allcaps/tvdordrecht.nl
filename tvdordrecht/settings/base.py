@@ -41,7 +41,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['www.tvdordrecht.nl', '127.0.0.1', '149.210.227.54']
+ALLOWED_HOSTS = ['tvdordrecht.nl', 'www.tvdordrecht.nl']  # '149.210.227.54'
 
 SITE_ID = 1
 
@@ -126,6 +126,8 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
+
+PREPEND_WWW = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
