@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 @register.filter
-def to_milliseconds(value):
+def to_seconds(value):
     """
     To seconds
     For time object to seconds.
@@ -12,5 +12,4 @@ def to_milliseconds(value):
     seconds += value.hour * 3600
     seconds += value.minute * 60
     seconds += value.second
-    return seconds * 1000
-
+    return seconds
