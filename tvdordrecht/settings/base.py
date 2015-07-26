@@ -13,7 +13,6 @@ from django.core.exceptions import ImproperlyConfigured
 BASE_DIR = path.abspath(path.join(path.dirname(__file__), "..", ".."))
 PROJECT_DIR = path.abspath(path.join(path.dirname(__file__), ".."))
 SECRETS_FILE = path.normpath(path.join(BASE_DIR, 'secrets.json'))
-DEBUG = False
 
 with open(SECRETS_FILE) as f:
     secrets = json.loads(f.read())
@@ -29,16 +28,12 @@ def get_secret(setting, default=None):
         raise ImproperlyConfigured(error_msg)
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ['www.tvdordrecht.nl', '127.0.0.1', '149.210.227.54']
 
@@ -114,11 +109,19 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Mail settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_PASSWORD = get_secret('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = get_secret('EMAIL_HOST_USER')
+DEFAULT_FROM_EMAIL = get_secret('DEFAULT_FROM_EMAIL')
+EMAIL_PORT = 587
+EMAIL_SUBJECT_PREFIX = "[TVD Website]"
+EMAIL_USE_TLS = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 MEDIA_ROOT = path.normpath(path.join(PROJECT_DIR, 'media'))
-print "MEDIA_ROOT", MEDIA_ROOT
 MEDIA_URL = '/media/'
 
 STATIC_ROOT = path.normpath(path.join(PROJECT_DIR, 'static'))
