@@ -5,7 +5,23 @@ History of this project
 0.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Google Analitics
+
+- Added client-side ckeditor
+
+- Add email settings.
+
+- Improve settings file. Dynamic path and dev settings.
+
+- Add to seconds tag filter.
+
+- Added server settings.
+
+- Added profile page.
+
+- Remove unused Python packages. Dj braces.
+
+- Removed base, activity and profiles.
 
 
 0.1 (2015-07-12)
