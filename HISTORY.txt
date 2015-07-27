@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.3 (unreleased)
+0.3 (2015-07-28)
 ----------------
 
 - Do not display username. Display first_name.
