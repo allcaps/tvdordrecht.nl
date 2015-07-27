@@ -5,7 +5,9 @@ History of this project
 0.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Do not display username. Display first_name.
+
+- Webapp meta tags description and keywords.
 
 
 0.2 (2015-07-27)
