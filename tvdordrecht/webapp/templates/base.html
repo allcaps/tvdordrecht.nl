@@ -140,7 +140,7 @@
                   <p class="btn-group">
                     {% if user.is_authenticated %}
                       <a class="btn btn-default" href="{% url 'webapp:profile' %}">
-                        <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{{ user.username|capfirst }}
+                        <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{{ user.first_name|capfirst }}
                       </a>
 
                       {% if user.is_staff %}

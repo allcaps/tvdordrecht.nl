@@ -47,7 +47,7 @@
             <h1>{{ object.title|safe }}</h1>
             <div class="col-md-10">
               <p class="small">
-                {{ object.pub_date|date:"j F Y" }} | {{ object.owner.username|capfirst }}
+                {{ object.pub_date|date:"j F Y" }} | {{ object.owner.first_name|capfirst }}
               </p>
 
               {{ object.text|safe }}

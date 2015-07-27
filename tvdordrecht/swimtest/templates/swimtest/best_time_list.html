@@ -26,7 +26,7 @@
         {% for obj in object_list %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td><a href="{{ obj.user.get_swimtest_url }}">{{ obj.user }}</a></td>
+                <td><a href="{{ obj.user.get_swimtest_url }}">{{ obj.user.first_name }}</a></td>
                 <td>{{ obj.time_500|time:"i:s" }}</td>
                 <td>{{ obj.swim_test }}</td>
             </tr>
@@ -84,7 +84,7 @@
 
                      {% for record in object_list %}
                          {
-                             name: '{{ record.user }}',
+                             name: '{{ record.user.first_name }}',
                              data: [
                                  {{ record.split_100|to_seconds }},
                                  {{ record.split_200|to_seconds }},
@@ -147,7 +147,7 @@
 
                    {% for record in object_list %}
                        {
-                           name: '{{ record.user }}',
+                           name: '{{ record.user.first_name }}',
                            data: [
                                0,
                                {{ record.time_100|to_milliseconds }},

@@ -30,7 +30,7 @@
         {% for record in object.record_set.all %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td><a href="{{ record.user.get_swimtest_url }}">{{ record.user }}</a></td>
+            <td><a href="{{ record.user.get_swimtest_url }}">{{ record.user.first_name }}</a></td>
             <td>{{ record.time_100|time:"i:s" }}</td>
             <td>{{ record.time_200|time:"i:s" }}</td>
             <td>{{ record.time_300|time:"i:s" }}</td>
@@ -101,7 +101,7 @@ $(function () {
 
       {% for record in object.record_set.all %}
       {
-          name: '{{ record.user }}',
+          name: '{{ record.user.first_name }}',
           data: [
             {{ record.split_100|to_seconds }},
             {{ record.split_200|to_seconds }},
@@ -164,7 +164,7 @@ $(function () {
 
       {% for record in object.record_set.all %}
       {
-          name: '{{ record.user }}',
+          name: '{{ record.user.first_name }}',
           data: [
             0,
             {{ record.time_100|to_milliseconds }},

@@ -21,7 +21,7 @@
         <div class="col-md-8 col-md-push-2" role="main">
             <h1>Nieuwsbericht {% if object %}bewerken{% else %}toevoegen{% endif %}</h1>
             <p class="small">
-              Door {{ user.username|capfirst }}<br/>
+              Door {{ user.first_name|capfirst }}<br/>
               Datum {% now "DATE_FORMAT" %}
             </p>
             <form method="post" action="" enctype="multipart/form-data">

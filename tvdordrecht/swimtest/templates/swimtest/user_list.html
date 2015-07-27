@@ -19,7 +19,7 @@
         <tbody>
         {% for user in object_list %}
             <tr>
-                <td><a href="{{ user.get_swimtest_url }}">{{ user }}</a></td>
+                <td><a href="{{ user.get_swimtest_url }}">{{ user.first_name }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
