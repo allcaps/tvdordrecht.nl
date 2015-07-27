@@ -4,8 +4,8 @@
 {% load thumb %}
 
 {% block title %}{{ current_menu.title }} « {% endblock %}
-{% block keywords %}{{ current_menu.keywords }}{% endblock %}
 {% block description %}{{ current_menu.description }}{% endblock %}
+{% block keywords %}{{ current_menu.keywords }}{% endblock %}
 
 {% block ogtitle %}{{ current_menu.title }} « {% endblock %}
 {% block ogimage %}http://{{ site.domain }}{{MEDIA_URL}}{{ current_menu.image }}{% endblock %}

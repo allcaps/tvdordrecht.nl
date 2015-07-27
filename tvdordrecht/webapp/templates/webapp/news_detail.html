@@ -3,9 +3,9 @@
 {% load crop %}
 {% load thumb %}
 
-{% block title %}{{ object.title }} « {{ site.name }}{% endblock %}
-{% block keywords %}{{ object.keywords }}{% endblock %}	
+{% block title %}{{ object.title }} « {% endblock %}
 {% block description %}{{ object.description }}{% endblock %}
+{% block keywords %}{{ current_menu.keywords }}{% endblock %}
 
 {% block ogtitle %}{{ object.title }} « {% endblock %}
 {% block ogimage %}http://{{ site.domain }}{{ MEDIA_URL }}{{ object.image }}{% endblock %}

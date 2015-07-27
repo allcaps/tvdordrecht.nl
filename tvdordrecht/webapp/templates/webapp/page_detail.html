@@ -4,7 +4,8 @@
 {% load thumb %}
 
 {% block title %}{{ article.title }} « {% endblock %}
-{% block keywords %}{% if article.keywords %}, {{ article.keywords }}{% endif %}{% endblock %}	
+{% block description %}{{ article.description }}{% endblock %}
+{% block keywords %}{{ current_menu.keywords }}{% endblock %}
 
 {% block ogtitle %}{{ article.title }} « {% endblock %}
 {% block ogimage %}http://{{ site.domain }}{{ MEDIA_URL }}{{ article.image }}{% endblock %}
@@ -13,7 +14,7 @@
 {% block admin_menu %}
     {{ block.super }}
     <a href="{{ article.get_admin_url }}" class="btn btn-default">
-      Wijzig pagina
+      Pagina bewerken
     </a>
 {% endblock admin_menu %}
 

@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <title>{% block title %}{% endblock title %}{{ site.name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+    <meta name="description" content="{% block description %}{% endblock description %}">
+    <meta name="keywords" content="{% block keywords %}{% endblock keywords %}">
     <meta name="author" content="">
 
     <link rel="stylesheet" href="{% static 'webapp/bootstrap/css/bootstrap.min.css' %}">

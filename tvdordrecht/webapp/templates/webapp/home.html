@@ -3,7 +3,10 @@
 {% load crop %}
 {% load thumb %}
 
+{% block title %}{{ current_menu.title }} « {% endblock %}
 {% block description %}{{ current_menu.description }}{% endblock %}
+{% block keywords %}{{ current_menu.keywords }}{% endblock %}
+
 
 {% block admin_menu %}
   {{ block.super }}

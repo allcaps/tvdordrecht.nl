@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block title %}{{ current_menu.title }} « {{ block.super }}{% endblock title %}
-{% block keywords %}{{ current_menu.keywords }}{% endblock keywords %}
 {% block description %}Nieuwsberichten {{ year }}{% endblock description %}
+{% block keywords %}{{ current_menu.keywords }}{% endblock %}
 
 {% block admin_menu %}
     {{ block.super }}
