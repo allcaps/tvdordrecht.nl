@@ -5,7 +5,11 @@ History of this project
 0.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Some CSS / branding.
+
+- Add who what where and results lists to homepage.
+
+- Fix homepage page title. We don't need `home` since that is obvious.
 
 
 0.3 (2015-07-28)
