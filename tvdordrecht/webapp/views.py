@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime, timedelta
+
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -8,7 +10,6 @@ from django.shortcuts import (
     redirect,
 )
 from django.template import RequestContext
-from django.contrib import messages
 from django.views.generic import (
     CreateView,
     DetailView,
@@ -19,6 +20,7 @@ from django.views.generic import (
 )
 
 from race.models import Result
+from training.models import Session
 
 from .forms import (
     # NewsForm,
@@ -31,8 +33,7 @@ from .models import (
     News,
     Image,
 )
-from training.models import Session
-from datetime import datetime, timedelta
+
 
 def home(request, template='webapp/home.html'):
     current_menu = get_object_or_404(Menu, slug='home')
