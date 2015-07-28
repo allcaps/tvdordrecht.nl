@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.4 (unreleased)
+0.4 (2015-07-28)
 ----------------
 
 - Some CSS / branding.
