@@ -46,6 +46,8 @@ def home(request, template='webapp/home.html'):
     www_list = Result.objects.filter(time=None)\
         .filter(race__edition__date__gte=datetime.now())\
         .order_by('-race__edition', 'race__distance', 'user')
+    result_list = Result.objects.filter(time__isnull=False,
+                                        race__edition__date__lte=now)
     return render_to_response(
         template,
         context_instance=RequestContext(request, locals())
