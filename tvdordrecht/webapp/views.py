@@ -18,6 +18,8 @@ from django.views.generic import (
     TemplateView,
 )
 
+from race.models import Result
+
 from .forms import (
     # NewsForm,
     ImageForm,
@@ -40,7 +42,9 @@ def home(request, template='webapp/home.html'):
     training_list = Session.objects \
         .filter(start__gte=now, start__lt=then) \
         .select_related('trainer', 'location', 'discipline')
-
+    www_list = Result.objects.filter(time=None)\
+        .filter(race__edition__date__gte=datetime.now())\
+        .order_by('-race__edition', 'race__distance', 'user')
     return render_to_response(
         template,
         context_instance=RequestContext(request, locals())
