@@ -14,8 +14,6 @@ from formtools.wizard.views import SessionWizardView
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
-
-
 from webapp.models import (
     Menu,
     Page,
@@ -23,14 +21,11 @@ from webapp.models import (
 
 from .models import (
     Event,
-    Edition,
-    Race,
     Result,
 )
 from .forms import (
     EditionSearchForm,
     EventForm,
-    EditionForm,
 )
 
 from django.contrib.auth.decorators import login_required
@@ -87,44 +82,6 @@ class CurrentEventMixin(object):
         return context
 
 
-class EditionCreateView(LoginRequiredMixin, CurrentMenuMixin, CurrentEventMixin, SuccessMessageMixin, CreateView):
-    template_name = 'race/edition_form.html'
-    model = Edition
-    form_class = EditionForm
-    success_message = "Succes: %(date)s is opgeslagen!"
-
-    def get_initial(self):
-        initial = super(EditionCreateView, self).get_initial()
-        initial = initial.copy()
-        initial['event'] = self.get_context_data().get('event')
-        return initial
-
-    def get_success_url(self):
-        return reverse(
-            "race:event_detail",
-            kwargs={'slug': self.kwargs['event_slug']}
-        )
-
-class EditionUpdateView(LoginRequiredMixin, CurrentMenuMixin, CurrentEventMixin, SuccessMessageMixin, UpdateView):
-    template_name = 'race/edition_form.html'
-    is_update_view = True
-    model = Edition
-    form_class = EditionForm
-    success_message = "Succes: %(date)s is opgeslagen!"
-
-    def get_success_url(self):
-        return reverse(
-            "race:event_detail",
-            kwargs={'slug': self.kwargs['event_slug']}
-        )
-
-    def get_initial(self):
-        initial = super(EditionUpdateView, self).get_initial()
-        initial = initial.copy()
-        initial['distances'] = [obj.distance.pk for obj in self.object.race_set.all()]
-        return initial
-
-
 class WhoWhatWhere(CurrentMenuMixin, CurrentPageMixin, ListView):
     model = Result
     template_name = 'race/who_what_where_list.html'
@@ -133,14 +90,14 @@ class WhoWhatWhere(CurrentMenuMixin, CurrentPageMixin, ListView):
     def get_queryset(self, **kwargs):
         """Filters the queryset with the search values."""
         queryset = Result.objects.filter(time=None)\
-            .filter(race__edition__date__gte=datetime.now())\
+            .filter(date__gte=datetime.now())\
             .order_by('-race__edition', 'race__distance', 'user')
 
         q = self.request.GET.get("q")
         if q:
             queryset = queryset.filter(
-                Q(race__edition__event__name__contains=q) |
-                Q(race__edition__event__city__contains=q) |
+                Q(event__name__contains=q) |
+                Q(event__city__contains=q) |
                 Q(user__username=q)
             )
         user = self.request.GET.get("user")
@@ -165,7 +122,7 @@ class ResultList(CurrentMenuMixin, CurrentPageMixin, ListView):
         queryset = super(ResultList, self).get_queryset()
         now = datetime.now()
         queryset = queryset.filter(time__isnull=False,
-                                   race__edition__date__lte=now)
+                                   date__lte=now)
         return queryset
 
 
@@ -202,17 +159,17 @@ class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMix
                     "race:edition_create", kwargs={'event_slug': event.slug}))
                 form.fields['edition'].help_text = help_text
 
-            if step == '2':
-                data = self.storage.get_step_data('1')
-                edition = Edition.objects.get(pk=data.get('1-edition'))
-                qs = edition.race_set.all()
-                form.fields['race'].queryset = qs
-                initial = [i.race.pk for i in self.request.user.result_set.all()]
-                form.fields['race'].initial = initial
-                help_text = get_help_text('wedstrijd', reverse(
-                    "race:edition_update", kwargs={'event_slug': event.slug,
-                                                   'pk': edition.pk}))
-                form.fields['race'].help_text = help_text
+            # if step == '2':
+            #     data = self.storage.get_step_data('1')
+            #     edition = Edition.objects.get(pk=data.get('1-edition'))
+            #     qs = edition.race_set.all()
+            #     form.fields['race'].queryset = qs
+            #     initial = [i.race.pk for i in self.request.user.result_set.all()]
+            #     form.fields['race'].initial = initial
+            #     help_text = get_help_text('wedstrijd', reverse(
+            #         "race:edition_update", kwargs={'event_slug': event.slug,
+            #                                        'pk': edition.pk}))
+            #     form.fields['race'].help_text = help_text
         return form
 
     def done(self, form_list, **kwargs):
@@ -235,7 +192,7 @@ class ResultWizard(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMixin, Se
 
         if step == '0':
             results = self.request.user.result_set.filter(
-                time__isnull=True, race__edition__date__lte=datetime.now()
+                time__isnull=True, date__lte=datetime.now()
             )
             choices = [(res.id, res.choice_label) for res in results]
             form.fields['result'].choices = choices
