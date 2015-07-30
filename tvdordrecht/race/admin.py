@@ -7,15 +7,13 @@ from .models import (
     Result,
 )
 
-
-class ResultInline(admin.TabularInline):
-    model = Result
-    extra = 0
+ckeditor = ['/static/webapp/ckeditor/ckeditor.js','/static/webapp/ckeditor.init.js']
 
 
 class ResultInline(admin.TabularInline):
     model = Result
     extra = 0
+    fields = ['user', 'date', 'distance', 'time', 'remarks']
 
 
 class EventAdmin(admin.ModelAdmin):
@@ -23,6 +21,20 @@ class EventAdmin(admin.ModelAdmin):
     list_filter = ['city', ]
     inlines = [ResultInline, ]
     prepopulated_fields = {'slug': ('name', 'city'), }
+    fieldsets = (
+        (None, {
+            'classes': ('wide', 'extrapretty'),
+            'fields': ('name', 'city', 'website', 'text')
+        }),
+
+        ('Geavanceerde opties', { #Geavanceerde opties
+            'classes': ('collapse', 'wide', 'extrapretty'),
+            'fields': ('image', 'slug')
+        }),
+    )
+
+    class Media:
+        js = ckeditor
 
 admin.site.register(Event, EventAdmin)
 
@@ -36,8 +48,8 @@ admin.site.register(Distance, DistanceAdmin)
 
 
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ['event_name', 'edition', 'user', 'time', 'remarks']
-    list_filter = ['race__distance', 'user']
+    list_display = ['event', 'date', 'user', 'time', 'remarks']
+    list_filter = ['distance', 'user']
     pass
 
 admin.site.register(Result, ResultAdmin)

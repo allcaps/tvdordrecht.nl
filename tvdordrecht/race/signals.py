@@ -15,7 +15,7 @@ def set_event_fields(sender, instance, **kwargs):
     if not instance.pub_date:
         instance.pub_date = timezone.now()
     if not instance.slug:
-        instance.slug = slugify("%s %s" %(instance.name, instance.city))
+        instance.slug = slugify("%s %s" % (instance.name, instance.city))
     if not instance.owner:
         instance.owner = get_current_user()
     instance.last_modified_by = get_current_user()
@@ -29,4 +29,4 @@ def set_result_fields(sender, instance, **kwargs):
         instance.owner = get_current_user()
     instance.last_modified_by = get_current_user()
 
-pre_save.connect(set_event_fields, sender=Result)
+pre_save.connect(set_result_fields, sender=Result)

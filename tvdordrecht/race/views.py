@@ -91,7 +91,7 @@ class WhoWhatWhere(CurrentMenuMixin, CurrentPageMixin, ListView):
         """Filters the queryset with the search values."""
         queryset = Result.objects.filter(time=None)\
             .filter(date__gte=datetime.now())\
-            .order_by('-race__edition', 'race__distance', 'user')
+            .order_by('-date', 'distance', 'user')
 
         q = self.request.GET.get("q")
         if q:
