@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
+from django.utils import timezone
 
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
@@ -38,16 +39,14 @@ from .models import (
 def home(request, template='webapp/home.html'):
     current_menu = get_object_or_404(Menu, slug='home')
     news_list = News.objects.filter(publish=True).order_by('-pub_date')[:6]
-    now = datetime.now().date()
+    now = timezone.now().date()
     then = now + timedelta(days=14)
     training_list = Session.objects \
         .filter(start__gte=now, start__lt=then) \
         .select_related('trainer', 'location', 'discipline')
     www_list = Result.objects.filter(time=None)\
-        .filter(race__edition__date__gte=datetime.now())\
-        .order_by('-race__edition', 'race__distance', 'user')
-    result_list = Result.objects.filter(time__isnull=False,
-                                        race__edition__date__lte=now)
+        .filter(date__gte=now)
+    result_list = Result.objects.filter(time__isnull=False, date__lte=now)
     return render_to_response(
         template,
         context_instance=RequestContext(request, locals())
