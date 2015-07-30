@@ -1,22 +1,46 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.conf import settings
-from django.template import defaultfilters
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from webapp.models import Image
 
-"""
-An `Event` can have multiple Editions.
-A `Result` belongs to one User.
 
-A result with time == Null is a who what where. Aka an indication the user will
-participate.
-"""
+class Base(models.Model):
+    pub_date = models.DateTimeField(
+        "publicatie datum",
+        blank=True,
+        null=True
+    )
+    owner = models.ForeignKey(
+        User,
+        verbose_name="Eigenaar",
+        blank=True,
+        null=True,
+        editable=False,
+        related_name="%(class)s_owner"
+    )
+    last_modified_by = models.ForeignKey(
+        User,
+        verbose_name="Laatst bewerkt door",
+        blank=True,
+        null=True,
+        editable=False,
+        related_name="%(class)s_last_modified_by"
+    )
+    last_modified = models.DateTimeField(
+        "laatst bewerkt",
+        blank=True,
+        null=True,
+        editable=False,
+        auto_now=True
+    )
+
+    class Meta:
+        abstract = True
 
 
-class Event(models.Model):
+class Event(Base):
     """
     An Event can have multiple Edition objects.
     """
@@ -29,11 +53,6 @@ class Event(models.Model):
         help_text=u"Alleen de base url.",
     )
     image = models.ForeignKey(Image, verbose_name='event_image', blank=True, null=True)
-    # Meta fields
-    pub_date = models.DateTimeField("publicatie datum", blank=True, null=True)
-    owner = models.ForeignKey(User, verbose_name="Eigenaar", blank=True, null=True, editable=False, related_name="%(class)s_owner")
-    last_modified_by = models.ForeignKey(User, verbose_name="Laatst bewerkt door", blank=True, null=True, editable=False, related_name="%(class)s_last_modified_by")
-    last_modified = models.DateTimeField("laatst bewerkt", blank=True, null=True, editable=False, auto_now=True)
 
     def __unicode__(self):
         return u"%s - %s" % (self.name, self.city)
@@ -52,13 +71,12 @@ class Event(models.Model):
         return reverse('admin:race_event_change', args=(self.id,))
 
 
-class Distance(models.Model):
+class Distance(Base):
     """
     Distance is a property of `Race`.
     """
     name = models.CharField(max_length=200, unique=True)
     order = models.CharField(max_length=200, blank=True)
-    default = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name
@@ -66,10 +84,10 @@ class Distance(models.Model):
     class Meta:
         verbose_name = u"Afstand"
         verbose_name_plural = u"Afstanden"
-        ordering = ["default", "order", ]
+        ordering = ["order", ]
 
 
-class Result(models.Model):
+class Result(Base):
     """
     Result
 
@@ -87,17 +105,12 @@ class Result(models.Model):
         blank=True,
         help_text=u"Podiumplaatsen zijn het vermelden waard. Bijvoorbeeld: '1e H50'.",
         )
-    # Meta fields
-    pub_date = models.DateTimeField("publicatie datum", blank=True, null=True)
-    owner = models.ForeignKey(User, verbose_name="Eigenaar", blank=True, null=True, editable=False, related_name="%(class)s_owner")
-    last_modified_by = models.ForeignKey(User, verbose_name="Laatst bewerkt door", blank=True, null=True, editable=False, related_name="%(class)s_last_modified_by")
-    last_modified = models.DateTimeField("laatst bewerkt", blank=True, null=True, editable=False, auto_now=True)
 
     def __unicode__(self):
         return "%s %s %s %s %s" % (self.user, self.date, self.event, self.distance, self.time)
 
     class Meta:
         unique_together = (("user", "event", "date", "distance"),)
-        verbose_name = "wie wat waar / uitslag"
-        verbose_name_plural = "wie wat waars / uitslagen"
-        ordering = ['date', 'event', 'distance', 'time']
+        verbose_name = "Wie wat waar / Uitslag"
+        verbose_name_plural = "Wie wat waars / Uitslagen"
+        ordering = ['-date', 'event', 'distance', 'time']
