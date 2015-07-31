@@ -7,18 +7,21 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-push-2" role="main">
+
   <h1>Wie wat waar toevoegen</h1>
 
   {% if wizard.steps.step1 == 1 %}
-    <p class="lead">Kijk eerst in het
-      <a href="{% url 'race:event_list' %}">evenementen overzicht</a> of het
-      evenement én de editie (datum) waaraan je deelneemt voorkomen. Zo niet,
-      maak dan eerst het evenement en de editie aan!</p>
+    <p class="lead">Staat jouw evenement niet in de lijst?
+      <a href="{% url 'race:event_create' %}">Maak dan eerst het evenement aan</a>.
   {% endif %}
 
   <p class="lead">Stap {{ wizard.steps.step1 }} van {{ wizard.steps.count }}</p>
 
   <form action="" method="post" class="well">{% csrf_token %}
+
     {{ wizard.management_form }}
     {% if wizard.form.forms %}
         {{ wizard.form.management_form }}
@@ -30,12 +33,15 @@
     {% endif %}
 
     <p>
-      {% if wizard.steps.prev %}
-      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}"  class="btn btn-default btn-xs">{% trans "first step" %}</button>
-      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}"  class="btn btn-default btn-xs">{% trans "prev step" %}</button>
-      {% endif %}
       <button type="submit" value="Volgende" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Volgende</button>
+      {% if wizard.steps.prev %}
+{#      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}"  class="btn btn-default btn-xs">{% trans "first step" %}</button>#}
+      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}"  class="btn btn-default btn-xs pull-left" style="margin:.5em;">{% trans "prev step" %}</button>
+      {% endif %}
     </p>
   </form>
 
+        </div>
+    </div>
+</div>
 {% endblock %}

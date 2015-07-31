@@ -12,8 +12,7 @@ from .views import (
 )
 from .forms import (
     WhoWhatWhereEventForm,
-    # WhoWhatWhereEditionForm,
-    # WhoWhatWhereRaceForm,
+    WhoWhatWhereDetailForm,
     ResultForm0,
     ResultForm1,
 )
@@ -50,8 +49,7 @@ urlpatterns = patterns('',
         WhoWhatWhereWizard.as_view(
             [
                 WhoWhatWhereEventForm,
-                # WhoWhatWhereEditionForm,
-                # WhoWhatWhereRaceForm,
+                WhoWhatWhereDetailForm,
             ],
         ),
         name='who_what_where_add',

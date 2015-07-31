@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.contrib.messages.views import SuccessMessageMixin
@@ -18,6 +19,7 @@ from webapp.models import (
     Menu,
     Page,
 )
+from webapp.middleware import get_current_user
 
 from .models import (
     Event,
@@ -148,37 +150,23 @@ class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMix
             help_text = get_help_text('evenement', reverse("race:event_create"))
             form.fields['event'].help_text = help_text
 
-        if step in ['1', '2']:
+        if step == '1':
             data = self.storage.get_step_data('0')
             event_pk = data.get('0-event')
             event = Event.objects.get(pk=event_pk)
-
-            if step == '1':
-                form.fields['edition'].queryset = event.edition_set.all()
-                help_text = get_help_text('editie', reverse(
-                    "race:edition_create", kwargs={'event_slug': event.slug}))
-                form.fields['edition'].help_text = help_text
-
-            # if step == '2':
-            #     data = self.storage.get_step_data('1')
-            #     edition = Edition.objects.get(pk=data.get('1-edition'))
-            #     qs = edition.race_set.all()
-            #     form.fields['race'].queryset = qs
-            #     initial = [i.race.pk for i in self.request.user.result_set.all()]
-            #     form.fields['race'].initial = initial
-            #     help_text = get_help_text('wedstrijd', reverse(
-            #         "race:edition_update", kwargs={'event_slug': event.slug,
-            #                                        'pk': edition.pk}))
-            #     form.fields['race'].help_text = help_text
+            form.fields['date'].help_text = "Wanneer is %s? Format: YYYY-MM-DD" % event.name
+            form.fields['user'].choices = [ (user.id, user.get_full_name()) for user in User.objects.all()]
+            form.fields['user'].initial = get_current_user()
         return form
 
     def done(self, form_list, **kwargs):
-        # TODO: Remove edition.results time==Null before saving the new Results.
-        for race in self.get_all_cleaned_data()['race']:
-            Result.objects.get_or_create(
-                user=self.request.user,
-                race=race
-            )
+        data = self.get_all_cleaned_data()
+        Result.objects.get_or_create(
+            user=self.request.user,
+            event=data['event'],
+            date=data['date'],
+            distance=data['distance'],
+        )
         return redirect(reverse("race:who_what_where_list"))
 
 
