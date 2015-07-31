@@ -44,7 +44,12 @@ class Event(Base):
     """
     An Event can have multiple Edition objects.
     """
-    name = models.CharField("Naam", max_length=200, unique=True)
+    name = models.CharField(
+        "Naam",
+        max_length=200,
+        unique=True,
+        help_text="De naam van dit evenement. Bijvoorbeeld: 'Triathlon Binnenmaas'"
+    )
     city = models.CharField("Plaats", max_length=200)
     slug = models.SlugField(unique=True)
     text = models.TextField("Tekst", blank=True, help_text="Korte omschrijving van dit evenement. Wat maakt dit evenement anders dan andere evenementen?")
@@ -94,10 +99,19 @@ class Result(Base):
     If no time is given, than that user still has to
     participate aka who-what-where.
     """
-    user = models.ForeignKey(User, verbose_name="deelnemer")
-    event = models.ForeignKey(Event)
-    date = models.DateField()
-    distance = models.ForeignKey(Distance)
+    user = models.ForeignKey(
+        User,
+        verbose_name="deelnemer",
+    )
+    event = models.ForeignKey(
+        Event,
+        verbose_name="Evenement",
+    )
+    date = models.DateField(
+        "datum",
+        help_text="YYYY-MM-DD"
+    )
+    distance = models.ForeignKey(Distance, verbose_name="Afstand")
     time = models.TimeField("Tijd", blank=True, null=True, help_text="HH:MM:SS")
     remarks = models.CharField(
         "Opmerkingen",
