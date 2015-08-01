@@ -1,0 +1,43 @@
+{% extends "webapp/news_base.html" %}
+
+{% load crop %}
+{% load thumb %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ article.title }} « {% endblock %}
+{% block keywords %}{{ article.keywords }}{% endblock %}
+{% block description %}{{ article.description }}{% endblock %}
+
+{% block ogtitle %}{{ article.title }} « {% endblock %}
+{% block ogimage %}http://{{ site.domain }}{{ MEDIA_URL }}{{ article.image }}{% endblock %}
+{% block ogdescription %}{{ article.description }}{% endblock %}
+
+{% block user_menu %}
+{% endblock user_menu %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-push-2" role="main">
+            <h1>Uitslag doorgeven</h1>
+            <p class="small">
+              Door {{ user.first_name|capfirst }}<br/>
+              Datum {% now "DATE_FORMAT" %}
+            </p>
+            <form method="post" action="" enctype="multipart/form-data" class="well">
+              {% csrf_token %}
+              {{ form|crispy }}
+              <div class="form-actions">
+                <input type="submit" name="submit" value="Verzenden"
+                       class="btn btn-primary" id="submit-id-submit">
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="/static/webapp/ckeditor/ckeditor.js"></script>
+  <script src="/static/webapp/ckeditor_simple.init.js"></script>
+{% endblock extra_js %}
