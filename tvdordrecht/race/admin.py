@@ -45,6 +45,13 @@ class DistanceAdmin(admin.ModelAdmin):
                     'owner', 'pub_date', 'last_modified_by', 'last_modified']
     list_editable = ['name', 'order']
     actions = ['delete_selected', ]
+    fieldsets = (
+        (None, {
+            'classes': ('wide', 'extrapretty'),
+            'fields': ('name', 'order')
+        }),
+
+    )
 
 admin.site.register(Distance, DistanceAdmin)
 
