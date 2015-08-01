@@ -7,10 +7,10 @@
 
 {% block user_menu %}
   {{ super.block }}
-{#  <a href="{%  url 'race:result_add' %}" class="btn btn-success">#}
-{#    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>#}
-{#    Uitslag toevoegen#}
-{#  </a>#}
+  <a href="{%  url 'race:result_list_add' %}" class="btn btn-success">
+    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+    Uitslag doorgeven
+  </a>
 {% endblock user_menu %}
 
 {% block content %}
@@ -50,7 +50,7 @@
                     {% if obj.time %}
                       {{ obj.time }}
                     {% else %}
-                      <a href="{{ obj.get_edit_url }}" title="Uitslag toevoegen">
+                      <a href="{{ obj.get_edit_url }}" title="Uitslag doorgeven">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                       </a>
                     {% endif %}

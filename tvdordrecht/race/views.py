@@ -193,3 +193,13 @@ class ResultUpdateView(LoginRequiredMixin, CurrentMenuMixin,
     form_class = ResultForm
     # success_url = '/wedstrijd/resultaten/'
     success_message = "Succes! Resultaat opgeslagen."
+
+
+class ResultListAddView(LoginRequiredMixin, CurrentMenuMixin, ListView):
+    model = Result
+    template_name = 'race/result_list_add.html'
+    def get_queryset(self):
+        queryset = super(ResultListAddView, self).get_queryset()
+        now = datetime.now()
+        queryset = queryset.filter(date__lte=now, time__isnull=True)
+        return queryset

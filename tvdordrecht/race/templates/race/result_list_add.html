@@ -5,19 +5,11 @@
 {% load crispy_forms_tags %}
 {% crispy form form.helper %}
 
-{% block user_menu %}
-  {{ super.block }}
-  <a href="{%  url 'race:result_list_add' %}" class="btn btn-success">
-    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-    Uitslag toevoegen
-  </a>
-{% endblock user_menu %}
-
 {% block content %}
 
   <div class="page-header">
-      <h1>{{ object.title }}</h1>
-      {{ object.text|safe }}
+      <h1>Uitslag doorgeven</h1>
+      <p class="lead">Kies 'uitslag doorgeven' uit onderstaande lijst.</p>
   </div>
 
       <table class="table">
@@ -28,7 +20,6 @@
                 <th>Afstand</th>
                 <th>Deelnemer</th>
                 <th>Uitslag</th>
-                <th>Opmerkingen</th>
               </tr>
           </thead>
           <tbody>
@@ -38,7 +29,7 @@
                     {{ obj.date }}
                   </td>
                   <td>
-                    <a href="{{ obj.event.get_absolute_url }}" title="{{ obj.event.name }}">{{ obj.event }}</a>
+                    {{ obj.event }}
                   </td>
                   <td>
                     {{ obj.distance }}
@@ -50,14 +41,11 @@
                     {% if obj.time %}
                       {{ obj.time }}
                     {% else %}
-                      <a href="{{ obj.get_edit_url }}" title="Uitslag toevoegen">
-                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                      <a href="{{ obj.get_edit_url }}" title="Uitslag doorgeven">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Uitslag doorgeven
                       </a>
                     {% endif %}
                   </td>
-              <td>
-                {{ obj.remarks }}
-              </td>
               </tr>
             {% endfor %}
           </tbody>
@@ -68,10 +56,21 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
               </tr>
           </tfoot>
       </table>
+
+        <p class="lead">Staat jouw evenement niet in de lijst? Dat kan twee oorzaken hebben:</p>
+        <ol>
+          <li>
+            Je uitslag is al door iemand anders doorgegeven.
+            <p><a href="{% url 'race:event_list' %}">Bekijk jouw evenement</a> en check of je uitslag al bestaat.</p>
+          </li>
+          <li>
+            Je hebt nog geen 'wie wat waar' doorgegeven.
+            <p>Graag eerst een <a href="{% url 'race:result_list' %}">wie wat waar toevoegen</a> daarna kun je een uitslag doorgeven.</p>
+          </li>
+        </ol>
 {% endblock content %}
 
 {% block extra_js %}

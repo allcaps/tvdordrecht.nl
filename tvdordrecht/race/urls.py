@@ -8,6 +8,7 @@ from .views import (
     EventCreateView,
     EventUpdateView,
     ResultList,
+    ResultListAddView,
     ResultUpdateView,
 )
 from .forms import (
@@ -57,13 +58,11 @@ urlpatterns = patterns('',
         ResultList.as_view(),
         name='result_list',
     ),
-    # Maybe a view with only empty results.
-    # And instruction that if not in list, you have to add who what where.
-    # url(
-    #     r'^uitslagen/toevoegen/$',
-    #     ResultList.as_view(),
-    #     name='result_add_list',
-    # ),
+    url(
+        r'^uitslagen/toevoegen/$',
+        ResultListAddView.as_view(),
+        name='result_list_add',
+    ),
     url(
         r'^uitslagen/(?P<pk>\d+)/$',
         ResultUpdateView.as_view(),
