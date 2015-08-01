@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
@@ -123,8 +124,7 @@ class ResultList(CurrentMenuMixin, CurrentPageMixin, ListView):
     def get_queryset(self):
         queryset = super(ResultList, self).get_queryset()
         now = datetime.now()
-        queryset = queryset.filter(time__isnull=False,
-                                   date__lte=now)
+        queryset = queryset.filter(date__lte=now)
         return queryset
 
 
@@ -138,7 +138,8 @@ def get_help_text(name, url):
     return template.format(name=name, url=url, title=name.title())
 
 
-class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMixin, SessionWizardView):
+class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin,
+                         SessionWizardView):
     template_name = 'race/who_what_where_wizard_form.html'
     success_message = "Succes: Wie Wat Waar is opgeslagen!"
 
@@ -154,48 +155,38 @@ class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMix
             data = self.storage.get_step_data('0')
             event_pk = data.get('0-event')
             event = Event.objects.get(pk=event_pk)
-            form.fields['date'].help_text = "Wanneer is %s? Format: YYYY-MM-DD" % event.name
+            form.fields['date'].label = "Wanneer is %s?" % event.name
+            form.fields['date'].help_text = "Format: DD-MM-YYYY"
             form.fields['user'].choices = [ (user.id, user.get_full_name()) for user in User.objects.all()]
             form.fields['user'].initial = get_current_user()
+
         return form
 
     def done(self, form_list, **kwargs):
         data = self.get_all_cleaned_data()
-        Result.objects.get_or_create(
+        obj, created = Result.objects.get_or_create(
             user=self.request.user,
             event=data['event'],
             date=data['date'],
             distance=data['distance'],
         )
-        return redirect(reverse("race:who_what_where_list"))
-
-
-class ResultWizard(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMixin, SessionWizardView):
-    template_name = 'race/result_wizard_form.html'
-    success_message = "Succes: Resultaat is opgeslagen!"
-
-    def get_form(self, step=None, data=None, files=None):
-        form = super(ResultWizard, self).get_form(step, data, files)
-        step = step or self.steps.current
-
-        if step == '0':
-            results = self.request.user.result_set.filter(
-                time__isnull=True, date__lte=datetime.now()
+        if created:
+            messages.add_message(
+                self.request,
+                messages.SUCCESS,
+                'Succes! Wie wat waar is opgeslagen.'
             )
-            choices = [(res.id, res.choice_label) for res in results]
-            form.fields['result'].choices = choices
-            form.fields['result'].help_text = """
-            <p class="small">
-                Staat jouw wedstrijd niet in deze lijst?
-                <a href="%s">+ Wie wat waar toevoegen</a>
-            </p>
-            """ % reverse('race:who_what_where_add')
-        return form
+        else:
+            messages.add_message(
+                self.request,
+                messages.INFO,
+                'Oeps! Er bestaat al een Wie wat waar voor %s %s %s %s.' %
+                (obj.date, obj.event, obj.distance, obj.user.get_full_name())
+            )
+        return redirect(obj.event.get_absolute_url())
 
-    def done(self, form_list, **kwargs):
-        data = self.get_all_cleaned_data()
-        result = Result.objects.get(pk=data['result'])
-        result.time = data['time']
-        result.remarks = data['remarks']
-        result.save()
-        return redirect(reverse("race:result_list"))
+
+class ResultUpdateView(LoginRequiredMixin, CurrentMenuMixin,
+                       SuccessMessageMixin, UpdateView):
+    model = Result
+    fields = ['time', 'remarks']

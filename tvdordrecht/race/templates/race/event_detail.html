@@ -28,47 +28,32 @@
   <p><a href="{{ object.website }}">{{ object.website }}</a></p>
   {{ object.text|safe }}
 
-  {% for edition in object.edition_set.all %}
-    <h3>{{ edition.date }}</h3>
-    {% if user.is_authenticated %}
-    <p><a href="{{ edition.get_edit_url }}">Editie bewerken</a></p>
-    {% endif %}
+  {% regroup object.result_set.all by date as date_list %}
+  {% for date in date_list %}
+    <h3>{{ date.grouper }}</h3>
       <table class="table">
-          <thead>
-              <tr>
-                  <th>Wedstrijd</th>
-                  <th>Deelnemer</th>
-                  <th>Uitslag</th>
-                  <th>Opmerkingen</th>
-              </tr>
-          </thead>
-          <tbody>
-          {% for race in edition.race_set.all %}
-            {% for result in race.result_set.all %}
-              <tr>
-                  <td>
-                    {% if forloop.first %}
-                      {{ race.distance }}
-                    {% endif %}
-                  </td>
-                  <td>
-                    {{ result.user }}
-                  </td>
-                  <td>{% if result.time %}{{ result.time }}{% endif %}</td>
-                  <td>{{ result.remarks }}</td>
-              </tr>
-            {% empty %}
-                <tr>
-                  <td>
-                    {{ race.distance }}
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-            {% endfor %}
-          {% endfor %}
-          </tbody>
+      <thead>
+          <tr>
+              <th>Afstand</th>
+              <th>Deelnemer</th>
+              <th>Uitslag</th>
+              <th>Opmerkingen</th>
+          </tr>
+      </thead>
+      <tbody>
+      {% for result in date.list %}
+          <tr>
+              <td>
+                  {{ result.distance }}
+              </td>
+              <td>
+                {{ result.user }}
+              </td>
+              <td>{% if result.time %}{{ result.time }}{% endif %}</td>
+              <td>{{ result.remarks }}</td>
+          </tr>
+      {% endfor %}
+      </tbody>
       <tfoot>
           <tr>
             <th></th>

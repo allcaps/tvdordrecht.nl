@@ -59,6 +59,12 @@ class WhoWhatWhereDetailForm(forms.ModelForm):
         exclude = ['event', 'pub_date', 'time', 'remarks']
 
 
+class ResultForm(forms.ModelForm):
+    class Meta:
+        model = Result
+        exclude = []
+
+
 class EditionSearchForm(forms.Form):
     """ Form to search `Edition` objects. """
     q = forms.CharField(label='', required=False)
@@ -86,23 +92,3 @@ class EditionSearchForm(forms.Form):
                 ),
             )
         )
-
-
-class ResultForm(forms.ModelForm):
-    class Meta:
-        model = Result
-        exclude = []
-
-
-class ResultForm0(forms.Form):
-    result = forms.ChoiceField(
-        label='Wedstrijd',
-        required=True,
-        widget=forms.widgets.RadioSelect()
-    )
-
-
-class ResultForm1(forms.ModelForm):
-    class Meta:
-        model = Result
-        fields = ['time', 'remarks']

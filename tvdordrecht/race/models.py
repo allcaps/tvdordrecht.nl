@@ -48,23 +48,34 @@ class Event(Base):
         "Naam",
         max_length=200,
         unique=True,
-        help_text="De naam van dit evenement. Bijvoorbeeld: 'Triathlon Binnenmaas'"
+        help_text="De naam van dit evenement. "
+                  "Bijvoorbeeld: 'Triathlon Binnenmaas'"
     )
     city = models.CharField("Plaats", max_length=200)
     slug = models.SlugField(unique=True)
-    text = models.TextField("Tekst", blank=True, help_text="Korte omschrijving van dit evenement. Wat maakt dit evenement anders dan andere evenementen?")
+    text = models.TextField(
+        "Tekst",
+        blank=True,
+        help_text="Korte omschrijving van dit evenement. Wat maakt dit "
+                  "evenement anders dan andere evenementen?"
+    )
     website = models.URLField(
         blank=True,
         help_text=u"Alleen de base url.",
     )
-    image = models.ForeignKey(Image, verbose_name='event_image', blank=True, null=True)
+    image = models.ForeignKey(
+        Image,
+        verbose_name='event_image',
+        blank=True,
+        null=True
+    )
 
     def __unicode__(self):
         return u"%s - %s" % (self.name, self.city)
 
     class Meta:
         verbose_name = u"evenement"
-        verbose_name_plural = u"   Evenementen"
+        verbose_name_plural = u"evenementen"
 
     def get_absolute_url(self):
         return reverse('race:event_detail', args=(self.slug, ))
@@ -96,8 +107,8 @@ class Result(Base):
     """
     Result
 
-    If no time is given, than that user still has to
-    participate aka who-what-where.
+    If no time is given and the event is in the futute, than that user
+    still has to participate. Also known as who-what-where.
     """
     user = models.ForeignKey(
         User,
@@ -111,17 +122,30 @@ class Result(Base):
         "datum",
         help_text="YYYY-MM-DD"
     )
-    distance = models.ForeignKey(Distance, verbose_name="Afstand")
-    time = models.TimeField("Tijd", blank=True, null=True, help_text="HH:MM:SS")
+    distance = models.ForeignKey(
+        Distance,
+        verbose_name="Afstand"
+    )
+    time = models.TimeField(
+        "Tijd",
+        blank=True,
+        null=True,
+        help_text="HH:MM:SS"
+    )
     remarks = models.CharField(
         "Opmerkingen",
         max_length=200,
         blank=True,
-        help_text=u"Podiumplaatsen zijn het vermelden waard. Bijvoorbeeld: '1e H50'.",
+        help_text=u"Podiumplaatsen zijn het vermelden waard. "
+                  u"Bijvoorbeeld: '1e H50'.",
         )
 
     def __unicode__(self):
-        return "%s %s %s %s %s" % (self.user, self.date, self.event, self.distance, self.time)
+        return "%s %s %s %s %s" % \
+               (self.user, self.date, self.event, self.distance, self.time)
+
+    def get_edit_url(self):
+        return reverse('race:result_update', args=(self.pk, ))
 
     class Meta:
         unique_together = (("user", "event", "date", "distance"),)

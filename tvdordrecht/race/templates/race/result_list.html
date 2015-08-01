@@ -7,10 +7,10 @@
 
 {% block user_menu %}
   {{ super.block }}
-  <a href="{%  url 'race:result_add' %}" class="btn btn-success">
-    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-    Uitslag toevoegen
-  </a>
+{#  <a href="{%  url 'race:result_add' %}" class="btn btn-success">#}
+{#    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>#}
+{#    Uitslag toevoegen#}
+{#  </a>#}
 {% endblock user_menu %}
 
 {% block content %}
@@ -47,7 +47,13 @@
                     {{ obj.user.first_name|capfirst }}
                   </td>
                   <td>
-                    {{ obj.time }}
+                    {% if obj.time %}
+                      {{ obj.time }}
+                    {% else %}
+                      <a href="{{ obj.get_edit_url }}" title="Uitslag toevoegen">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                      </a>
+                    {% endif %}
                   </td>
               <td>
                 {{ obj.remarks }}
