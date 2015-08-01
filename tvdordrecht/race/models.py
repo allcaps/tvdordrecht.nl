@@ -130,7 +130,8 @@ class Result(Base):
         "Tijd",
         blank=True,
         null=True,
-        help_text="HH:MM:SS"
+        help_text=u"Format: UU:MM:SS. Bijvoorbeeld: 00:20:05 "
+                  u"(twintig minuten en vijf seconden)."
     )
     remarks = models.CharField(
         "Opmerkingen",
@@ -146,6 +147,9 @@ class Result(Base):
 
     def get_edit_url(self):
         return reverse('race:result_update', args=(self.pk, ))
+
+    def get_absolute_url(self):
+        return reverse('race:result_list')
 
     class Meta:
         unique_together = (("user", "event", "date", "distance"),)

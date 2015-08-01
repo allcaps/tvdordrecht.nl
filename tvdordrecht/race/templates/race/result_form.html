@@ -20,10 +20,45 @@
     <div class="row">
         <div class="col-md-8 col-md-push-2" role="main">
             <h1>Uitslag doorgeven</h1>
-            <p class="small">
-              Door {{ user.first_name|capfirst }}<br/>
-              Datum {% now "DATE_FORMAT" %}
-            </p>
+              <table class="table">
+                  <thead>
+                      <tr>
+                        <th>Datum</th>
+                        <th>Evemenement</th>
+                        <th>Plaats</th>
+                        <th>Afstand</th>
+                        <th>Deelnemer</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>
+                            {{ object.date }}
+                          </td>
+                          <td>
+                            {{ object.event.name }}
+                          </td>
+                          <td>
+                            {{ object.event.city }}
+                          </td>
+                          <td>
+                            {{ object.distance }}
+                          </td>
+                          <td>
+                            {{ object.user.first_name|capfirst }}
+                          </td>
+                      </tr>
+                  </tbody>
+                  <tfoot>
+                      <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                  </tfoot>
+              </table>
             <form method="post" action="" enctype="multipart/form-data" class="well">
               {% csrf_token %}
               {{ form|crispy }}

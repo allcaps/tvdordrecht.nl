@@ -60,9 +60,14 @@ class WhoWhatWhereDetailForm(forms.ModelForm):
 
 
 class ResultForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ResultForm, self).__init__(*args, **kwargs)
+        self.fields['time'].required = True
+
     class Meta:
         model = Result
-        exclude = []
+        fields = ['time', 'remarks']
 
 
 class EditionSearchForm(forms.Form):

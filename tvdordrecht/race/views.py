@@ -29,6 +29,7 @@ from .models import (
 from .forms import (
     EditionSearchForm,
     EventForm,
+    ResultForm,
 )
 
 from django.contrib.auth.decorators import login_required
@@ -189,4 +190,6 @@ class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin,
 class ResultUpdateView(LoginRequiredMixin, CurrentMenuMixin,
                        SuccessMessageMixin, UpdateView):
     model = Result
-    fields = ['time', 'remarks']
+    form_class = ResultForm
+    # success_url = '/wedstrijd/resultaten/'
+    success_message = "Succes! Resultaat opgeslagen."

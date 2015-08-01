@@ -36,9 +36,13 @@
     <p>
       {# The order of buttons is revesed in the markup and corrected with css floats. #}
       {# This to trigger a form submit on enter. (The first button) #}
-      <button type="submit" value="Volgende" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Volgende</button>
+      <button type="submit" value="Volgende" class="btn btn-primary">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Volgende
+      </button>
       {% if wizard.steps.prev %}
-        <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}"  class="btn btn-default btn-xs pull-left" style="margin:.5em;">{% trans "prev step" %}</button>
+        <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}"  class="btn btn-default btn-xs pull-left" style="margin:.5em;">
+          {% trans "prev step" %}
+        </button>
       {% endif %}
     </p>
   </form>
