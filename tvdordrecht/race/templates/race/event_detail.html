@@ -35,7 +35,9 @@
 </div>
 <div>
   <h3>Wie wat waar</h3>
-  {% include 'race/who_what_where_table.html' %}
+  {% with www_list as result_list %}
+    {% include 'race/who_what_where_table.html' %}
+  {% endwith %}
 
   <h3>Uitslagen</h3>
   {% include 'race/result_table.html' %}
