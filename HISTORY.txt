@@ -5,7 +5,7 @@ History of this project
 0.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Switch Who what where and result lists in profile and event page.
 
 
 0.6 (2015-08-02)
