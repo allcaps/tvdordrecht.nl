@@ -5,6 +5,10 @@
 {% load crispy_forms_tags %}
 {% crispy form form.helper %}
 
+{% block title %}
+  Evenementen «
+{% endblock title %}
+
 {% block admin_menu %}
     {{ super.block }}
     <a href="{{ object.get_admin_url }}" class="btn btn-default">
@@ -14,6 +18,7 @@
 
 {% block user_menu %}
     <a class="btn btn-success" href="{% url 'race:event_create' %}">
+      <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
       Evenement toevoegen
     </a>
 {% endblock user_menu %}

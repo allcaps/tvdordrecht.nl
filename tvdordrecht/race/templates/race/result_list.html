@@ -5,11 +5,15 @@
 {% load crispy_forms_tags %}
 {% crispy form form.helper %}
 
+{% block title %}
+  Uitslagen «
+{% endblock title %}
+
 {% block user_menu %}
   {{ super.block }}
-  <a href="{%  url 'race:result_add' %}" class="btn btn-success">
+  <a href="{%  url 'race:result_list_add' %}" class="btn btn-success">
     <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-    Uitslag toevoegen
+    Uitslag doorgeven
   </a>
 {% endblock user_menu %}
 
@@ -20,52 +24,8 @@
       {{ object.text|safe }}
   </div>
 
-      <table class="table">
-          <thead>
-              <tr>
-                <th>Datum</th>
-                <th>Evemenement</th>
-                <th>Wedstrijd</th>
-                <th>Deelnemer</th>
-                <th>Uitslag</th>
-                <th>Opmerkingen</th>
-              </tr>
-          </thead>
-          <tbody>
-            {% for obj in object_list %}
-              <tr>
-                  <td>
-                    {{ obj.edition.date }}
-                  </td>
-                  <td>
-                    <a href="{{ obj.edition.event.get_absolute_url }}" title="{{ obj.edition.event.name }}">{{ obj.edition.event }}</a>
-                  </td>
-                  <td>
-                    {{ obj.race }}
-                  </td>
-                  <td>
-                    {{ obj.user.first_name|capfirst }}
-                  </td>
-                  <td>
-                    {{ obj.time }}
-                  </td>
-              <td>
-                {{ obj.remarks }}
-              </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-          <tfoot>
-              <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-              </tr>
-          </tfoot>
-      </table>
+  {% include 'race/result_table.html' %}
+
 {% endblock content %}
 
 {% block extra_js %}

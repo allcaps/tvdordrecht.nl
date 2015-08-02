@@ -1,0 +1,36 @@
+{% extends 'race/base.html' %}
+
+{% load staticfiles %}
+
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
+
+{% block title %}
+  Uitslagen «
+{% endblock title %}
+
+{% block content %}
+
+  <div class="page-header">
+      <h1>Uitslag doorgeven</h1>
+      <p class="lead">Kies 'uitslag doorgeven' uit onderstaande lijst.</p>
+  </div>
+
+  {% include 'race/result_table.html' %}
+
+  <p class="lead">Staat jouw evenement niet in de lijst? Dat kan twee oorzaken hebben:</p>
+  <ol>
+    <li>
+      Je uitslag is al door iemand anders doorgegeven.
+      <p><a href="{% url 'webapp:profile' %}">Bekijk jouw profielpagina</a> en controleer of je uitslag al bestaat.</p>
+    </li>
+    <li>
+      Je hebt nog geen 'wie wat waar' doorgegeven.
+      <p>Graag eerst een <a href="{% url 'race:who_what_where_add' %}">wie wat waar toevoegen</a> daarna kun je een uitslag doorgeven.</p>
+    </li>
+  </ol>
+
+{% endblock content %}
+
+{% block extra_js %}
+{% endblock extra_js %}

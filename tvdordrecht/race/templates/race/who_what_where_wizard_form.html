@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load crispy_forms_tags %}
 
@@ -7,18 +8,21 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-push-2" role="main">
+
   <h1>Wie wat waar toevoegen</h1>
 
   {% if wizard.steps.step1 == 1 %}
-    <p class="lead">Kijk eerst in het
-      <a href="{% url 'race:event_list' %}">evenementen overzicht</a> of het
-      evenement én de editie (datum) waaraan je deelneemt voorkomen. Zo niet,
-      maak dan eerst het evenement en de editie aan!</p>
+    <p class="lead">Staat jouw evenement niet in de lijst?
+      <a href="{% url 'race:event_create' %}">Maak dan eerst het evenement aan</a>.
   {% endif %}
 
   <p class="lead">Stap {{ wizard.steps.step1 }} van {{ wizard.steps.count }}</p>
 
   <form action="" method="post" class="well">{% csrf_token %}
+
     {{ wizard.management_form }}
     {% if wizard.form.forms %}
         {{ wizard.form.management_form }}
@@ -30,12 +34,74 @@
     {% endif %}
 
     <p>
+      {# The order of buttons is revesed in the markup and corrected with css floats. #}
+      {# This to trigger a form submit on enter. (The first button) #}
+      <button type="submit" value="Volgende" class="btn btn-primary">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Volgende
+      </button>
       {% if wizard.steps.prev %}
-      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}"  class="btn btn-default btn-xs">{% trans "first step" %}</button>
-      <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}"  class="btn btn-default btn-xs">{% trans "prev step" %}</button>
+        <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}"  class="btn btn-default btn-xs pull-left" style="margin:.5em;">
+          {% trans "prev step" %}
+        </button>
       {% endif %}
-      <button type="submit" value="Volgende" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Volgende</button>
     </p>
   </form>
 
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+{% block javascript %}
+  <link rel="stylesheet" href="{% static 'race/jquery-ui-1.11.4.custom/jquery-ui.css' %}">
+  <script src="{% static 'race/jquery-ui-1.11.4.custom/jquery-ui.js' %}"></script>
+  <script src="{% static 'race/jquery-ui-1.11.4.custom/ui.datepicker-nl.js' %}"></script>
+  <script>
+  $(function() {
+    $( ".dateinput" ).datepicker({
+      showOn: "button",
+      buttonText: '<span class="glyphicon glyphicon-calendar"></span> Kies een datum ...',
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-mm-yy",
+      submitFormat: "dd-mm-yy",
+      regional: 'nl'
+    });
+  });
+
+  // Get query sting parameter.
+  $(function() {
+    var came_from = location.search.split('?event=')[1];
+    if (came_from) {
+      $("input[value=" + came_from + "]").click();
+    }
+  });
+
+  // Show or hide 'Other ...'
+  $(function() {
+    var foo = $('#div_id_1-foo');
+    if ($("input[value='1']:checked").length != 1) {
+      foo.hide();
+    }
+    $('#div_id_1-distance input').change(
+      function radioValueChanged() {
+          if($(this).val() == "1") {
+            foo.show();
+          }
+          else {
+            foo.hide();
+          }
+      }
+    );
+  });
+
+  // Hide help text until error.
+  $(function() {
+    if (!$('#error_1_id_1-date').length) {
+      $("#hint_id_1-date").hide();
+    }
+  });
+
+
+  </script>
+{% endblock javascript %}

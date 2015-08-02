@@ -1,48 +1,82 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.conf import settings
-from django.template import defaultfilters
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.utils.text import slugify
 
 from webapp.models import Image
 
-"""
-An `Event` can have multiple Editions.
-An `Edition` can have multiple Races.
-A `Race` can have multiple Results.
-A `Result` belongs to one User.
 
-A result with time == Null is a who what where. Aka an indication the user will
-participate.
-"""
+class Base(models.Model):
+    pub_date = models.DateTimeField(
+        "publicatie datum",
+        blank=True,
+        null=True
+    )
+    owner = models.ForeignKey(
+        User,
+        verbose_name="Eigenaar",
+        blank=True,
+        null=True,
+        editable=False,
+        related_name="%(class)s_owner"
+    )
+    last_modified_by = models.ForeignKey(
+        User,
+        verbose_name="Laatst bewerkt door",
+        blank=True,
+        null=True,
+        editable=False,
+        related_name="%(class)s_last_modified_by"
+    )
+    last_modified = models.DateTimeField(
+        "laatst bewerkt",
+        blank=True,
+        null=True,
+        editable=False,
+        auto_now=True
+    )
+
+    class Meta:
+        abstract = True
 
 
-class Event(models.Model):
+class Event(Base):
     """
     An Event can have multiple Edition objects.
     """
-    name = models.CharField("Naam", max_length=200, unique=True)
+    name = models.CharField(
+        "Naam",
+        max_length=200,
+        unique=True,
+        help_text="De naam van dit evenement. "
+                  "Bijvoorbeeld: 'Triathlon Binnenmaas'"
+    )
     city = models.CharField("Plaats", max_length=200)
     slug = models.SlugField(unique=True)
-    text = models.TextField("Tekst", blank=True, help_text="Korte omschrijving van dit evenement. Wat maakt dit evenement anders dan andere evenementen?")
+    text = models.TextField(
+        "Tekst",
+        blank=True,
+        help_text="Korte omschrijving van dit evenement. Wat maakt dit "
+                  "evenement anders dan andere evenementen?"
+    )
     website = models.URLField(
         blank=True,
         help_text=u"Alleen de base url.",
     )
-    image = models.ForeignKey(Image, verbose_name='event_image', blank=True, null=True)
-    # Meta fields
-    pub_date = models.DateTimeField("publicatie datum", blank=True, null=True)
-    owner = models.ForeignKey(User, verbose_name="Eigenaar", blank=True, null=True, editable=False, related_name="%(class)s_owner")
-    last_modified_by = models.ForeignKey(User, verbose_name="Laatst bewerkt door", blank=True, null=True, editable=False, related_name="%(class)s_last_modified_by")
-    last_modified = models.DateTimeField("laatst bewerkt", blank=True, null=True, editable=False, auto_now=True)
+    image = models.ForeignKey(
+        Image,
+        verbose_name='event_image',
+        blank=True,
+        null=True
+    )
 
     def __unicode__(self):
         return u"%s - %s" % (self.name, self.city)
 
     class Meta:
         verbose_name = u"evenement"
-        verbose_name_plural = u"   Evenementen"
+        verbose_name_plural = u"evenementen"
 
     def get_absolute_url(self):
         return reverse('race:event_detail', args=(self.slug, ))
@@ -53,43 +87,17 @@ class Event(models.Model):
     def get_admin_url(self):
         return reverse('admin:race_event_change', args=(self.id,))
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify("%s %s" % (self.name, self.city))
+        super(Event, self).save(*args, **kwargs)
 
-class Edition(models.Model):
-    """
-    An Edition can have multiple Race objects.
-    """
-    event = models.ForeignKey(Event)
-    date = models.DateField()
-
-    def __unicode__(self):
-        return defaultfilters.date(self.date, "j F Y")
-
-    class Meta:
-        unique_together = (("event", "date"),)
-        verbose_name = u"editie"
-        verbose_name_plural = u"  Edities"
-        ordering = ["-date", ]
-
-    def get_absolute_url(self):
-        return reverse('race:event_detail', kwargs={'slug': self.event.slug, })
-
-    def get_edit_url(self):
-        return reverse(
-            'race:edition_update',
-            kwargs={
-                'event_slug': self.event.slug,
-                'pk': self.pk,
-            }
-        )
-
-
-class Distance(models.Model):
+class Distance(Base):
     """
     Distance is a property of `Race`.
     """
     name = models.CharField(max_length=200, unique=True)
     order = models.CharField(max_length=200, blank=True)
-    default = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name
@@ -97,70 +105,59 @@ class Distance(models.Model):
     class Meta:
         verbose_name = u"Afstand"
         verbose_name_plural = u"Afstanden"
-        ordering = ["default", "order", ]
+        ordering = ["order", ]
 
 
-class Race(models.Model):
-    """
-    A Race can have multiple Results
-    """
-    edition = models.ForeignKey(Edition)
-    distance = models.ForeignKey(Distance)
-
-    def __unicode__(self):
-        return self.distance.name
-
-    def get_absolute_url(self):
-        return reverse('race:event_detail', args=(self.edition.event.slug,))
-
-    def get_edit_url(self):
-        return reverse(
-            'race:event_update',
-            kargs={
-                'event_slug': self.edition__event.slug,
-                'pk': self.pk,
-            }
-        )
-
-    class Meta:
-        unique_together = (("edition", "distance"),)
-        verbose_name = "wedstrijd"
-        verbose_name_plural = " Wedstrijden"
-        ordering = ['distance']
-
-
-class Result(models.Model):
+class Result(Base):
     """
     Result
 
-    If no time is given, than this is a indication that the user will
-    participate aka who-what-where.
+    If no time is given and the event is in the futute, than that user
+    still has to participate. Also known as who-what-where.
     """
-    user = models.ForeignKey(User, verbose_name="deelnemer")
-    race = models.ForeignKey(Race, verbose_name="Wedstrijd")
-    time = models.TimeField("Tijd", blank=True, null=True, help_text="HH:MM:SS")
+    user = models.ForeignKey(
+        User,
+        verbose_name="deelnemer",
+    )
+    event = models.ForeignKey(
+        Event,
+        verbose_name="Evenement",
+    )
+    date = models.DateField(
+        "datum",
+        help_text="YYYY-MM-DD"
+    )
+    distance = models.ForeignKey(
+        Distance,
+        verbose_name="Afstand"
+    )
+    time = models.TimeField(
+        "Tijd",
+        blank=True,
+        null=True,
+        help_text=u"Format: UU:MM:SS. Bijvoorbeeld: 00:20:05 "
+                  u"(twintig minuten en vijf seconden)."
+    )
     remarks = models.CharField(
         "Opmerkingen",
         max_length=200,
         blank=True,
-        help_text=u"Podiumplaatsen zijn het vermelden waard. Bijvoorbeeld: '1e H50'.",
+        help_text=u"Podiumplaatsen zijn het vermelden waard. "
+                  u"Bijvoorbeeld: '1e H50'.",
         )
 
     def __unicode__(self):
-        time = self.time or "(Geen)"
-        return "%s %s" % (self.user, time)
+        return "%s %s %s %s %s" % \
+               (self.user, self.date, self.event, self.distance, self.time)
 
-    def event_name(self):
-        return self.race.edition.event
+    def get_edit_url(self):
+        return reverse('race:result_update', args=(self.pk, ))
 
-    def edition(self):
-        return self.race.edition
-
-    def choice_label(self):
-        return "%s %s %s" % (self.edition(), self.event_name(), self.race.distance)
+    def get_absolute_url(self):
+        return reverse('race:result_list')
 
     class Meta:
-        unique_together = (("user", "race"),)
-        verbose_name = "uitslag"
-        verbose_name_plural = "uitslagen"
-        ordering = ['race__edition', 'time']
+        unique_together = (("user", "event", "date", "distance"),)
+        verbose_name = "Wie wat waar / Uitslag"
+        verbose_name_plural = "Wie wat waars / Uitslagen"
+        ordering = ['-date', 'event', 'distance', 'time']

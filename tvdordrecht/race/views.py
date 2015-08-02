@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
+from django.utils import timezone
+from django.contrib import messages
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.contrib.messages.views import SuccessMessageMixin
@@ -14,23 +15,21 @@ from formtools.wizard.views import SessionWizardView
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
-
-
 from webapp.models import (
     Menu,
     Page,
 )
+from webapp.middleware import get_current_user
 
 from .models import (
     Event,
-    Edition,
-    Race,
+    Distance,
     Result,
 )
 from .forms import (
     EditionSearchForm,
     EventForm,
-    EditionForm,
+    ResultForm,
 )
 
 from django.contrib.auth.decorators import login_required
@@ -64,6 +63,13 @@ class EventList(CurrentMenuMixin, CurrentPageMixin, ListView):
 class EventDetail(CurrentMenuMixin, DetailView):
     model = Event
 
+    def get_context_data(self, **kwargs):
+        context = super(EventDetail, self).get_context_data(**kwargs)
+        now = timezone.now()
+        event = context['object']
+        context['www_list'] = Result.objects.filter(event=event, date__gt=now)
+        context['result_list'] = Result.objects.filter(event=event, date__lte=now)
+        return context
 
 class EventCreateView(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMixin, CreateView):
     template_name = 'race/event_form.html'
@@ -87,44 +93,6 @@ class CurrentEventMixin(object):
         return context
 
 
-class EditionCreateView(LoginRequiredMixin, CurrentMenuMixin, CurrentEventMixin, SuccessMessageMixin, CreateView):
-    template_name = 'race/edition_form.html'
-    model = Edition
-    form_class = EditionForm
-    success_message = "Succes: %(date)s is opgeslagen!"
-
-    def get_initial(self):
-        initial = super(EditionCreateView, self).get_initial()
-        initial = initial.copy()
-        initial['event'] = self.get_context_data().get('event')
-        return initial
-
-    def get_success_url(self):
-        return reverse(
-            "race:event_detail",
-            kwargs={'slug': self.kwargs['event_slug']}
-        )
-
-class EditionUpdateView(LoginRequiredMixin, CurrentMenuMixin, CurrentEventMixin, SuccessMessageMixin, UpdateView):
-    template_name = 'race/edition_form.html'
-    is_update_view = True
-    model = Edition
-    form_class = EditionForm
-    success_message = "Succes: %(date)s is opgeslagen!"
-
-    def get_success_url(self):
-        return reverse(
-            "race:event_detail",
-            kwargs={'slug': self.kwargs['event_slug']}
-        )
-
-    def get_initial(self):
-        initial = super(EditionUpdateView, self).get_initial()
-        initial = initial.copy()
-        initial['distances'] = [obj.distance.pk for obj in self.object.race_set.all()]
-        return initial
-
-
 class WhoWhatWhere(CurrentMenuMixin, CurrentPageMixin, ListView):
     model = Result
     template_name = 'race/who_what_where_list.html'
@@ -133,14 +101,14 @@ class WhoWhatWhere(CurrentMenuMixin, CurrentPageMixin, ListView):
     def get_queryset(self, **kwargs):
         """Filters the queryset with the search values."""
         queryset = Result.objects.filter(time=None)\
-            .filter(race__edition__date__gte=datetime.now())\
-            .order_by('-race__edition', 'race__distance', 'user')
+            .filter(date__gte=timezone.now())\
+            .order_by('-date', 'distance', 'user')
 
         q = self.request.GET.get("q")
         if q:
             queryset = queryset.filter(
-                Q(race__edition__event__name__contains=q) |
-                Q(race__edition__event__city__contains=q) |
+                Q(event__name__contains=q) |
+                Q(event__city__contains=q) |
                 Q(user__username=q)
             )
         user = self.request.GET.get("user")
@@ -163,9 +131,7 @@ class ResultList(CurrentMenuMixin, CurrentPageMixin, ListView):
 
     def get_queryset(self):
         queryset = super(ResultList, self).get_queryset()
-        now = datetime.now()
-        queryset = queryset.filter(time__isnull=False,
-                                   race__edition__date__lte=now)
+        queryset = queryset.filter(date__lte=timezone.now())
         return queryset
 
 
@@ -179,7 +145,8 @@ def get_help_text(name, url):
     return template.format(name=name, url=url, title=name.title())
 
 
-class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMixin, SessionWizardView):
+class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin,
+                         SessionWizardView):
     template_name = 'race/who_what_where_wizard_form.html'
     success_message = "Succes: Wie Wat Waar is opgeslagen!"
 
@@ -191,66 +158,71 @@ class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMix
             help_text = get_help_text('evenement', reverse("race:event_create"))
             form.fields['event'].help_text = help_text
 
-        if step in ['1', '2']:
+        if step == '1':
             data = self.storage.get_step_data('0')
             event_pk = data.get('0-event')
             event = Event.objects.get(pk=event_pk)
+            form.fields['date'].label = "Wanneer is %s?" % event.name
+            form.fields['date'].help_text = "Format: DD-MM-YYYY"
+            form.fields['user'].choices = [ (user.id, user.get_full_name()) for user in User.objects.all()]
+            form.fields['user'].initial = get_current_user()
 
-            if step == '1':
-                form.fields['edition'].queryset = event.edition_set.all()
-                help_text = get_help_text('editie', reverse(
-                    "race:edition_create", kwargs={'event_slug': event.slug}))
-                form.fields['edition'].help_text = help_text
-
-            if step == '2':
-                data = self.storage.get_step_data('1')
-                edition = Edition.objects.get(pk=data.get('1-edition'))
-                qs = edition.race_set.all()
-                form.fields['race'].queryset = qs
-                initial = [i.race.pk for i in self.request.user.result_set.all()]
-                form.fields['race'].initial = initial
-                help_text = get_help_text('wedstrijd', reverse(
-                    "race:edition_update", kwargs={'event_slug': event.slug,
-                                                   'pk': edition.pk}))
-                form.fields['race'].help_text = help_text
-        return form
-
-    def done(self, form_list, **kwargs):
-        # TODO: Remove edition.results time==Null before saving the new Results.
-        for race in self.get_all_cleaned_data()['race']:
-            Result.objects.get_or_create(
-                user=self.request.user,
-                race=race
-            )
-        return redirect(reverse("race:who_what_where_list"))
-
-
-class ResultWizard(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMixin, SessionWizardView):
-    template_name = 'race/result_wizard_form.html'
-    success_message = "Succes: Resultaat is opgeslagen!"
-
-    def get_form(self, step=None, data=None, files=None):
-        form = super(ResultWizard, self).get_form(step, data, files)
-        step = step or self.steps.current
-
-        if step == '0':
-            results = self.request.user.result_set.filter(
-                time__isnull=True, race__edition__date__lte=datetime.now()
-            )
-            choices = [(res.id, res.choice_label) for res in results]
-            form.fields['result'].choices = choices
-            form.fields['result'].help_text = """
-            <p class="small">
-                Staat jouw wedstrijd niet in deze lijst?
-                <a href="%s">+ Wie wat waar toevoegen</a>
-            </p>
-            """ % reverse('race:who_what_where_add')
         return form
 
     def done(self, form_list, **kwargs):
         data = self.get_all_cleaned_data()
-        result = Result.objects.get(pk=data['result'])
-        result.time = data['time']
-        result.remarks = data['remarks']
-        result.save()
-        return redirect(reverse("race:result_list"))
+        distance = data['distance']
+
+        if distance.id == 1:
+            distance, created = Distance.objects.get_or_create(
+                name=data['foo'],
+                order='xx'
+            )
+
+        obj, created = Result.objects.get_or_create(
+            user=self.request.user,
+            event=data['event'],
+            date=data['date'],
+            distance=distance,
+        )
+
+        if created:
+            messages.add_message(
+                self.request,
+                messages.SUCCESS,
+                'Succes! Wie wat waar is opgeslagen.'
+            )
+        else:
+            messages.add_message(
+                self.request,
+                messages.INFO,
+                'Oeps! Er bestaat al een Wie wat waar voor %s %s %s %s.' %
+                (obj.date, obj.event, obj.distance, obj.user.get_full_name())
+            )
+
+        if obj.date >= timezone.now().date():
+            messages.add_message(
+                self.request,
+                messages.INFO,
+                'Je kunt hier direct de uitslag doorgeven!'
+            )
+            return redirect(obj.get_edit_url())
+        else:
+            return redirect(obj.event.get_absolute_url())
+
+
+class ResultUpdateView(LoginRequiredMixin, CurrentMenuMixin,
+                       SuccessMessageMixin, UpdateView):
+    model = Result
+    form_class = ResultForm
+    success_message = "Succes! Uitslag opgeslagen."
+
+
+class ResultListAddView(LoginRequiredMixin, CurrentMenuMixin, ListView):
+    model = Result
+    template_name = 'race/result_list_add.html'
+
+    def get_queryset(self):
+        queryset = super(ResultListAddView, self).get_queryset()
+        queryset = queryset.filter(date__lte=timezone.now(), time__isnull=True)
+        return queryset

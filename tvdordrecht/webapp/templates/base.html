@@ -73,8 +73,6 @@
           margin-bottom: 4em;
         }
 
-{#        .news-item h3#}
-{##}
         .news-item a p {
           color: #333;
         }
@@ -100,6 +98,11 @@
         .jumbotron p {
           color: black;
         }
+
+      .ui-datepicker-trigger {
+        margin-top: .2em;
+        padding: .5em;
+      }
 
     </style>
 
@@ -197,6 +200,9 @@
 
 {% block extra_js %}
 {% endblock extra_js %}
+{% block javascript %}
+{% endblock javascript %}
+
 
 <script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
 <script type="text/javascript">

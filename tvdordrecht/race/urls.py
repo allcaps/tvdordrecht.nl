@@ -1,23 +1,19 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
 from .views import (
     WhoWhatWhere,
     WhoWhatWhereWizard,
-    ResultWizard,
     EventDetail,
     EventList,
     EventCreateView,
     EventUpdateView,
-    EditionCreateView,
-    EditionUpdateView,
     ResultList,
+    ResultListAddView,
+    ResultUpdateView,
 )
 from .forms import (
     WhoWhatWhereEventForm,
-    WhoWhatWhereEditionForm,
-    WhoWhatWhereRaceForm,
-    ResultForm0,
-    ResultForm1,
+    WhoWhatWhereDetailForm,
 )
 
 
@@ -43,16 +39,6 @@ urlpatterns = patterns('',
         name='event_update',
     ),
     url(
-        r'^evenementen/(?P<event_slug>[A-Za-z0-9-_]+)/editie/toevoegen/$',
-        EditionCreateView.as_view(),
-        name='edition_create',
-    ),
-    url(
-        r'^evenementen/(?P<event_slug>[A-Za-z0-9-_]+)/editie/(?P<pk>\d+)/$',
-        EditionUpdateView.as_view(),
-        name='edition_update',
-    ),
-    url(
         r'^wie-wat-waar/$',
         WhoWhatWhere.as_view(),
         name='who_what_where_list',
@@ -62,8 +48,7 @@ urlpatterns = patterns('',
         WhoWhatWhereWizard.as_view(
             [
                 WhoWhatWhereEventForm,
-                WhoWhatWhereEditionForm,
-                WhoWhatWhereRaceForm,
+                WhoWhatWhereDetailForm,
             ],
         ),
         name='who_what_where_add',
@@ -75,12 +60,12 @@ urlpatterns = patterns('',
     ),
     url(
         r'^uitslagen/toevoegen/$',
-        ResultWizard.as_view(
-            [
-                ResultForm0,
-                ResultForm1,
-            ],
-        ),
-        name='result_add',
+        ResultListAddView.as_view(),
+        name='result_list_add',
+    ),
+    url(
+        r'^uitslagen/(?P<pk>\d+)/$',
+        ResultUpdateView.as_view(),
+        name='result_update',
     ),
 )

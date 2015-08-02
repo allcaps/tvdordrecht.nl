@@ -1,0 +1,68 @@
+{% extends "webapp/news_base.html" %}
+
+{% load crop %}
+{% load thumb %}
+{% load crispy_forms_tags %}
+
+{% block title %}Uitslag doorgeven « {% endblock %}
+
+{% block ogtitle %}{{ article.title }} « {% endblock %}
+{% block ogimage %}http://{{ site.domain }}{{ MEDIA_URL }}{{ article.image }}{% endblock %}
+{% block ogdescription %}{{ article.description }}{% endblock %}
+
+{% block user_menu %}
+{% endblock user_menu %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-push-2" role="main">
+            <h1>Uitslag doorgeven</h1>
+              <table class="table">
+                  <thead>
+                      <tr>
+                        <th>Datum</th>
+                        <th>Evemenement</th>
+                        <th>Afstand</th>
+                        <th>Deelnemer</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>
+                            {{ object.date }}
+                          </td>
+                          <td>
+                            {{ object.event }}
+                          </td>
+                          <td>
+                            {{ object.distance }}
+                          </td>
+                          <td>
+                            {{ object.user.first_name|capfirst }}
+                          </td>
+                      </tr>
+                  </tbody>
+                  <tfoot>
+                      <tr>
+                        <th colspan="4"></th>
+                      </tr>
+                  </tfoot>
+              </table>
+            <form method="post" action="" enctype="multipart/form-data" class="well">
+              {% csrf_token %}
+              {{ form|crispy }}
+              <div class="form-actions">
+                <input type="submit" name="submit" value="Verzenden"
+                       class="btn btn-primary" id="submit-id-submit">
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="/static/webapp/ckeditor/ckeditor.js"></script>
+  <script src="/static/webapp/ckeditor_simple.init.js"></script>
+{% endblock extra_js %}

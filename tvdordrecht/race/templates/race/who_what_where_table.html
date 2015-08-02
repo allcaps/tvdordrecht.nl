@@ -1,0 +1,39 @@
+<table class="table">
+    <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Evemenement</th>
+          <th>Afstand</th>
+          <th>Deelnemer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for obj in result_list %}
+        <tr>
+            <td>
+              {{ obj.date }}
+            </td>
+            <td>
+              {% ifequal object obj.event %}
+                {{ obj.event }}
+              {% else %}
+                <a href="{{ obj.event.get_absolute_url }}" title="{{ obj.event.name }}">{{ obj.event }}</a>
+              {% endifequal %}
+            </td>
+            <td>
+              {{ obj.distance }}
+            </td>
+            <td>
+              {{ obj.user.first_name|capfirst }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+          <th colspan="4"></th>
+        </tr>
+    </tfoot>
+</table>
+
+

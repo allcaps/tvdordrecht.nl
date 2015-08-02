@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
+from django.utils import timezone
 
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
@@ -8,6 +9,7 @@ from django.shortcuts import (
     get_object_or_404,
     render_to_response,
     redirect,
+    render,
 )
 from django.template import RequestContext
 from django.views.generic import (
@@ -38,16 +40,14 @@ from .models import (
 def home(request, template='webapp/home.html'):
     current_menu = get_object_or_404(Menu, slug='home')
     news_list = News.objects.filter(publish=True).order_by('-pub_date')[:6]
-    now = datetime.now().date()
+    now = timezone.now().date()
     then = now + timedelta(days=14)
     training_list = Session.objects \
         .filter(start__gte=now, start__lt=then) \
         .select_related('trainer', 'location', 'discipline')
     www_list = Result.objects.filter(time=None)\
-        .filter(race__edition__date__gte=datetime.now())\
-        .order_by('-race__edition', 'race__distance', 'user')
-    result_list = Result.objects.filter(time__isnull=False,
-                                        race__edition__date__lte=now)
+        .filter(date__gte=now)
+    result_list = Result.objects.filter(time__isnull=False, date__lte=now)
     return render_to_response(
         template,
         context_instance=RequestContext(request, locals())
@@ -242,3 +242,11 @@ class AccountCreateView(SuccessMessageMixin, CreateView):
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'registration/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        result_set = self.request.user.result_set
+        context['www_list'] = result_set.filter(date__lte=timezone.now())
+        context['result_list'] = result_set.filter(date__gt=timezone.now())
+        return context
+

@@ -4,16 +4,16 @@
 {% load thumb %}
 {% load crispy_forms_tags %}
 
-{% block title %}{{ article.title }} « {% endblock %}
-{% block keywords %}{{ article.keywords }}{% endblock %}
-{% block description %}{{ article.description }}{% endblock %}
-
 {% block ogtitle %}{{ article.title }} « {% endblock %}
 {% block ogimage %}http://{{ site.domain }}{{ MEDIA_URL }}{{ article.image }}{% endblock %}
 {% block ogdescription %}{{ article.description }}{% endblock %}
 
 {% block user_menu %}
 {% endblock user_menu %}
+
+{% block title %}
+  Evenement toevoegen «
+{% endblock title %}
 
 {% block content %}
 <div class="container">

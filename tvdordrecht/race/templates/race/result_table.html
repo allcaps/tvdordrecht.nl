@@ -1,0 +1,53 @@
+  <table class="table">
+  <thead>
+      <tr>
+            <th>Datum</th>
+            <th>Evemenement</th>
+            <th>Afstand</th>
+            <th>Deelnemer</th>
+            <th>Uitslag</th>
+            <th>Opmerkingen</th>
+      </tr>
+  </thead>
+  <tbody>
+  {% for obj in result_list %}
+      <tr>
+          <td>
+            {{ obj.date }}
+          </td>
+          <td>
+            {% ifequal object obj.event %}
+              {{ obj.event }}
+            {% else %}
+              <a href="{{ obj.event.get_absolute_url }}" title="{{ obj.event.name }}">{{ obj.event }}</a>
+            {% endifequal %}
+          </td>
+          <td>
+            {{ obj.distance }}
+          </td>
+          <td>
+            {{ obj.user.first_name|capfirst }}
+          </td>
+          {% if obj.time %}
+            <td>
+                {{ obj.time }}
+            </td>
+            <td>
+                {{ obj.remarks }}
+            </td>
+          {% else %}
+            <td colspan="2">
+              <a href="{{ obj.get_edit_url }}" title="Uitslag doorgeven">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Uitslag doorgeven
+              </a>
+            </td>
+          {% endif %}
+      </tr>
+  {% endfor %}
+  </tbody>
+  <tfoot>
+      <tr>
+        <th colspan="6"></th>
+      </tr>
+  </tfoot>
+  </table>

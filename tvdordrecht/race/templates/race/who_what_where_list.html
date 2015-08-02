@@ -5,6 +5,10 @@
 {% load crispy_forms_tags %}
 {% crispy form form.helper %}
 
+{% block title %}
+  Wie wat waar «
+{% endblock title %}
+
 {% block user_menu %}
   {{ super.block }}
   <a href="{%  url 'race:who_what_where_add' %}" class="btn btn-success">
@@ -26,58 +30,7 @@
 
   <div class="container">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Datum</th>
-                <th>Evenement</th>
-                <th>Plaats</th>
-                <th>Wedstrijd</th>
-                <th>Deelnemers</th>
-            </tr>
-        </thead>
-        <tbody>
-          {% regroup object_list by race.edition as edition_list %}
-          {% for edition in edition_list %}
-            {% for result in edition.list %}
-              <tr>
-                  {% if forloop.first %}
-                    <td>
-                      {{ edition.grouper }}
-                    </td>
-                    <td>
-                      <a href="{{ edition.grouper.event.get_absolute_url }}">
-                        {{ edition.grouper.event.name }}
-                      </a>
-                    </td>
-                    <td>
-                      {{ edition.grouper.event.city }}
-                    </td>
-                  {% else %}
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  {% endif %}
-                  <td>
-                    {{ result.race }}
-                  </td>
-                  <td>
-                    {{ result.user }}
-                  </td>
-              </tr>
-          {% endfor %}
-          {% endfor %}
-        <tfoot>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-        </tfoot>
-        </tbody>
-    </table>
+    {% include 'race/who_what_where_table.html' %}
 
   </div>
 {% endblock content %}
