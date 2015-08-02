@@ -245,6 +245,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
+        context['news_list'] = self.request.user.news_owner.filter(publish=True)
         result_set = self.request.user.result_set
         context['www_list'] = result_set.filter(date__lte=timezone.now())
         context['result_list'] = result_set.filter(date__gt=timezone.now())

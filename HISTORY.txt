@@ -5,7 +5,9 @@ History of this project
 0.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- User profile: display only published news items.
+
+- Fix: Show reslut from only if who what where is today or in the past.
 
 
 0.5 (2015-08-02)

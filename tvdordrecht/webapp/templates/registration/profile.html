@@ -66,7 +66,7 @@
           <h1><a href="{% url 'webapp:news_list' %}">Nieuws <a href="{% url 'webapp:news_create' %}" class="btn btn-success btn-sm">Nieuwsbericht toevoegen</a></a></h1>
         </div>
 
-        {% for obj in user.news_owner.all %}
+        {% for obj in news_list %}
 
             {% include 'webapp/snippets/item.html' %}
 
