@@ -68,5 +68,30 @@
       regional: 'nl'
     });
   });
+  // Get parameter.
+  var came_from = location.search.split('?event=')[1];
+  if (came_from) {
+    $("input[value=" + came_from + "]").click();
+  }
+
+
+  // Show or hide 'Other ...'
+  $(function() {
+    var foo = $('#div_id_1-foo');
+    if ($("input[value='1']:checked").length != 1) {
+      foo.hide();
+    }
+    $('#div_id_1-distance input').change(
+      function radioValueChanged() {
+          if($(this).val() == "1") {
+            foo.show();
+          }
+          else {
+            foo.hide();
+          }
+      }
+    );
+  });
+
   </script>
 {% endblock javascript %}

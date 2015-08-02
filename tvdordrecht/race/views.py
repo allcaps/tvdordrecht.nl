@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
+from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -24,6 +23,7 @@ from webapp.middleware import get_current_user
 
 from .models import (
     Event,
+    Distance,
     Result,
 )
 from .forms import (
@@ -63,6 +63,13 @@ class EventList(CurrentMenuMixin, CurrentPageMixin, ListView):
 class EventDetail(CurrentMenuMixin, DetailView):
     model = Event
 
+    def get_context_data(self, **kwargs):
+        context = super(EventDetail, self).get_context_data(**kwargs)
+        now = timezone.now()
+        event = context['object']
+        context['www_list'] = Result.objects.filter(event=event, date__gt=now)
+        context['result_list'] = Result.objects.filter(event=event, date__lte=now)
+        return context
 
 class EventCreateView(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMixin, CreateView):
     template_name = 'race/event_form.html'
@@ -94,7 +101,7 @@ class WhoWhatWhere(CurrentMenuMixin, CurrentPageMixin, ListView):
     def get_queryset(self, **kwargs):
         """Filters the queryset with the search values."""
         queryset = Result.objects.filter(time=None)\
-            .filter(date__gte=datetime.now())\
+            .filter(date__gte=timezone.now())\
             .order_by('-date', 'distance', 'user')
 
         q = self.request.GET.get("q")
@@ -124,8 +131,7 @@ class ResultList(CurrentMenuMixin, CurrentPageMixin, ListView):
 
     def get_queryset(self):
         queryset = super(ResultList, self).get_queryset()
-        now = datetime.now()
-        queryset = queryset.filter(date__lte=now)
+        queryset = queryset.filter(date__lte=timezone.now())
         return queryset
 
 
@@ -165,12 +171,21 @@ class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin,
 
     def done(self, form_list, **kwargs):
         data = self.get_all_cleaned_data()
+        distance = data['distance']
+
+        if distance.id == 1:
+            distance, created = Distance.objects.get_or_create(
+                name=data['foo'],
+                order='xx'
+            )
+
         obj, created = Result.objects.get_or_create(
             user=self.request.user,
             event=data['event'],
             date=data['date'],
-            distance=data['distance'],
+            distance=distance,
         )
+
         if created:
             messages.add_message(
                 self.request,
@@ -184,22 +199,30 @@ class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin,
                 'Oeps! Er bestaat al een Wie wat waar voor %s %s %s %s.' %
                 (obj.date, obj.event, obj.distance, obj.user.get_full_name())
             )
-        return redirect(obj.event.get_absolute_url())
+
+        if obj.date >= timezone.now().date():
+            messages.add_message(
+                self.request,
+                messages.INFO,
+                'Je kunt hier direct de uitslag doorgeven!'
+            )
+            return redirect(obj.get_edit_url())
+        else:
+            return redirect(obj.event.get_absolute_url())
 
 
 class ResultUpdateView(LoginRequiredMixin, CurrentMenuMixin,
                        SuccessMessageMixin, UpdateView):
     model = Result
     form_class = ResultForm
-    # success_url = '/wedstrijd/resultaten/'
-    success_message = "Succes! Resultaat opgeslagen."
+    success_message = "Succes! Uitslag opgeslagen."
 
 
 class ResultListAddView(LoginRequiredMixin, CurrentMenuMixin, ListView):
     model = Result
     template_name = 'race/result_list_add.html'
+
     def get_queryset(self):
         queryset = super(ResultListAddView, self).get_queryset()
-        now = datetime.now()
-        queryset = queryset.filter(date__lte=now, time__isnull=True)
+        queryset = queryset.filter(date__lte=timezone.now(), time__isnull=True)
         return queryset

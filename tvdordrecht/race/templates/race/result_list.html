@@ -5,6 +5,10 @@
 {% load crispy_forms_tags %}
 {% crispy form form.helper %}
 
+{% block title %}
+  Uitslagen «
+{% endblock title %}
+
 {% block user_menu %}
   {{ super.block }}
   <a href="{%  url 'race:result_list_add' %}" class="btn btn-success">
@@ -46,18 +50,21 @@
                   <td>
                     {{ obj.user.first_name|capfirst }}
                   </td>
-                  <td>
-                    {% if obj.time %}
-                      {{ obj.time }}
-                    {% else %}
+                  {% if obj.time %}
+                    <td>
+                        {{ obj.time }}
+                    </td>
+                    <td>
+                        {{ obj.remarks }}
+                    </td>
+                  {% else %}
+                    <td colspan="2">
                       <a href="{{ obj.get_edit_url }}" title="Uitslag doorgeven">
-                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Uitslag doorgeven
                       </a>
-                    {% endif %}
-                  </td>
-              <td>
-                {{ obj.remarks }}
-              </td>
+                    </td>
+                  {% endif %}
+
               </tr>
             {% endfor %}
           </tbody>

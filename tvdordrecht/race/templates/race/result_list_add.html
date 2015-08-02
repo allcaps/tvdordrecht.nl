@@ -5,6 +5,10 @@
 {% load crispy_forms_tags %}
 {% crispy form form.helper %}
 
+{% block title %}
+  Uitslagen «
+{% endblock title %}
+
 {% block content %}
 
   <div class="page-header">
@@ -68,7 +72,7 @@
           </li>
           <li>
             Je hebt nog geen 'wie wat waar' doorgegeven.
-            <p>Graag eerst een <a href="{% url 'race:result_list' %}">wie wat waar toevoegen</a> daarna kun je een uitslag doorgeven.</p>
+            <p>Graag eerst een <a href="{% url 'race:who_what_where_add' %}">wie wat waar toevoegen</a> daarna kun je een uitslag doorgeven.</p>
           </li>
         </ol>
 {% endblock content %}

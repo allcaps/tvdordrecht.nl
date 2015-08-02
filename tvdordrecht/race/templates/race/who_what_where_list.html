@@ -5,6 +5,10 @@
 {% load crispy_forms_tags %}
 {% crispy form form.helper %}
 
+{% block title %}
+  Wie wat waar «
+{% endblock title %}
+
 {% block user_menu %}
   {{ super.block }}
   <a href="{%  url 'race:who_what_where_add' %}" class="btn btn-success">

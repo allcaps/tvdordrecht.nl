@@ -5,6 +5,10 @@
 {% load crispy_forms_tags %}
 {% crispy form form.helper %}
 
+{% block title %}
+  Evenementen «
+{% endblock title %}
+
 {% block admin_menu %}
     {{ super.block }}
     <a href="{{ object.get_admin_url }}" class="btn btn-default">

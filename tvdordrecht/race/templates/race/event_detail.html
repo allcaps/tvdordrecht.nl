@@ -2,6 +2,8 @@
 
 {% load staticfiles %}
 {% load crispy_forms_tags %}
+{% load countdown %}
+
 {% crispy form form.helper %}
 
 {% block title %}
@@ -16,6 +18,10 @@
 {% endblock admin_menu %}
 
 {% block user_menu %}
+    <a href="{%  url 'race:who_what_where_add' %}?event={{ object.id }}" class="btn btn-success">
+      <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+      Wie wat waar toevoegen
+    </a>
     <a class="btn btn-primary" href="{{ object.get_absolute_url }}bewerken/">
       Evenement bewerken
     </a>
@@ -28,30 +34,70 @@
   <p><a href="{{ object.website }}">{{ object.website }}</a></p>
   {{ object.text|safe }}
 
-  {% regroup object.result_set.all by date as date_list %}
+
+  {% regroup www_list by date as date_list %}
   {% for date in date_list %}
-    <h3>{{ date.grouper }}</h3>
+      <h3>{{ date.grouper }}</h3>
+      <p class="lead">{{ date.grouper|countdown }}</p>
+      <table class="table">
+          <thead>
+              <tr>
+                <th>Afstand</th>
+                <th>Deelnemer</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for obj in date.list %}
+              <tr>
+                  <td>
+                    {{ obj.distance }}
+                  </td>
+                  <td>
+                    {{ obj.user.first_name|capfirst }}
+                  </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+          </tfoot>
+      </table>
+  {% endfor %}
+
+  {% regroup result_list by date as date_list %}
+  {% for date in date_list %}
+      <h3>Uitslag {{ date.grouper }}</h3>
       <table class="table">
       <thead>
           <tr>
-              <th>Afstand</th>
-              <th>Deelnemer</th>
-              <th>Uitslag</th>
-              <th>Opmerkingen</th>
+                <th>Afstand</th>
+                <th>Deelnemer</th>
+                <th>Uitslag</th>
+                <th>Opmerkingen</th>
           </tr>
       </thead>
       <tbody>
-      {% for result in date.list %}
+      {% for obj in date.list %}
           <tr>
               <td>
-                  {{ result.distance }}
+                {{ obj.distance }}
               </td>
               <td>
-                {{ result.user }}
+                {{ obj.user.first_name|capfirst }}
               </td>
-              <td>{% if result.time %}{{ result.time }}{% endif %}</td>
-              <td>{{ result.remarks }}</td>
-          </tr>
+              <td>
+                {% if obj.time %}
+                  {{ obj.time }}
+                {% else %}
+                  <a href="{{ obj.get_edit_url }}" title="Uitslag doorgeven">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                  </a>
+                {% endif %}
+              </td>
+          <td>
       {% endfor %}
       </tbody>
       <tfoot>

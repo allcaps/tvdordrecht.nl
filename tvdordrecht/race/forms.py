@@ -49,10 +49,23 @@ class WhoWhatWhereEventForm(forms.Form):
 
 class WhoWhatWhereDetailForm(forms.ModelForm):
 
+    foo = forms.CharField(
+        label="",
+        required=False,
+    )
+
     def __init__(self, *args, **kwargs):
         super(WhoWhatWhereDetailForm, self).__init__(*args, **kwargs)
         self.fields['distance'].widget = forms.widgets.RadioSelect()
         self.fields['distance'].empty_label = None
+
+    def clean(self):
+        data = super(WhoWhatWhereDetailForm, self).clean()
+        foo = data.get("foo")
+        distance = data.get("distance")
+
+        if distance and distance.id == 1 and foo == u"":
+            self.add_error('foo', 'Dit veld is verplicht.')
 
     class Meta:
         model = Result
