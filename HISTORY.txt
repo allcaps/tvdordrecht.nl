@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.7 (unreleased)
+0.7 (2015-08-02)
 ----------------
 
 - Switch Who what where and result lists in profile and event page.
