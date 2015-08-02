@@ -5,7 +5,8 @@ History of this project
 0.9 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Fix add WWW comming from an event. The url param ?event=2 will select wrong
+  distance in step 2.
 
 
 0.8 (2015-08-02)
