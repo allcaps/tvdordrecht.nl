@@ -200,7 +200,7 @@ class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin,
                 (obj.date, obj.event, obj.distance, obj.user.get_full_name())
             )
 
-        if obj.date >= timezone.now().date():
+        if obj.date <= timezone.now().date():
             messages.add_message(
                 self.request,
                 messages.INFO,
