@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.utils.text import slugify
 
 from webapp.models import Image
 
@@ -86,6 +87,10 @@ class Event(Base):
     def get_admin_url(self):
         return reverse('admin:race_event_change', args=(self.id,))
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify("%s %s" % (self.name, self.city))
+        super(Event, self).save(*args, **kwargs)
 
 class Distance(Base):
     """
