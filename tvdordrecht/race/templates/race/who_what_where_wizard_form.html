@@ -60,7 +60,7 @@
   $(function() {
     $( ".dateinput" ).datepicker({
       showOn: "button",
-      buttonText: '<span class="glyphicon glyphicon-calendar"></span>',
+      buttonText: '<span class="glyphicon glyphicon-calendar"></span> Kies een datum ...',
       changeMonth: true,
       changeYear: true,
       dateFormat: "dd-mm-yy",
@@ -68,12 +68,14 @@
       regional: 'nl'
     });
   });
-  // Get parameter.
-  var came_from = location.search.split('?event=')[1];
-  if (came_from) {
-    $("input[value=" + came_from + "]").click();
-  }
 
+  // Get query sting parameter.
+  $(function() {
+    var came_from = location.search.split('?event=')[1];
+    if (came_from) {
+      $("input[value=" + came_from + "]").click();
+    }
+  });
 
   // Show or hide 'Other ...'
   $(function() {
@@ -92,6 +94,14 @@
       }
     );
   });
+
+  // Hide help text until error.
+  $(function() {
+    if (!$('#error_1_id_1-date').length) {
+      $("#hint_id_1-date").hide();
+    }
+  });
+
 
   </script>
 {% endblock javascript %}
