@@ -16,65 +16,20 @@
       <p class="lead">Kies 'uitslag doorgeven' uit onderstaande lijst.</p>
   </div>
 
-      <table class="table">
-          <thead>
-              <tr>
-                <th>Datum</th>
-                <th>Evemenement</th>
-                <th>Afstand</th>
-                <th>Deelnemer</th>
-                <th>Uitslag</th>
-              </tr>
-          </thead>
-          <tbody>
-            {% for obj in object_list %}
-              <tr>
-                  <td>
-                    {{ obj.date }}
-                  </td>
-                  <td>
-                    {{ obj.event }}
-                  </td>
-                  <td>
-                    {{ obj.distance }}
-                  </td>
-                  <td>
-                    {{ obj.user.first_name|capfirst }}
-                  </td>
-                  <td>
-                    {% if obj.time %}
-                      {{ obj.time }}
-                    {% else %}
-                      <a href="{{ obj.get_edit_url }}" title="Uitslag doorgeven">
-                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Uitslag doorgeven
-                      </a>
-                    {% endif %}
-                  </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-          <tfoot>
-              <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-              </tr>
-          </tfoot>
-      </table>
+  {% include 'race/result_table.html' %}
 
-        <p class="lead">Staat jouw evenement niet in de lijst? Dat kan twee oorzaken hebben:</p>
-        <ol>
-          <li>
-            Je uitslag is al door iemand anders doorgegeven.
-            <p><a href="{% url 'race:event_list' %}">Bekijk jouw evenement</a> en controleer of je uitslag al bestaat.</p>
-          </li>
-          <li>
-            Je hebt nog geen 'wie wat waar' doorgegeven.
-            <p>Graag eerst een <a href="{% url 'race:who_what_where_add' %}">wie wat waar toevoegen</a> daarna kun je een uitslag doorgeven.</p>
-          </li>
-        </ol>
+  <p class="lead">Staat jouw evenement niet in de lijst? Dat kan twee oorzaken hebben:</p>
+  <ol>
+    <li>
+      Je uitslag is al door iemand anders doorgegeven.
+      <p><a href="{% url 'race:event_list' %}">Bekijk jouw evenement</a> en controleer of je uitslag al bestaat.</p>
+    </li>
+    <li>
+      Je hebt nog geen 'wie wat waar' doorgegeven.
+      <p>Graag eerst een <a href="{% url 'race:who_what_where_add' %}">wie wat waar toevoegen</a> daarna kun je een uitslag doorgeven.</p>
+    </li>
+  </ol>
+
 {% endblock content %}
 
 {% block extra_js %}

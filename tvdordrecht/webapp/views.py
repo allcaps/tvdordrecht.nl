@@ -9,6 +9,7 @@ from django.shortcuts import (
     get_object_or_404,
     render_to_response,
     redirect,
+    render,
 )
 from django.template import RequestContext
 from django.views.generic import (
@@ -241,3 +242,11 @@ class AccountCreateView(SuccessMessageMixin, CreateView):
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'registration/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        result_set = self.request.user.result_set
+        context['www_list'] = result_set.filter(date__lte=timezone.now())
+        context['result_list'] = result_set.filter(date__gt=timezone.now())
+        return context
+

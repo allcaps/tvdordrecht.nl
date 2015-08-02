@@ -47,9 +47,8 @@
 
       {% endfor %}
     </div>
-</div>
 
-<div class="col-md-6">
+  <div class="col-md-10 col-md-push-1">
     <div class="page-header">
         <h2 class="section_title">
           <a href="{% url 'training:session_list' %}">Training</a>
@@ -99,102 +98,34 @@
         {% endfor %}
 
         </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+            </td>
+          </tr>
+        </tfoot>
     </table>
-</div>
+  </div>
 
-<div class="col-md-6">
+  <div class="col-md-10 col-md-push-1">
     <div class="page-header">
         <h2 class="section_title">
           <a href="{% url 'race:who_what_where_list' %}">Wie wat waar</a>
         </h2>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-              <th>Datum</th>
-              <th>Evemenement</th>
-              <th>Wedstrijd</th>
-              <th>Deelnemer</th>
-            </tr>
-        </thead>
-        <tbody>
-          {% for obj in www_list %}
-            <tr>
-                <td>
-                  {{ obj.date }}
-                </td>
-                <td>
-                  <a href="{{ obj.event.get_absolute_url }}" title="{{ obj.event.name }}">{{ obj.event }}</a>
-                </td>
-                <td>
-                  {{ obj.distance }}
-                </td>
-                <td>
-                  {{ obj.user.first_name|capfirst }}
-                </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-        </tfoot>
-    </table>
 
+    {% with www_list as result_list %}
+      {% include 'race/who_what_where_table.html' %}
+    {% endwith %}
+  </div>
+
+  <div class="col-md-10 col-md-push-1">
     <div class="page-header">
         <h2 class="section_title">
           <a href="{% url 'race:result_list' %}">Uitslagen</a>
         </h2>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-              <th>Datum</th>
-              <th>Evemenement</th>
-              <th>Wedstrijd</th>
-              <th>Deelnemer</th>
-              <th>Uitslag</th>
-              <th>Opmerkingen</th>
-            </tr>
-        </thead>
-        <tbody>
-          {% for obj in result_list %}
-            <tr>
-                <td>
-                  {{ obj.date }}
-                </td>
-                <td>
-                  <a href="{{ obj.event.get_absolute_url }}" title="{{ obj.event.name }}">{{ obj.event }}</a>
-                </td>
-                <td>
-                  {{ obj.distance }}
-                </td>
-                <td>
-                  {{ obj.user.first_name|capfirst }}
-                </td>
-                <td>
-                  {{ obj.time }}
-                </td>
-            <td>
-              {{ obj.remarks }}
-            </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-        </tfoot>
-    </table>
+    {% include 'race/who_what_where_table.html' %}
+  </div>
 </div>
 {% endblock %}

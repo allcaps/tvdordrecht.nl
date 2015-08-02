@@ -30,48 +30,7 @@
 
   <div class="container">
 
-      <table class="table">
-          <thead>
-              <tr>
-                <th>Datum</th>
-                <th>Evemenement</th>
-                <th>Plaats</th>
-                <th>Afstand</th>
-                <th>Deelnemer</th>
-              </tr>
-          </thead>
-          <tbody>
-            {% for obj in object_list %}
-              <tr>
-                  <td>
-                    {{ obj.date }}
-                  </td>
-                  <td>
-                    <a href="{{ obj.event.get_absolute_url }}" title="{{ obj.event.name }}">{{ obj.event.name }}</a>
-                  </td>
-                  <td>
-                    {{ obj.event.city }}
-                  </td>
-                  <td>
-                    {{ obj.distance }}
-                  </td>
-                  <td>
-                    {{ obj.user.first_name|capfirst }}
-                  </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-          <tfoot>
-              <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-              </tr>
-          </tfoot>
-      </table>
-
+    {% include 'race/who_what_where_table.html' %}
 
   </div>
 {% endblock content %}

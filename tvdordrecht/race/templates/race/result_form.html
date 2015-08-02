@@ -23,7 +23,6 @@
                       <tr>
                         <th>Datum</th>
                         <th>Evemenement</th>
-                        <th>Plaats</th>
                         <th>Afstand</th>
                         <th>Deelnemer</th>
                       </tr>
@@ -34,10 +33,7 @@
                             {{ object.date }}
                           </td>
                           <td>
-                            {{ object.event.name }}
-                          </td>
-                          <td>
-                            {{ object.event.city }}
+                            {{ object.event }}
                           </td>
                           <td>
                             {{ object.distance }}
@@ -49,11 +45,7 @@
                   </tbody>
                   <tfoot>
                       <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th colspan="4"></th>
                       </tr>
                   </tfoot>
               </table>

@@ -33,83 +33,13 @@
   <p class="lead">{{ object.city }}</p>
   <p><a href="{{ object.website }}">{{ object.website }}</a></p>
   {{ object.text|safe }}
+</div>
+<div>
+  <h3>Wie wat waar</h3>
+  {% include 'race/who_what_where_table.html' %}
 
-
-  {% regroup www_list by date as date_list %}
-  {% for date in date_list %}
-      <h3>{{ date.grouper }}</h3>
-      <p class="lead">{{ date.grouper|countdown }}</p>
-      <table class="table">
-          <thead>
-              <tr>
-                <th>Afstand</th>
-                <th>Deelnemer</th>
-              </tr>
-          </thead>
-          <tbody>
-            {% for obj in date.list %}
-              <tr>
-                  <td>
-                    {{ obj.distance }}
-                  </td>
-                  <td>
-                    {{ obj.user.first_name|capfirst }}
-                  </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-          <tfoot>
-              <tr>
-                <th></th>
-                <th></th>
-              </tr>
-          </tfoot>
-      </table>
-  {% endfor %}
-
-  {% regroup result_list by date as date_list %}
-  {% for date in date_list %}
-      <h3>Uitslag {{ date.grouper }}</h3>
-      <table class="table">
-      <thead>
-          <tr>
-                <th>Afstand</th>
-                <th>Deelnemer</th>
-                <th>Uitslag</th>
-                <th>Opmerkingen</th>
-          </tr>
-      </thead>
-      <tbody>
-      {% for obj in date.list %}
-          <tr>
-              <td>
-                {{ obj.distance }}
-              </td>
-              <td>
-                {{ obj.user.first_name|capfirst }}
-              </td>
-              <td>
-                {% if obj.time %}
-                  {{ obj.time }}
-                {% else %}
-                  <a href="{{ obj.get_edit_url }}" title="Uitslag doorgeven">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                  </a>
-                {% endif %}
-              </td>
-          <td>
-      {% endfor %}
-      </tbody>
-      <tfoot>
-          <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-      </tfoot>
-      </table>
-  {% endfor %}
+  <h3>Uitslagen</h3>
+  {% include 'race/result_table.html' %}
 </div>
 {% endblock content %}
 

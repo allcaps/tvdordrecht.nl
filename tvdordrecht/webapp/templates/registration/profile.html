@@ -3,7 +3,7 @@
 {% load crop %}
 {% load thumb %}
 
-{% block title %}{{ current_menu.title }} « {% endblock %}
+{% block title %}{{ user.first_name }} « {% endblock %}
 {% block keywords %}{{ current_menu.keywords }}{% endblock %}
 {% block description %}{{ current_menu.description }}{% endblock %}
 
@@ -33,64 +33,31 @@
         </div>
 
         <div class="col-md-8">
+
             <div class="page-header">
                 <h2 class="section_title">
-                  <a href="{% url 'race:who_what_where_list' %}">Wie wat waar</a> /
-                  <a href="{% url 'race:result_list' %}">Uitslagen</a>
+                  <a href="{% url 'race:who_what_where_list' %}">Wie wat waar</a>
                   <a href="{% url 'race:who_what_where_add' %}" class="btn btn-success btn-sm">
                     Wie wat waar toevoegen
                   </a>
+                </h2>
+            </div>
+
+            {% with www_list as result_list %}
+              {% include 'race/who_what_where_table.html' %}
+            {% endwith %}
+
+            <div class="page-header">
+                <h2 class="section_title">
+                  <a href="{% url 'race:result_list' %}">Uitslagen</a>
                   <a href="{% url 'race:result_list_add' %}" class="btn btn-success btn-sm">
                     Uitslag toevoegen
                   </a>
                 </h2>
             </div>
 
-            {% if user.result_set.all %}
-            <table class="table">
-                <thead>
-                    <tr>
-                      <th>Datum</th>
-                      <th>Evemenement</th>
-                      <th>Wedstrijd</th>
-                      <th>Uitslag</th>
-                      <th>Opmerkingen</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  {% for obj in user.result_set.all %}
-                    <tr>
-                        <td>
-                          {{ obj.edition.date }}
-                        </td>
-                        <td>
-                          <a href="{{ obj.edition.event.get_absolute_url }}" title="{{ obj.edition.event.name }}">{{ obj.edition.event }}</a>
-                        </td>
-                        <td>
-                          {{ obj.race }}
-                        </td>
-                        <td>
-                          {% if obj.time %}{{ obj.time }}{% endif %}
-                        </td>
-                    <td>
-                      {{ obj.remarks }}
-                    </td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-                <tfoot>
-                    <tr>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                </tfoot>
-            </table>
-            {% else %}
-                    <h2>Geen Wie wat waar / Uitslagen</h2>
-            {% endif %}
+            {% include 'race/result_table.html' %}
+
         </div>
 
     </div>
