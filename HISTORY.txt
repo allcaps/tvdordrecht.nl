@@ -5,7 +5,7 @@ History of this project
 0.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Fix: www can be added for other people then yourself.
 
 
 0.7 (2015-08-02)

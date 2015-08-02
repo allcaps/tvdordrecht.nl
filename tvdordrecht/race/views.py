@@ -180,7 +180,7 @@ class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin,
             )
 
         obj, created = Result.objects.get_or_create(
-            user=self.request.user,
+            user=data['user'],
             event=data['event'],
             date=data['date'],
             distance=distance,
