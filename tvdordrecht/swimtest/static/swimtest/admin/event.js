@@ -15,14 +15,14 @@ $(function() {
     });
   });
   
-  // Change the background color of stopwach fields on load.
+  // Change the background color of stopwatch fields on load.
   $('input[type=time].sTimeField').each(function() {
     if (this.value != '00:00:00') {
       $(this).css('background', '#dfd');
     }
   });
   
-  // Change the background color of stopwach fields on change.
+  // Change the background color of stopwatch fields on change.
   $('input[type=time].sTimeField').change(function() {
     if (this.value != '00:00:00') {
       $(this).css('background', '#dfd');
