@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, time
+from datetime import datetime, timedelta
 combine = datetime.combine
 
 from django.db import models
@@ -95,7 +95,6 @@ class Record(models.Model):
         ordering = ['pace_time',]
 
 def get_swimtest_url(self):
-    #return '/zwemtest/deelnemers/%s' % self.id
     return reverse('swimtest-user', args=(self.id,))
 
 User.add_to_class('get_swimtest_url', get_swimtest_url)
