@@ -32,11 +32,7 @@
 
           <tr{% if obj.cancel %} class="cancel-item"{% endif %}
              {% if obj.message and not obj.cancel %} class="message-item"{% endif %}>
-            <td>
-              <a href="{{ obj.get_absolute_url }}" title="{{ obj }}">
-                {{ obj.start|date:'l j F H:i' }}
-              </a>
-            </td>
+            <td>{{ obj.start|date:'l j F H:i' }}</td>
             <td>{{ obj.discipline }}</td>
             <td>{{ obj.location }}</td>
             <td>{{ obj.trainer }}</td>
