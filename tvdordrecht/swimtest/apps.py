@@ -1,8 +1,5 @@
 from django.apps import AppConfig
 
-class RaceConfig(AppConfig):
-    name = 'race'
-    verbose_name = "Wedstrijd"
-
-    def ready(self):
-        import signals
+class SwimTestConfig(AppConfig):
+    name = 'swimtest'
+    verbose_name = "Zwemtest"
