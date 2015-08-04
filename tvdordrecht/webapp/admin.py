@@ -184,6 +184,7 @@ class NewsAdmin(admin.ModelAdmin):
     """
     list_display = ['title', 'publish', 'pub_date', 'last_modified', 'owner', 'last_modified_by']
     list_filter = ['owner', ]
+    list_editable = ['owner', ]
     actions = [remove, make_published, make_depublished]
     search_fields = ['title', 'text', ]
     prepopulated_fields = { 'slug': ('title', ) }
