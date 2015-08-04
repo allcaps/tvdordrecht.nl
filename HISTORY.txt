@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.10 (unreleased)
+0.10 (2015-08-05)
 -----------------
 
 - Mail manager on post_save Event and News.
