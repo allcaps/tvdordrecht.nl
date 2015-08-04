@@ -2,6 +2,12 @@ History of this project
 =======================
 
 
+0.11 (unreleased)
+-----------------
+
+- Nothing changed yet.
+
+
 0.10 (2015-08-05)
 -----------------
 
