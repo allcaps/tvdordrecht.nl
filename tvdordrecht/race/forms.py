@@ -101,7 +101,7 @@ class EditionSearchForm(forms.Form):
         self.helper.field_template = 'bootstrap3/layout/inline_field.html'
         self.helper.layout = Layout(
             Div(
-                Field('q', placeholder="Search"),
+                Field('q', placeholder="Zoek"),
                 'user',
                 StrictButton(
                     '<span class="glyphicon glyphicon-search"></span>',
