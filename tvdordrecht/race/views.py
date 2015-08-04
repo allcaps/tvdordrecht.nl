@@ -102,7 +102,7 @@ class WhoWhatWhere(CurrentMenuMixin, CurrentPageMixin, ListView):
         """Filters the queryset with the search values."""
         queryset = Result.objects.filter(time=None)\
             .filter(date__gte=timezone.now())\
-            .order_by('-date', 'distance', 'user')
+            .reverse()
 
         q = self.request.GET.get("q")
         if q:

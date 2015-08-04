@@ -46,7 +46,7 @@ def home(request, template='webapp/home.html'):
         .filter(start__gte=now, start__lt=then) \
         .select_related('trainer', 'location', 'discipline')
     www_list = Result.objects.filter(time=None)\
-        .filter(date__gte=now)
+        .filter(date__gte=now).reverse()
     result_list = Result.objects.filter(time__isnull=False, date__lte=now)
     return render_to_response(
         template,
