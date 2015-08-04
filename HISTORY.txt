@@ -5,7 +5,23 @@ History of this project
 0.10 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Mail manager on post_save Event and News.
+
+- Fix datepicker month and year style on IE.
+
+- Translate search to dutch
+
+- Remove links in training list view to training session detail.
+
+- Default ordering events.
+
+- Admin list_editable News owner.
+
+- Fix title overlap on lg.
+
+- Reverse Who what where.
+
+- Add Dutch app labels in admin.
 
 
 0.9 (2015-08-03)
