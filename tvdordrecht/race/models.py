@@ -77,6 +77,7 @@ class Event(Base):
     class Meta:
         verbose_name = u"evenement"
         verbose_name_plural = u"evenementen"
+        ordering = ['name', 'city']
 
     def get_absolute_url(self):
         return reverse('race:event_detail', args=(self.slug, ))
