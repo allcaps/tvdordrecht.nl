@@ -208,7 +208,7 @@ class News(models.Model):
     publish = models.BooleanField("publiceren", default=True)
     # Meta fields
     pub_date = models.DateTimeField("publicatie datum", blank=True, null=True)
-    owner = models.ForeignKey(User, verbose_name="gemaakt door", blank=True, null=True, editable=False, related_name="%(class)s_owner")
+    owner = models.ForeignKey(User, verbose_name="gemaakt door", blank=True, null=True, related_name="%(class)s_owner")
     last_modified_by = models.ForeignKey(User, verbose_name="Laatst bewerkt door", blank=True, null=True, editable=False, related_name="%(class)s_last_modified_by")
     last_modified = models.DateTimeField("laatst bewerkt", blank=True, null=True, editable=False, auto_now=True)
     keywords = models.TextField(blank=True, help_text=keyword_help_text)
