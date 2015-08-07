@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.11 (unreleased)
+0.11 (2015-08-08)
 -----------------
 
 - Add sesconds.
