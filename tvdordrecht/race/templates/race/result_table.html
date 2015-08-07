@@ -30,7 +30,7 @@
           </td>
           {% if obj.time %}
             <td>
-                {{ obj.time }}
+                {{ obj.time|time:"H:i:s" }}
             </td>
             <td>
                 {{ obj.remarks }}
