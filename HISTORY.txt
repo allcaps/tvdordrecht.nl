@@ -5,7 +5,9 @@ History of this project
 0.12 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Add site admin.
+
+- Fix homepage resutls table.
 
 
 0.11 (2015-08-08)
