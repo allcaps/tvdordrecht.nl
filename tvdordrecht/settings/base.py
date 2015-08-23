@@ -31,6 +31,10 @@ def get_secret(setting, default=None):
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_secret("SECRET_KEY")
 
+# TODO: This should be a tuple in secrets.json.
+SITE_ADMIN = get_secret("SITE_ADMIN")
+ADMINS = (('Coen', SITE_ADMIN), )
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
