@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.13 (unreleased)
+0.13 (2015-08-23)
 -----------------
 
 - Added ADMINS setting.
