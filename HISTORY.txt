@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.12 (unreleased)
+0.12 (2015-08-23)
 -----------------
 
 - Add site admin.
