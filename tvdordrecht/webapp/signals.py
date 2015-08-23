@@ -69,5 +69,5 @@ def send_notification(sender, instance, **kwargs):
         ['irvinvanderwaal@hotmail.com'], fail_silently=True)
 
 
-pre_save.connect(send_notification, sender=News)
-pre_save.connect(send_notification, sender=Event)
+# pre_save.connect(send_notification, sender=News)
+# pre_save.connect(send_notification, sender=Event)
