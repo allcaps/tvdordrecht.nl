@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.14 (unreleased)
+0.14 (2015-08-23)
 -----------------
 
 - Disabled notification on save.
