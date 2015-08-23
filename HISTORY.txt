@@ -5,7 +5,7 @@ History of this project
 0.13 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Added ADMINS setting.
 
 
 0.12 (2015-08-23)
