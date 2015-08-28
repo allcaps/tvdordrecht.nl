@@ -39,7 +39,7 @@ ADMINS = (('Coen', SITE_ADMIN), )
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['tvdordrecht.nl', 'www.tvdordrecht.nl']  # '149.210.227.54'
+ALLOWED_HOSTS = ['tvdordrecht.nl', 'www.tvdordrecht.nl', '149.210.227.54']
 
 SITE_ID = 1
 

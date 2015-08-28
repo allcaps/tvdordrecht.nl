@@ -2,9 +2,6 @@ from django.utils import timezone
 
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
-from django.core.mail import send_mail
-
-from race.models import Event
 
 from .middleware import get_current_user
 from .models import (
@@ -24,9 +21,13 @@ def set_defaults(sender, instance, **kwargs):
     """ Give (meta) fields default values on model save. """
     if not instance.pub_date:
         instance.pub_date = timezone.now()
-    if not instance.owner:
-        instance.owner = get_current_user()
-    instance.last_modified_by = get_current_user()
+    # TODO: I don't trust get_current_user. So this try and except it temp hack.
+    try:
+        if not instance.owner:
+            instance.owner = get_current_user()
+        instance.last_modified_by = get_current_user()
+    except:
+        pass
     if not sender == Image and not instance.description:
         instance.description = get_description(instance.text)
     if hasattr(instance, 'table_of_contents'):
@@ -42,32 +43,3 @@ def set_defaults(sender, instance, **kwargs):
 
 for model in [Menu, Page, Image, News]:
     pre_save.connect(set_defaults, sender=model)
-
-
-def send_notification(sender, instance, **kwargs):
-    url = "http://www.tvdordrecht.nl" + instance.get_absolute_url()
-    subject = "[TVD website] " + url
-
-    message = u"""
-    url              : %s
-    title            : %s
-    Eigenaar         : %s
-    Bewerkt door     : %s
-    Aangemaakt op    : %s
-    Laatst bewerkt op: %s
-
-    """ % (
-        url,
-        instance,
-        instance.owner,
-        instance.last_modified_by,
-        instance.pub_date,
-        instance.last_modified,
-    )
-
-    send_mail(subject, message, 'website@tvdordrecht.nl',
-        ['irvinvanderwaal@hotmail.com'], fail_silently=True)
-
-
-# pre_save.connect(send_notification, sender=News)
-# pre_save.connect(send_notification, sender=Event)
