@@ -5,7 +5,7 @@ History of this project
 0.15 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Removed notification. Wrap get_current_user in try except.
 
 
 0.14 (2015-08-23)
