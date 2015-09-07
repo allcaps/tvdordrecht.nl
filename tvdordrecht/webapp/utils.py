@@ -7,23 +7,9 @@ from PIL import Image as PILImage
 from bs4 import BeautifulSoup
 
 from django.template.defaultfilters import slugify
-from django.conf import settings
 from django.utils.html import strip_tags
-
-
-# def make_default_size(self, width=276, height=276):
-#     filename = os.path.join(settings.MEDIA_ROOT, self.image.name)
-#     try:
-#         image = PILImage.open(filename)
-#         if width < image.size[0] or height < image.size[1]:
-#             image.convert('RGB')
-#             image.thumbnail([width, height], PILImage.ANTIALIAS)
-#             if image.format == "jpg" or "JPG" or "jpeg" or "JPEG":
-#                 image.save(filename, image.format, quality=75)
-#             else:
-#                 image.save(filename, image.format)
-#     except:
-#         pass
+import string
+from random import choice
 
 
 def edit_image(self):
@@ -70,15 +56,15 @@ def clean_tables(html):
     return unicode(soup)
 
 
-def make_table(html, absolute_url=""):
+def table_of_contents(html, absolute_url=""):
     """
     Generates table of contents and HTML width an unique id for every heading
     """
     table_of_contents = u""
     soup = BeautifulSoup(html)
-    ids = []
+    uids = []
 
-    for tag in soup.find_all('h2'): #re.compile('^h')
+    for tag in soup.find_all('h2'):  # re.compile('^h')
 
         # Clean the title before constructing an id.
         # Remove all breaks.
@@ -89,27 +75,27 @@ def make_table(html, absolute_url=""):
         else:
             title = ""
 
-        id = slugify(title)
+        uid = slugify(title)
 
         # Make sure the id is unique
         counter = 1
-        temp_id = id
-        while id in ids:
-            id = '%s_%d' % (temp_id, counter)
+        temp_uid = uid
+        while uid in uids:
+            uid = '%s_%d' % (temp_uid, counter)
             counter += 1
-        ids.append(id)
+        uids.append(id)
 
         # Replace heading element a new one.
-        tag['id'] = id
+        tag['id'] = uid
         temp = BeautifulSoup(
             u'<%s id="%s"><a href="#%s" title="Permanente link naar %s">%s</a></%s>' %
-            (tag.name, id, id, title, title, tag.name)
+            (tag.name, uid, uid, title, title, tag.name)
         )
         tag.replaceWith(temp)
 
         # Add an link to the table of contents.
         table_of_contents += u'<li class="toc_%s"><a href="%s#%s">%s</a></li>' % \
-                             (tag.name, absolute_url, id, title)
+                             (tag.name, absolute_url, uid, title)
 
     html = unicode(soup)
     return table_of_contents, html
@@ -125,9 +111,6 @@ def get_description(html):
         return " ".join(text.split())[:250]
     else:
         return ""
-
-import string
-from random import choice
 
 
 def rot(n, text):

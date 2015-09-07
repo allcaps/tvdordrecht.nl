@@ -12,7 +12,7 @@ from .models import (
 )
 from .utils import (
     get_description,
-    make_table,
+    table_of_contents,
     obfuscate_email,
 )
 
@@ -31,7 +31,7 @@ def set_defaults(sender, instance, **kwargs):
     if not sender == Image and not instance.description:
         instance.description = get_description(instance.text)
     if hasattr(instance, 'table_of_contents'):
-        instance.table_of_contents, instance.html = make_table(instance.text)
+        instance.table_of_contents, instance.html = table_of_contents(instance.text)
         instance.html = obfuscate_email(instance.html)
     if sender is News and not instance.slug:
         slug = slugify(instance.title)
