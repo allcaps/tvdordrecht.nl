@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.16 (unreleased)
+0.16 (2015-09-14)
 -----------------
 
 - Improve date time rendering.
