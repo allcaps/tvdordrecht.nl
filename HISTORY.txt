@@ -5,7 +5,11 @@ History of this project
 0.16 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Improve date time rendering.
+
+- Time Zone False.
+
+- Hide participants from training edit view.
 
 
 0.15 (2015-08-28)
