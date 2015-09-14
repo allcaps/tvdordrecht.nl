@@ -60,8 +60,8 @@ def table_of_contents(html, absolute_url=""):
     """
     Generates table of contents and HTML width an unique id for every heading
     """
-    table_of_contents = u""
     soup = BeautifulSoup(html)
+    table_of_contents = u""
     uids = []
 
     for tag in soup.find_all('h2'):  # re.compile('^h')
@@ -71,7 +71,7 @@ def table_of_contents(html, absolute_url=""):
         [br.extract() for br in tag.findAll('br')]
         if tag.contents and tag.contents[0]:
             # Removes non breaking space from title.
-            title = tag.contents[0].replace('&nbsp;', ' ')
+            title = tag.contents[0].replace(u'\xa0', u' ')
         else:
             title = ""
 
@@ -81,9 +81,9 @@ def table_of_contents(html, absolute_url=""):
         counter = 1
         temp_uid = uid
         while uid in uids:
-            uid = '%s_%d' % (temp_uid, counter)
+            uid = '%s-%d' % (temp_uid, counter)
             counter += 1
-        uids.append(id)
+        uids.append(uid)
 
         # Replace heading element a new one.
         tag['id'] = uid
@@ -97,7 +97,7 @@ def table_of_contents(html, absolute_url=""):
         table_of_contents += u'<li class="toc_%s"><a href="%s#%s">%s</a></li>' % \
                              (tag.name, absolute_url, uid, title)
 
-    html = unicode(soup)
+    html = soup.encode_contents(formatter='html')
     return table_of_contents, html
 
 
