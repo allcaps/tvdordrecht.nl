@@ -240,6 +240,12 @@ class SessionAdmin(admin.ModelAdmin):
                 'discipline',
                 'location',
                 'trainer',
+                ),
+            }
+        ),
+        ('Deelnemers', {
+            'classes': ('collapse',),
+            'fields': (
                 'participants',
                 ),
             }

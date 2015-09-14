@@ -3,8 +3,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from model_utils.models import TimeStampedModel
+from django.template.defaultfilters import date
 from django.core.urlresolvers import reverse
+
+from model_utils.models import TimeStampedModel
 
 
 class Discipline(TimeStampedModel):
@@ -88,10 +90,11 @@ class Session(TimeStampedModel):
         )
 
     def __unicode__(self):
-        return "%s %s " % (
-            self.start.strftime("%Y %m %d"), 
+        date_time = date(self.start, "l j F Y")
+        return "%s %s" % (
+            date_time,
             self.discipline.title,
-            )
+        )
 
     class Meta:
         verbose_name = "trainingssessie"

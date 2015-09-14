@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, timedelta
+from datetime import timedelta
+
 from django.views.generic import (
     ListView,
     DetailView,
     FormView,
     )
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
 from webapp.models import Menu
 
@@ -27,7 +29,7 @@ class SessionList(CurrentMenuMixin, ListView):
     model = Session
 
     def get_queryset(self, **kwargs):
-        now = datetime.now().date()
+        now = timezone.now().date()
         then = now + timedelta(days=90)
         queryset = super(SessionList, self).get_queryset() \
             .filter(start__gte=now, start__lt=then) \
@@ -41,6 +43,7 @@ class SessionDetail(CurrentMenuMixin, DetailView):
 
 class DisciplineList(CurrentMenuMixin, ListView):
     model = Discipline
+
 
 class LocationList(CurrentMenuMixin, ListView):
     model = Location
