@@ -5,7 +5,17 @@ History of this project
 0.17 (unreleased)
 -----------------
 
-- Nothing changed yet.
+ - Dry and PEP-8 the webapp model.
+
+ - Added abstract Base and BaseExt classes.
+
+ - Use auto_now and auto_now_add for date fields.
+
+ - Disable the auto generation of description fields.
+
+ - Simplefy the save signal handler.
+
+ - Tiny fixes in settings and requirements.
 
 
 0.16 (2015-09-14)
