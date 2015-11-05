@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.18 (unreleased)
+0.18 (2015-11-05)
 -----------------
 
 - Add migration.
