@@ -19,17 +19,11 @@ from .utils import (
 
 def set_defaults(sender, instance, **kwargs):
     """ Give (meta) fields default values on model save. """
-    if not instance.pub_date:
-        instance.pub_date = timezone.now()
-    # TODO: I don't trust get_current_user. So this try and except it temp hack.
-    try:
-        if not instance.owner:
-            instance.owner = get_current_user()
-        instance.last_modified_by = get_current_user()
-    except:
-        pass
-    if not sender == Image and not instance.description:
-        instance.description = get_description(instance.text)
+    if not instance.owner:
+        instance.owner = get_current_user()
+    instance.last_modified_by = get_current_user()
+    # if not sender == Image and not instance.description:
+    #     instance.description = get_description(instance.text)
     if hasattr(instance, 'table_of_contents'):
         instance.table_of_contents, instance.html = table_of_contents(instance.text)
         instance.html = obfuscate_email(instance.html)
@@ -37,7 +31,7 @@ def set_defaults(sender, instance, **kwargs):
         slug = slugify(instance.title)
         num = 1
         while News.objects.filter(slug=slug).count():
-            slug = "%s-%d" %(slugify(instance.title), num)
+            slug = "%s-%d" % (slugify(instance.title), num)
             num += 1
         instance.slug = slug
 

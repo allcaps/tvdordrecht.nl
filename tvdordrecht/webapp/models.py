@@ -46,12 +46,58 @@ EDIT_CHOICES = (
     (u'double', u'Double the size')
 )
 
+class Base(models.Model):
+    """
+    An abstract base class model.
+    """
+    pub_date = models.DateTimeField(
+        "publicatie datum",
+        auto_now_add=True
+    )
+    owner = models.ForeignKey(
+        User,
+        verbose_name="gemaakt door",
+        blank=True,
+        null=True,
+        related_name="%(class)s_owner"
+    )
+    last_modified_by = models.ForeignKey(
+        User,
+        verbose_name="Laatst bewerkt door",
+        blank=True,
+        null=True,
+        editable=False,
+        related_name="%(class)s_last_modified_by"
+    )
+    last_modified = models.DateTimeField(
+        "laatst bewerkt",
+        auto_now=True
+    )
 
-class Image(models.Model):
+    class Meta:
+        abstract = True
+
+
+class BaseExt(Base):
+    keywords = models.TextField(
+        blank=True,
+        help_text=keyword_help_text
+    )
+    description = models.TextField(
+        blank=True,
+        max_length=250,
+        help_text=description_help_text
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Image(Base):
     image = models.ImageField(
         "afbeelding", 
-        upload_to='images/%Y/%m/%d', 
-        height_field="height", 
+        upload_to='images/%Y/%m/%d',
+        height_field="height",
         width_field="width",
     )
     caption = models.CharField(
@@ -60,9 +106,9 @@ class Image(models.Model):
         blank=True,
     )
     sortorder = models.IntegerField(
-        "Sortering", 
-        blank=True, 
-        null=True, 
+        "Sortering",
+        blank=True,
+        null=True,
         help_text=sortorder_help_text,
     )
     height = models.IntegerField(
@@ -75,40 +121,11 @@ class Image(models.Model):
     )
     # Edit
     image_editing = models.CharField(
-        "Afbeelding roteren", 
-        choices=EDIT_CHOICES, 
-        blank=True, 
-        max_length=100, 
+        "Afbeelding roteren",
+        choices=EDIT_CHOICES,
+        blank=True,
+        max_length=100,
         default=""
-    )
-    # Meta fields
-    pub_date = models.DateTimeField(
-        "publicatie datum", 
-        blank=True, 
-        null=True,
-    )
-    owner = models.ForeignKey(
-        User, 
-        verbose_name="Eigenaar", 
-        blank=True, 
-        null=True, 
-        editable=False, 
-        related_name="%(class)s_owner",
-    )
-    last_modified_by = models.ForeignKey(
-        User, 
-        verbose_name="Laatst bewerkt door", 
-        blank=True, 
-        null=True, 
-        editable=False, 
-        related_name="%(class)s_last_modified_by",
-    )
-    last_modified = models.DateTimeField(
-        "laatst bewerkt", 
-        blank=True, 
-        null=True, 
-        editable=False, 
-        auto_now=True,
     )
 
     class Meta:
@@ -192,7 +209,7 @@ class Image(models.Model):
     inline_urls.allow_tags = True
 
 
-class Menu(models.Model):
+class Menu(BaseExt):
     title = models.CharField(
         "titel",
         max_length=200,
@@ -202,7 +219,7 @@ class Menu(models.Model):
         blank=True,
     )
     image = models.ForeignKey(
-        Image, 
+        Image,
         verbose_name="afbeelding",
         blank=True,
         null=True,
@@ -211,66 +228,24 @@ class Menu(models.Model):
     )
     html = models.TextField(
         "html",
-        null=True,
-        blank=True,
-        editable=False,
+        blank=True
     )
     table_of_contents = models.TextField(
-        "table of contents", 
-        null=True,
-        blank=True,
-        editable=False,
+        "table of contents",
+        blank=True
     )
     # Advanced
     slug = models.SlugField(unique=True)
     sortorder = models.IntegerField(
-        "sortering", 
-        blank=True, 
+        "sortering",
+        blank=True,
         null=True,
-    )
-    # Meta fields
-    pub_date = models.DateTimeField(
-        "publicatie datum", 
-        blank=True, 
-        null=True,
-    )
-    owner = models.ForeignKey(
-        User, 
-        verbose_name="Eigenaar", 
-        blank=True, 
-        null=True, 
-        editable=False, 
-        related_name="%(class)s_owner",
-    )
-    last_modified_by = models.ForeignKey(
-        User, 
-        verbose_name="Laatst bewerkt door", 
-        blank=True, 
-        null=True, 
-        editable=False, 
-        related_name="%(class)s_last_modified_by",
-    )
-    last_modified = models.DateTimeField(
-        "laatst bewerkt", 
-        blank=True, 
-        null=True, 
-        editable=False, 
-        auto_now=True,
-    )
-    keywords = models.TextField(
-        blank=True, 
-        help_text=keyword_help_text,
-    )
-    description = models.TextField(
-        blank=True, 
-        max_length=250, 
-        help_text=description_help_text,
     )
 
     class Meta:
         verbose_name = "menu-item"
         verbose_name_plural = "menu"
-        ordering = ('sortorder', )
+        ordering = ('sortorder',)
 
     def __unicode__(self):
         return self.title
@@ -305,7 +280,7 @@ class PageManager(models.Manager):
         return self.get_queryset().live()
 
 
-class Page(models.Model):
+class Page(BaseExt):
     # , limit_choices_to=
     # {'id__in':[int(obj.id) for obj in Menu.objects.exclude(slug='home') \
     #   .exclude(slug='nieuws')] })
@@ -331,13 +306,11 @@ class Page(models.Model):
     )
     html = models.TextField(
         "html",
-        null=True,
         blank=True,
         editable=False
     )
     table_of_contents = models.TextField(
         "table of contents",
-        null=True,
         blank=True,
         editable=False
     )
@@ -351,45 +324,6 @@ class Page(models.Model):
         "sortering",
         blank=True,
         null=True
-    )
-    # Meta fields
-    pub_date = models.DateTimeField(
-        "publicatie datum",
-        blank=True,
-        null=True,
-        editable=False
-    )
-    owner = models.ForeignKey(
-        User,
-        verbose_name="Eigenaar",
-        blank=True,
-        null=True,
-        editable=False,
-        related_name="%(class)s_owner"
-    )
-    last_modified_by = models.ForeignKey(
-        User,
-        verbose_name="Laatst bewerkt door",
-        blank=True,
-        null=True,
-        editable=False,
-        related_name="%(class)s_last_modified_by"
-    )
-    last_modified = models.DateTimeField(
-        "laatst bewerkt",
-        blank=True,
-        null=True,
-        editable=False,
-        auto_now=True
-    )
-    keywords = models.TextField(
-        blank=True,
-        help_text=keyword_help_text
-    )
-    description = models.TextField(
-        blank=True,
-        max_length=250,
-        help_text=description_help_text
     )
 
     objects = PageManager()
@@ -410,7 +344,7 @@ class Page(models.Model):
         return reverse('webapp:page_detail', args=(self.menu.slug, self.slug))
 
 
-class News(models.Model):
+class News(BaseExt):
     title = models.CharField(
         "titel",
         max_length=200
@@ -430,44 +364,7 @@ class News(models.Model):
         "publiceren",
         default=True
     )
-    # Meta fields
-    pub_date = models.DateTimeField(
-        "publicatie datum",
-        blank=True,
-        null=True
-    )
-    owner = models.ForeignKey(
-        User,
-        verbose_name="gemaakt door",
-        blank=True,
-        null=True,
-        related_name="%(class)s_owner"
-    )
-    last_modified_by = models.ForeignKey(
-        User,
-        verbose_name="Laatst bewerkt door",
-        blank=True,
-        null=True,
-        editable=False,
-        related_name="%(class)s_last_modified_by"
-    )
-    last_modified = models.DateTimeField(
-        "laatst bewerkt",
-        blank=True,
-        null=True,
-        editable=False,
-        auto_now=True
-    )
-    keywords = models.TextField(
-        blank=True,
-        help_text=keyword_help_text
-    )
-    description = models.TextField(
-        blank=True,
-        max_length=250,
-        help_text=description_help_text
-    )
-        
+
     class Meta:
         verbose_name = "nieuws-item"
         verbose_name_plural = "nieuws"
