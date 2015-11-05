@@ -5,7 +5,7 @@ History of this project
 0.19 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix news admin date. Date isn't available no more.
 
 
 0.18 (2015-11-05)

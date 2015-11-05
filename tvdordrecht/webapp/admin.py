@@ -198,7 +198,7 @@ class NewsAdmin(admin.ModelAdmin):
         }),
         ('Geavanceerde opties', {
             'classes': ('collapse', 'wide', 'extrapretty'),
-            'fields': ('publish', 'slug', 'pub_date')
+            'fields': ('publish', 'slug')
         }),
         ('Meta tags', {
             'classes': ('collapse', 'wide', 'extrapretty'),
