@@ -10,40 +10,106 @@ from django.contrib.auth.models import User
 from django.template.loader import get_template
 from django.template import Context
 
-from utils import (
-    edit_image,
-    #make_default_size,
-)
+from utils import edit_image
 
+keyword_help_text = """
+    Alleen relevante keywords. Niet relevante keywords (die niet in de tekst 
+    voorkomen) doen pagina's zakken.<br>
+    Bij een leeg keywordveld worden keywords gegenereerd op basis van de 
+    inhoud van het tekstveld.
+    """
 
-keyword_help_text = """Alleen relevante keywords. Niet relevante keywords (die niet in de tekst voorkomen) doen pagina's zakken.<br>
-                        Bij een leeg keywordveld worden keywords gegenereerd op basis van de inhoud van het tekstveld."""
+description_help_text = """
+    Maximaal 250 karakters (Google zoekresultaten geven alleen de eerste 150 
+    karakters weer).<br>
+    Maak een relevante description. Bij voorkeur met tekst die op de pagina 
+    voorkomt.</br>
+    Bij een leeg descriptionveld wordt description gegenereerd op basis van de 
+    inhoud van het tekstveld.
+    """
 
-description_help_text = """Maximaal 250 karakters (Google zoekresultaten geven alleen de eerste 150 karakters weer).<br>
-                            Maak een relevante description. Bij voorkeur met tekst die op de pagina voorkomt.</br>
-                            Bij een leeg descriptionveld wordt description gegenereerd op basis van de inhoud van het tekstveld."""
+sortorder_help_text = """
+    Als er meerdere afbeeldingen in een foto-album staan, worden ze standaard 
+    op alfabetische volgorde weergeven. Om de volgorde te wijzigen geef je een 
+    sortering (getal) bij alle te ordenen afbeeldigen in.
+    """
+
+image_help_text = """
+    Deze afbeelding komt op een vaste positie. Gebruik het afbeeldings-icoon
+    in de text-editor om afbeeldingen tussen de lopende tekst in te voegen.
+    """
 
 EDIT_CHOICES = (
     (u'90', u'90°'),
     (u'180', u'180° '),
     (u'270', u'270°'),
-    (u'double', u'Double the size!'),
-    )
+    (u'double', u'Double the size')
+)
 
 
 class Image(models.Model):
-    image = models.ImageField("afbeelding", upload_to='images/%Y/%m/%d', height_field="height", width_field="width")
-    caption = models.CharField("bijschrift", max_length=600, blank=True)
-    sortorder = models.IntegerField("Sortering", blank=True, null=True, help_text="Als er meerdere afbeeldingen in een foto-album staan, worden ze standaard op alfabetische volgorde weergeven. Om de volgorde te wijzigen geef je een sortering (getal) bij alle te ordenen afbeeldigen in.")
-    height = models.IntegerField(blank=True, editable=False)
-    width = models.IntegerField(blank=True, editable=False)
+    image = models.ImageField(
+        "afbeelding", 
+        upload_to='images/%Y/%m/%d', 
+        height_field="height", 
+        width_field="width",
+    )
+    caption = models.CharField(
+        "bijschrift", 
+        max_length=600, 
+        blank=True,
+    )
+    sortorder = models.IntegerField(
+        "Sortering", 
+        blank=True, 
+        null=True, 
+        help_text=sortorder_help_text,
+    )
+    height = models.IntegerField(
+        blank=True, 
+        editable=False,
+    )
+    width = models.IntegerField(
+        blank=True, 
+        editable=False,
+    )
     # Edit
-    image_editing = models.CharField("Afbeelding roteren", choices=EDIT_CHOICES, blank=True, max_length=100, default="")
+    image_editing = models.CharField(
+        "Afbeelding roteren", 
+        choices=EDIT_CHOICES, 
+        blank=True, 
+        max_length=100, 
+        default=""
+    )
     # Meta fields
-    pub_date = models.DateTimeField("publicatie datum", blank=True, null=True)
-    owner = models.ForeignKey(User, verbose_name="Eigenaar", blank=True, null=True, editable=False, related_name="%(class)s_owner")
-    last_modified_by = models.ForeignKey(User, verbose_name="Laatst bewerkt door", blank=True, null=True, editable=False, related_name="%(class)s_last_modified_by")
-    last_modified = models.DateTimeField("laatst bewerkt", blank=True, null=True, editable=False, auto_now=True)
+    pub_date = models.DateTimeField(
+        "publicatie datum", 
+        blank=True, 
+        null=True,
+    )
+    owner = models.ForeignKey(
+        User, 
+        verbose_name="Eigenaar", 
+        blank=True, 
+        null=True, 
+        editable=False, 
+        related_name="%(class)s_owner",
+    )
+    last_modified_by = models.ForeignKey(
+        User, 
+        verbose_name="Laatst bewerkt door", 
+        blank=True, 
+        null=True, 
+        editable=False, 
+        related_name="%(class)s_last_modified_by",
+    )
+    last_modified = models.DateTimeField(
+        "laatst bewerkt", 
+        blank=True, 
+        null=True, 
+        editable=False, 
+        auto_now=True,
+    )
 
     class Meta:
         verbose_name = "Afbeelding"
@@ -69,7 +135,7 @@ class Image(models.Model):
         # make_default_size(self, width=1024, height=1024)
         super(Image, self).save()
 
-    def delete(self):
+    def delete(self, using=None):
         self.delete_thumbnails()
         super(Image, self).delete()
 
@@ -98,31 +164,108 @@ class Image(models.Model):
         """
         try:
             img, ext = self.image.name.rsplit('.', 1)
-        except:
+        except ValueError:
             img, ext = self.image.name, ""
-        html = '<p><label for="inline_l_%s">Groot:</label><input id="inline_l_%s" type="text" value="/media/%s_t_360x1200.%s" readonly="readonly" /></p>' %(self.id, self.id, img, ext)
-        html += '<p><label for="inline_s_%s">Klein:</label><input id="inline_s_%s" type="text" value="/media/%s_t_132x132.%s" readonly="readonly" /></p>' %(self.id, self.id, img, ext)
-        return html
+        return """
+            <p>
+                <label for="inline_l_{uid}">Groot:</label>
+                <input
+                    id="inline_l_{uid}"
+                    type="text"
+                    value="/media/{img}_t_360x1200.{ext}"
+                    readonly="readonly" />
+            </p>
+            <p>
+                <label for="inline_s_{uid}">Klein:</label>
+                <input
+                    id="inline_s_{uid}"
+                    type="text"
+                    value="/media/{img}_t_132x132.{ext}"
+                    readonly="readonly" />
+            </p>
+            """.format(
+                uid=self.id,
+                img=img,
+                ext=ext
+            )
     inline_urls.short_description = "Inline afbeelding-url's"
     inline_urls.allow_tags = True
 
 
 class Menu(models.Model):
-    title = models.CharField("titel", max_length=200)
-    text = models.TextField("tekst", blank=True)
-    image = models.ForeignKey(Image, verbose_name="afbeelding", blank=True, null=True, related_name="%(class)s_image", help_text="Deze afbeelding komt op een vaste positie. Gebruik het afbeeldings-icoon in de text-editor om afbeeldingen tussen de lopende tekst in te voegen.")
-    html = models.TextField("html", null=True, blank=True, editable=False)
-    table_of_contents = models.TextField("table of contents", null=True, blank=True, editable=False)
+    title = models.CharField(
+        "titel",
+        max_length=200,
+    )
+    text = models.TextField(
+        "tekst",
+        blank=True,
+    )
+    image = models.ForeignKey(
+        Image, 
+        verbose_name="afbeelding",
+        blank=True,
+        null=True,
+        related_name="%(class)s_image",
+        help_text=image_help_text
+    )
+    html = models.TextField(
+        "html",
+        null=True,
+        blank=True,
+        editable=False,
+    )
+    table_of_contents = models.TextField(
+        "table of contents", 
+        null=True,
+        blank=True,
+        editable=False,
+    )
     # Advanced
     slug = models.SlugField(unique=True)
-    sortorder = models.IntegerField("sortering", blank=True, null=True)
+    sortorder = models.IntegerField(
+        "sortering", 
+        blank=True, 
+        null=True,
+    )
     # Meta fields
-    pub_date = models.DateTimeField("publicatie datum", blank=True, null=True)
-    owner = models.ForeignKey(User, verbose_name="Eigenaar", blank=True, null=True, editable=False, related_name="%(class)s_owner")
-    last_modified_by = models.ForeignKey(User, verbose_name="Laatst bewerkt door", blank=True, null=True, editable=False, related_name="%(class)s_last_modified_by")
-    last_modified = models.DateTimeField("laatst bewerkt", blank=True, null=True, editable=False, auto_now=True)
-    keywords = models.TextField(blank=True, help_text=keyword_help_text)
-    description = models.TextField(blank=True, max_length=250, help_text=description_help_text)
+    pub_date = models.DateTimeField(
+        "publicatie datum", 
+        blank=True, 
+        null=True,
+    )
+    owner = models.ForeignKey(
+        User, 
+        verbose_name="Eigenaar", 
+        blank=True, 
+        null=True, 
+        editable=False, 
+        related_name="%(class)s_owner",
+    )
+    last_modified_by = models.ForeignKey(
+        User, 
+        verbose_name="Laatst bewerkt door", 
+        blank=True, 
+        null=True, 
+        editable=False, 
+        related_name="%(class)s_last_modified_by",
+    )
+    last_modified = models.DateTimeField(
+        "laatst bewerkt", 
+        blank=True, 
+        null=True, 
+        editable=False, 
+        auto_now=True,
+    )
+    keywords = models.TextField(
+        blank=True, 
+        help_text=keyword_help_text,
+    )
+    description = models.TextField(
+        blank=True, 
+        max_length=250, 
+        help_text=description_help_text,
+    )
 
     class Meta:
         verbose_name = "menu-item"
@@ -158,35 +301,103 @@ class PageManager(models.Manager):
     def get_queryset(self):
         return PageQuerySet(self.model)
 
-    def live(self, *args, **kwargs):
-        return self.get_queryset().live(*args, **kwargs)
+    def live(self):
+        return self.get_queryset().live()
 
 
 class Page(models.Model):
-    menu = models.ForeignKey(Menu, related_name="page") #, limit_choices_to={'id__in':[int(obj.id) for obj in Menu.objects.exclude(slug='home').exclude(slug='nieuws')] })
-    title = models.CharField("titel", max_length=200)
-    image = models.ForeignKey(Image, verbose_name="afbeelding", blank=True, null=True, related_name="%(class)s_image", help_text="Deze afbeelding komt op een vaste positie. Gebruik het afbeeldings-icoon in de text-editor om afbeeldingen tussen de lopende tekst in te voegen.")
-    text = models.TextField("tekst", blank=True)
-    html = models.TextField("html", null=True, blank=True, editable=False)
-    table_of_contents = models.TextField("table of contents", null=True, blank=True, editable=False)
+    # , limit_choices_to=
+    # {'id__in':[int(obj.id) for obj in Menu.objects.exclude(slug='home') \
+    #   .exclude(slug='nieuws')] })
+    menu = models.ForeignKey(
+        Menu,
+        related_name="page"
+    )
+    title = models.CharField(
+        "titel",
+        max_length=200
+    )
+    image = models.ForeignKey(
+        Image,
+        verbose_name="afbeelding",
+        blank=True,
+        null=True,
+        related_name="%(class)s_image",
+        help_text=image_help_text
+    )
+    text = models.TextField(
+        "tekst",
+        blank=True
+    )
+    html = models.TextField(
+        "html",
+        null=True,
+        blank=True,
+        editable=False
+    )
+    table_of_contents = models.TextField(
+        "table of contents",
+        null=True,
+        blank=True,
+        editable=False
+    )
     # Advanced
     slug = models.SlugField(unique=True)
-    publish = models.BooleanField("publiceren", default=True)
-    sortorder = models.IntegerField("sortering", blank=True, null=True)
+    publish = models.BooleanField(
+        "publiceren",
+        default=True
+    )
+    sortorder = models.IntegerField(
+        "sortering",
+        blank=True,
+        null=True
+    )
     # Meta fields
-    pub_date = models.DateTimeField("publicatie datum", blank=True, null=True, editable=False)
-    owner = models.ForeignKey(User, verbose_name="Eigenaar", blank=True, null=True, editable=False, related_name="%(class)s_owner")
-    last_modified_by = models.ForeignKey(User, verbose_name="Laatst bewerkt door", blank=True, null=True, editable=False, related_name="%(class)s_last_modified_by")
-    last_modified = models.DateTimeField("laatst bewerkt", blank=True, null=True, editable=False, auto_now=True)
-    keywords = models.TextField(blank=True, help_text=keyword_help_text)
-    description = models.TextField(blank=True, max_length=250, help_text=description_help_text)
+    pub_date = models.DateTimeField(
+        "publicatie datum",
+        blank=True,
+        null=True,
+        editable=False
+    )
+    owner = models.ForeignKey(
+        User,
+        verbose_name="Eigenaar",
+        blank=True,
+        null=True,
+        editable=False,
+        related_name="%(class)s_owner"
+    )
+    last_modified_by = models.ForeignKey(
+        User,
+        verbose_name="Laatst bewerkt door",
+        blank=True,
+        null=True,
+        editable=False,
+        related_name="%(class)s_last_modified_by"
+    )
+    last_modified = models.DateTimeField(
+        "laatst bewerkt",
+        blank=True,
+        null=True,
+        editable=False,
+        auto_now=True
+    )
+    keywords = models.TextField(
+        blank=True,
+        help_text=keyword_help_text
+    )
+    description = models.TextField(
+        blank=True,
+        max_length=250,
+        help_text=description_help_text
+    )
 
     objects = PageManager()
 
     class Meta:
         verbose_name = "pagina"
         verbose_name_plural = "pagina's"
-        ordering = ('sortorder', 'title' )
+        ordering = ('sortorder', 'title')
         unique_together = (("menu", "slug"),)
 
     def __unicode__(self):
@@ -200,19 +411,62 @@ class Page(models.Model):
 
 
 class News(models.Model):
-    title = models.CharField("titel", max_length=200)
+    title = models.CharField(
+        "titel",
+        max_length=200
+    )
     text = models.TextField("tekst")
-    image = models.ForeignKey(Image, verbose_name="afbeelding", blank=True, null=True, related_name="%(class)s_image", help_text="Deze afbeelding komt op een vaste positie. Gebruik het afbeeldings-icoon in de text-editor om afbeeldingen tussen de lopende tekst in te voegen.")
+    image = models.ForeignKey(
+        Image,
+        verbose_name="afbeelding",
+        blank=True,
+        null=True,
+        related_name="%(class)s_image",
+        help_text=image_help_text
+    )
     # Advanced
     slug = models.SlugField(unique=True)
-    publish = models.BooleanField("publiceren", default=True)
+    publish = models.BooleanField(
+        "publiceren",
+        default=True
+    )
     # Meta fields
-    pub_date = models.DateTimeField("publicatie datum", blank=True, null=True)
-    owner = models.ForeignKey(User, verbose_name="gemaakt door", blank=True, null=True, related_name="%(class)s_owner")
-    last_modified_by = models.ForeignKey(User, verbose_name="Laatst bewerkt door", blank=True, null=True, editable=False, related_name="%(class)s_last_modified_by")
-    last_modified = models.DateTimeField("laatst bewerkt", blank=True, null=True, editable=False, auto_now=True)
-    keywords = models.TextField(blank=True, help_text=keyword_help_text)
-    description = models.TextField(blank=True, max_length=250, help_text=description_help_text)
+    pub_date = models.DateTimeField(
+        "publicatie datum",
+        blank=True,
+        null=True
+    )
+    owner = models.ForeignKey(
+        User,
+        verbose_name="gemaakt door",
+        blank=True,
+        null=True,
+        related_name="%(class)s_owner"
+    )
+    last_modified_by = models.ForeignKey(
+        User,
+        verbose_name="Laatst bewerkt door",
+        blank=True,
+        null=True,
+        editable=False,
+        related_name="%(class)s_last_modified_by"
+    )
+    last_modified = models.DateTimeField(
+        "laatst bewerkt",
+        blank=True,
+        null=True,
+        editable=False,
+        auto_now=True
+    )
+    keywords = models.TextField(
+        blank=True,
+        help_text=keyword_help_text
+    )
+    description = models.TextField(
+        blank=True,
+        max_length=250,
+        help_text=description_help_text
+    )
         
     class Meta:
         verbose_name = "nieuws-item"
