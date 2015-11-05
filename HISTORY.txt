@@ -5,7 +5,7 @@ History of this project
 0.18 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Add migration.
 
 
 0.17 (2015-11-05)
