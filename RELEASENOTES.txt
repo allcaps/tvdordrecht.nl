@@ -11,6 +11,10 @@ virtualenv env
 # Install requirements into the environment:
 env/bin/pip2.7 install -r requirements.txt
 
+# For local developement you might:
+# env/bin/pip2.7 install -r requirements/local.txt
+
+
 # Start the environment
 source env/bin/activate
 
