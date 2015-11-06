@@ -60,7 +60,7 @@ def table_of_contents(html, absolute_url=""):
     """
     Generates table of contents and HTML width an unique id for every heading
     """
-    soup = BeautifulSoup(html)
+    soup = BeautifulSoup(html, 'html.parser')
     table_of_contents = u""
     uids = []
 
@@ -126,7 +126,7 @@ def obfuscate_email(html):
     to NOT publish your email address at all.
     Although we have SPAM filters in place, we don't want to feed the troll.
     """
-    soup = BeautifulSoup(html)
+    soup = BeautifulSoup(html, 'html.parser')
     # Strip out all mailto links and replace them with the email in plain text.
     [tag.replaceWith(tag['href'].replace("mailto:", "")) for tag in soup.select('a[href^=mailto]')]
     # Find and replace all emails with a JS constructing the email.
@@ -151,5 +151,4 @@ def obfuscate_email(html):
         </script>
         """ % (index, index, encoded, decode_number)
         html = html.replace(email, js, 1)
-    print html
     return html
