@@ -26,7 +26,7 @@ def set_defaults(sender, instance, **kwargs):
     #     instance.description = get_description(instance.text)
     if hasattr(instance, 'table_of_contents'):
         instance.table_of_contents, instance.html = table_of_contents(instance.text)
-        # instance.html = obfuscate_email(instance.html)
+        instance.html = obfuscate_email(instance.html)
     if sender is News and not instance.slug:
         slug = slugify(instance.title)
         num = 1

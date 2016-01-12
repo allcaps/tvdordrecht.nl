@@ -5,7 +5,7 @@ History of this project
 0.21 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Turn on email obfuscation
 
 
 0.20 (2016-01-12)
