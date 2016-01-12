@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-sm-push-3 col-md-4 col-md-push-4" role="main">
-          <form method="post" action="{% url 'webapp:account_create' %}">
+{#          <form method="post" action="{% url 'webapp:account_create' %}">#}
           <h1>Account aanmaken</h1>
             <p>Met een account kun je:</p>
             <ul>
@@ -15,10 +15,17 @@
               <li>Uitslagen toevoegen;</li>
               <li>Een persoonlijk overzicht bekijken.</li>
             </ul>
-            {% csrf_token %}
-            {{ form|crispy }}
-            <input type="submit" class="btn btn-primary form-control" value="Account aanmaken" />
-          </form>
+            <p>
+              Een account is alleen voor leden van Triathlonvereniging
+              Dordrecht. Vraag een acount aan bij de beheerder van de website.
+              Zie
+              <a href="/over-triathlonvereniging-dordrecht/#contact">
+                onze contactpagina</a>.
+            </p>
+{#            {% csrf_token %}#}
+{#            {{ form|crispy }}#}
+{#            <input type="submit" class="btn btn-primary form-control" value="Account aanmaken" />#}
+{#          </form>#}
 
         </div>
     </div>
