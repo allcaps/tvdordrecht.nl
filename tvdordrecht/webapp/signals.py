@@ -37,3 +37,11 @@ def set_defaults(sender, instance, **kwargs):
 
 for model in [Menu, Page, Image, News]:
     pre_save.connect(set_defaults, sender=model)
+
+
+from django.contrib.auth.models import User
+
+def user_unicode(self):
+    return u'%s %s' % (self.first_name, self.last_name)
+
+User.__unicode__ = user_unicode

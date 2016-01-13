@@ -90,7 +90,7 @@ class EditionSearchForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(EditionSearchForm, self).__init__(*args, **kwargs)
         self.fields['user'] = forms.ModelChoiceField(
-            queryset=User.objects.all(),
+            queryset=User.objects.all().order_by('first_name', 'last_name'),
             label='Deelnemer',
             required=False,
             empty_label="Alle deelnemers"
