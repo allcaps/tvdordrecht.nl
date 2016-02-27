@@ -5,7 +5,7 @@ History of this project
 0.22 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Add tvdwedstrijd to allowed hosts.
 
 
 0.21 (2016-01-12)
