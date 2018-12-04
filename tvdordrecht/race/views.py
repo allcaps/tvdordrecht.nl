@@ -34,6 +34,7 @@ from .forms import (
 
 from django.contrib.auth.decorators import login_required
 
+
 class LoginRequiredMixin(object):
     @classmethod
     def as_view(cls, *args, **kwargs):
@@ -71,6 +72,7 @@ class EventDetail(CurrentMenuMixin, DetailView):
         context['result_list'] = Result.objects.filter(event=event, date__lte=now)
         return context
 
+
 class EventCreateView(LoginRequiredMixin, CurrentMenuMixin, SuccessMessageMixin, CreateView):
     template_name = 'race/event_form.html'
     model = Event
@@ -100,9 +102,13 @@ class WhoWhatWhere(CurrentMenuMixin, CurrentPageMixin, ListView):
 
     def get_queryset(self, **kwargs):
         """Filters the queryset with the search values."""
-        queryset = Result.objects.filter(time=None)\
-            .filter(date__gte=timezone.now())\
-            .reverse()
+        queryset = Result.objects.filter(
+            time=None
+        ).filter(
+            date__gte=timezone.now()
+        ).select_related(
+            'user', 'event', 'distance'
+        ).reverse()
 
         q = self.request.GET.get("q")
         if q:
@@ -131,7 +137,11 @@ class ResultList(CurrentMenuMixin, CurrentPageMixin, ListView):
 
     def get_queryset(self):
         queryset = super(ResultList, self).get_queryset()
-        queryset = queryset.filter(date__lte=timezone.now())
+        queryset = queryset.filter(
+            date__lte=timezone.now()
+        ).select_related(
+            'user', 'event', 'distance'
+        )
         return queryset
 
 
@@ -164,7 +174,7 @@ class WhoWhatWhereWizard(LoginRequiredMixin, CurrentMenuMixin,
             event = Event.objects.get(pk=event_pk)
             form.fields['date'].label = "Wanneer is %s?" % event.name
             form.fields['date'].help_text = "Format: DD-MM-YYYY"
-            form.fields['user'].choices = [ (user.id, user.get_full_name()) for user in User.objects.all()]
+            form.fields['user'].choices = [(user.id, user.get_full_name()) for user in User.objects.all()]
             form.fields['user'].initial = get_current_user()
 
         return form

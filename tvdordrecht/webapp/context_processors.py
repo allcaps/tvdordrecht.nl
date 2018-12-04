@@ -5,6 +5,6 @@ from .models import Menu
 
 def basics(request):
     return {
-        'menu': Menu.objects.all().prefetch_related('page'),
+        'menu': Menu.objects.all(),
         'site': Site.objects.get_current(),
     }

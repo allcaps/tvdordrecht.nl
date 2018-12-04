@@ -25,7 +25,6 @@ from race.models import Result
 from training.models import Session
 
 from .forms import (
-    # NewsForm,
     ImageForm,
     ImageFormSet,
 )
@@ -39,15 +38,19 @@ from .models import (
 
 def home(request, template='webapp/home.html'):
     current_menu = get_object_or_404(Menu, slug='home')
-    news_list = News.objects.filter(publish=True).order_by('-pub_date')[:6]
+    news_list = News.objects.filter(publish=True).order_by('-pub_date').select_related('image')[:6]
     now = timezone.now().date()
     then = now + timedelta(days=14)
     training_list = Session.objects \
         .filter(start__gte=now, start__lt=then) \
         .select_related('trainer', 'location', 'discipline')
-    www_list = Result.objects.filter(time=None)\
-        .filter(date__gte=now).reverse()
-    result_list = Result.objects.filter(time__isnull=False, date__lte=now)
+    www_list = Result.objects.filter(time=None) \
+        .filter(date__gte=now).select_related('user', 'event', 'distance').reverse()
+    result_list = Result.objects.filter(
+        time__isnull=False,
+        date__lte=now,
+        date__gte=now - timedelta(days=31)
+    ).select_related('user', 'event', 'distance')
     return render_to_response(
         template,
         context_instance=RequestContext(request, locals())
@@ -80,6 +83,7 @@ def logout(request):
 
 class CurrentMenuMixin(object):
     """ Adds the current menu object to the context data. """
+
     def get_context_data(self, **kwargs):
         context = super(CurrentMenuMixin, self).get_context_data(**kwargs)
         context['current_menu'] = get_object_or_404(Menu, slug='nieuws')
@@ -88,6 +92,7 @@ class CurrentMenuMixin(object):
 
 class YearListMixin(object):
     """ Adds a year list to the context data. """
+
     def get_context_data(self, **kwargs):
         context = super(YearListMixin, self).get_context_data(**kwargs)
         news = News.objects.filter(publish=True).order_by('-pub_date')
@@ -111,7 +116,9 @@ class FlipperMixin(object):
         context['next'] = self.queryset.filter(pub_date__gt=context['object'].pub_date).last()
         return context
 
+
 from django.contrib.auth.decorators import login_required
+
 
 class LoginRequiredMixin(object):
     @classmethod
@@ -121,12 +128,12 @@ class LoginRequiredMixin(object):
 
 
 class NewsListView(CurrentMenuMixin, YearListMixin, ListView):
-    queryset = News.objects.filter(publish=True)[:18]
+    queryset = News.objects.filter(publish=True).select_related('image')[:18]
     make_object_list = True
 
 
 class NewsYearArchiveView(CurrentMenuMixin, YearListMixin, YearArchiveView):
-    queryset = News.objects.filter(publish=True)
+    queryset = News.objects.filter(publish=True).select_related('image')
     date_field = "pub_date"
     make_object_list = True
     template_name = "webapp/news_list.html"
@@ -212,6 +219,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 
+
 class AccountCreateView(SuccessMessageMixin, CreateView):
     """
     Temp account registration form.
@@ -240,6 +248,7 @@ class AccountCreateView(SuccessMessageMixin, CreateView):
         )
         return redirect(reverse('webapp:home'))
 
+
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'registration/profile.html'
 
@@ -250,4 +259,3 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context['www_list'] = result_set.filter(date__gt=timezone.now())
         context['result_list'] = result_set.filter(date__lte=timezone.now())
         return context
-
