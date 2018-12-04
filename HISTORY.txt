@@ -5,7 +5,15 @@ History of this project
 0.23 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Add media to ignore
+- Add footer
+- Anon analytics
+- Make Analytics anon.
+- Dutch
+- Select related
+- Select related to remove duplicate queries
+- Remove person selector
+- Upgrade psycopg2
 
 
 0.22 (2016-02-27)
