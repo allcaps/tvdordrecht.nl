@@ -89,12 +89,6 @@ class EditionSearchForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(EditionSearchForm, self).__init__(*args, **kwargs)
-        self.fields['user'] = forms.ModelChoiceField(
-            queryset=User.objects.all(),
-            label='Deelnemer',
-            required=False,
-            empty_label="Alle deelnemers"
-        )
         self.helper = FormHelper()
         self.helper.form_method = 'get'
         self.helper.form_class = 'form-inline hidden-print'
@@ -102,7 +96,6 @@ class EditionSearchForm(forms.Form):
         self.helper.layout = Layout(
             Div(
                 Field('q', placeholder="Zoek"),
-                'user',
                 StrictButton(
                     '<span class="glyphicon glyphicon-search"></span>',
                     css_class='btn-primary',
