@@ -49,19 +49,8 @@
 {% endblock %}
 
 
-{% block footer %}
-{#<div id="big-photo" style="background-image: url('{{MEDIA_URL}}{{ article.image }}');">#}
-{#</div>#}
-{% endblock %}
-
-
 {% block javascript %}
 <script>
-    $('#sidebar').affix({
-        offset: { bottom: function () {
-            return (this.bottom = $('#footer').outerHeight(true))
-          }
-        }
-      })
+    $('#sidebar').affix();
 </script>
 {% endblock %}

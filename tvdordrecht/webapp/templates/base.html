@@ -148,10 +148,8 @@
                                     class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 {% for sub in i.page.live %}
-                                    <li{% ifequal sub article %}
-                                        class="active"{% endifequal %}><a
-                                            href="{{ sub.get_absolute_url }}"
-                                            title="{{ sub.title }}">{{ sub.title }}</a>
+                                    <li {% ifequal sub article %} class="active"{% endifequal %}>
+                                      <a href="{{ sub.get_absolute_url }}" title="{{ sub.title }}">{{ sub.title }}</a>
                                     </li>
                                 {% endfor %}
                             </ul>
@@ -209,7 +207,7 @@
 </div>
 
 <div id="footer">
-  <div class="container">
+  <div id="footer_container">
     <div class="row">
       <div class="col-xs-12">
         <a href="/over-triathlonvereniging-dordrecht/#avg-privacyverklaring">Privacyverklaring</a> –
