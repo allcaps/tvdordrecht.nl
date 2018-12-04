@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.24 (unreleased)
+0.24 (2018-12-04)
 -----------------
 
 - Fix contact page menu
