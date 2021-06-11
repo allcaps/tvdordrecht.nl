@@ -1,4 +1,4 @@
-Django==1.8.2
+Django==2.2.24
 django-model-utils==2.2
 pytz==2014.10
 django-crispy-forms==1.4.0
