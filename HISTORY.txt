@@ -2,7 +2,7 @@ History of this project
 =======================
 
 
-0.25 (unreleased)
+0.25 (2021-06-11)
 -----------------
 
 - Allow multiple trainings to have the same start datetime.
