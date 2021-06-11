@@ -5,7 +5,7 @@ History of this project
 0.25 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Allow multiple trainings to have the same start datetime.
 
 
 0.24 (2018-12-04)
