@@ -50,7 +50,7 @@ class Location(TimeStampedModel):
 
 
 class Session(TimeStampedModel):
-    start = models.DateTimeField("Start", unique=True)
+    start = models.DateTimeField("Start")
     discipline = models.ForeignKey(
         Discipline,
         verbose_name="discipline",
@@ -100,7 +100,6 @@ class Session(TimeStampedModel):
         verbose_name = "trainingssessie"
         verbose_name_plural = "trainingssessies"
         ordering = ('start',)
-        unique_together = (('start', 'discipline', 'location'),)
 
     def get_absolute_url(self):
         return reverse(
